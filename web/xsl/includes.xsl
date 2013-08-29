@@ -25,12 +25,12 @@
     </div>
     <div class="neacker">
         <div class="menu">
-            <div>| <span onclick="javascript:toBrowse('Painel');">Painel</span></div>
-            <div>| <span onclick="javascript:toBrowse('Experimentos');">Experimentos</span></div>
-            <div>| <span onclick="javascript:toBrowse('Meios');">Meios de cultura</span></div>
-            <div>| <span onclick="javascript:toBrowse('Repiques');">Repiques</span></div>
-            <div>| <span onclick="javascript:toBrowse('Levantamentos');">Levantamentos</span></div>
-            <div>| <span onclick="javascript:toBrowse('Usuarios');">Usuários</span></div>
+            <div onclick="javascript:toBrowse('Painel');">| <span>Painel</span></div>
+            <div onclick="javascript:toBrowse('Experimentos');">| <span>Experimentos</span></div>
+            <div onclick="javascript:toBrowse('Meios');">| <span>Meios de cultura</span></div>
+            <div onclick="javascript:toBrowse('Repiques');">| <span>Repiques</span></div>
+            <div onclick="javascript:toBrowse('Levantamentos');">| <span>Levantamentos</span></div>
+            <div onclick="javascript:toBrowse('Usuarios');">| <span>Usuários</span></div>
         </div>
     </div>
     </xsl:template>
