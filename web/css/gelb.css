@@ -245,7 +245,7 @@ form button:hover {
     position: relative;
     text-align: center;
     font-size: 12px;
-    margin-right: 35px;
+    padding-right: 40px;
     color: #000000;
 }
 .neacker span {
@@ -360,7 +360,7 @@ form button:hover {
 .title-large {
     margin-top: 15px;
     margin-bottom: 10px;
-    font-size: 30px;
+    font-size: 26px;
     font-family: "Segoe";
     color: #9FCD66;
 }

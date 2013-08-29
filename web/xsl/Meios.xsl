@@ -13,7 +13,7 @@
     <xsl:call-template name="menu"/>
         <div class="bodier">
             <div class="section-mid">
-                <div class="title-large">Meios</div>
+                <div class="title-large">Meios de cultura</div>
                 <div class="container">
                     
                     <xsl:if test="/root/cmd = 'DET'">
