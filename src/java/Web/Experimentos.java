@@ -76,6 +76,12 @@ public class Experimentos extends HttpServlet {
                 
                 con.createStatement().execute(SQL);    
             }
+            if(cmd.equals("DEL")){
+                String SQL = " DELETE FROM tExperimento ";
+                SQL = SQL + " WHERE id_experimento=" + id_experimento + "; ";
+                
+                con.createStatement().execute(SQL);    
+            }
         } catch (SQLException e) {
             System.out.println("SQL Exception: "+ e.toString());
         } catch (ClassNotFoundException cE) {

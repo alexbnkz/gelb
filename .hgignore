@@ -1,0 +1,10 @@
+\.orig\..*$
+\.orig$
+\.chg\..*$
+\.rej$
+\.conflict\~$
+syntax: glob
+dist/GELB.war
+build/web/WEB-INF/classes/Web/clControle.class
+build/web/WEB-INF/classes/Web/Plantas.class
+build/web/WEB-INF/classes/Web/Experimentos.class
