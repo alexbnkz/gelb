@@ -20,7 +20,7 @@ public class Experimentos extends HttpServlet {
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-//        response.setContentType("text/html;charset=UTF-8");
+        response.setContentType("text/html;charset=ISO-8859-1");
         PrintWriter out = response.getWriter();
         Hashtable hash = new Hashtable();
         String xml = "";
@@ -85,10 +85,12 @@ public class Experimentos extends HttpServlet {
             if(cmd.equals("INS")){
                 ResultSet result = con.createStatement().executeQuery("SELECT MAX(id_experimento)+1 AS NewCodigo FROM tExperimento;");
                 
-                int novoCodigo = 1;
+                String novoCodigo = "1";
                 
                 if(result.next()){
-                    novoCodigo = result.getInt("NewCodigo");
+                    if(result.getString(1) != null){
+                        novoCodigo = result.getString("NewCodigo");
+                    }
                 }
                 
                 String SQL = "INSERT INTO";
