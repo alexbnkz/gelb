@@ -38,20 +38,21 @@ public class Experimentos extends HttpServlet {
             }else {
                 if(hash.get("id_experimento") == ""){
                     cmd = "INS";
+                }else{
+                    cmd = hash.get("cmd").toString().split("/")[1].toUpperCase();
                 }
             }
             
-            page = hash.get("cmd").toString().split("/")[0];
-//            cmd = hash.get("cmd").toString().split("/")[1].toUpperCase();
+            page = hash.get("cmd").toString().split("/")[0];           
             
             if(cmd.equals("INS") || cmd.equals("UPD") || cmd.equals("DEL")){
-                salvarExperimento(cmd, hash);
+                xml += salvarExperimento(cmd, hash);
             }
             
-//            xml += listarExperimento(cmd, hash);
+            xml += listarExperimento(cmd, hash);
             
         } catch (Exception e) {
-            xml += "<erro1 message='" + e.toString() + "' />";
+            xml += "<erro message='" + e.toString() + "' />";
         } 
         
         try{
@@ -69,7 +70,8 @@ public class Experimentos extends HttpServlet {
         }
     }
     
-    private void salvarExperimento(String cmd, Hashtable hash){ 
+    private String salvarExperimento(String cmd, Hashtable hash){ 
+        String xml = "";
         try {
             Class.forName("com.mysql.jdbc.Driver");
             String connectionUrl = "jdbc:mysql://localhost/ifrj?user=root&password=";
@@ -116,9 +118,11 @@ public class Experimentos extends HttpServlet {
                 con.createStatement().execute(SQL);    
             }
         } catch (SQLException e) {
-            System.out.println("SQL Exception: "+ e.toString());
+            xml += "<erro message='SQL Exception: "+ e.toString() + "' />";
         } catch (ClassNotFoundException cE) {
-            System.out.println("Class Not Found Exception: "+ cE.toString());
+            xml += "<erro message='Class Not Found Exception: "+ cE.toString() + "' />";
+        } finally {
+            return xml;
         }
     }
     
@@ -135,11 +139,13 @@ public class Experimentos extends HttpServlet {
 //            String dt_experimento = hash.get("dt_experimento").toString();
 //            String tp_experimento = hash.get("tp_experimento").toString();
 //            String de_experimento = hash.get("de_experimento").toString();
-                    
+            
+            cmd = "LST";
+            
             if(cmd.equals("LST")){
                 String SQL = " SELECT  ";
                 SQL += " id_experimento, nm_experimento, dt_experimento, tp_experimento, de_experimento ";
-                SQL += " FROM tExperimento ";        
+                SQL += " FROM tExperimento ORDER BY id_experimento ASC";        
                 
                 ResultSet result = con.createStatement().executeQuery(SQL);
                 
@@ -151,14 +157,14 @@ public class Experimentos extends HttpServlet {
                         xml += " dt_experimento = '" + result.getString("dt_experimento") + "' ";
                         xml += " tp_experimento = '" + result.getString("tp_experimento") + "' ";
                         xml += " de_experimento = '" + result.getString("de_experimento") + "' ";
-                        xml += " > </experimento> ";
+                        xml += " > </experimento> \n";
                     }
                 }
             }
         } catch (SQLException e) {
-            System.out.println("SQL Exception: "+ e.toString());
+            xml += "<erro message='SQL Exception: "+ e.toString() + "' />";
         } catch (ClassNotFoundException cE) {
-            System.out.println("Class Not Found Exception: "+ cE.toString());
+            xml += "<erro message='Class Not Found Exception: "+ cE.toString() + "' />";
         } finally {
             return xml;
         }

@@ -10,3 +10,9 @@ build/web/WEB-INF/classes/Web/Plantas.class
 build/web/WEB-INF/classes/Web/Experimentos.class
 build/web/xsl/Experimentos.xsl
 build/web/js/funcs.js
+nbproject/project.xml
+nbproject/project.properties
+nbproject/private/private.xml
+nbproject/genfiles.properties
+nbproject/build-impl.xml
+build/web/WEB-INF/lib/mysql-connector-java-5.1.20-bin.jar
