@@ -2,12 +2,7 @@ function id(obj){
     return document.getElementById(obj);
 }
 function toBrowse(cmd){
-    document.location = document.URL + cmd.split('/')[0];
-}
-function toSubmit(cmd){
-    id('cmd').value = cmd;
-    id('frm').action = document.URL + cmd.split('/')[0];
-    id('frm').submit();
+    document.location = 'http://alex-work:8080/GELB/' + cmd.split('/')[0];
 }
 function validateDate(obj) {
     var vlr = obj.value;
