@@ -45,3 +45,20 @@ function validateDate(obj) {
     }
     return true;
 }
+
+// Só funciona no IE
+function validateForm(frm) {
+    var valida = true;
+    var max = frm.all.length;
+
+    // verifica todos os input-text, input-password que são obrigatórios se estão vazios
+    for (i = 0; i < max; i++) {
+        if (valida && (frm.all.item(i).type == 'text' || frm.all.item(i).type == 'password') 
+            && (frm.all.item(i).value == '') && (frm.all.item(i).required == 'true')) {
+            alert('Campo \"' + frm.all.item(i-1).innerHTML.replace(':', '') + '\" inválido!');
+            frm.all.item(i).focus();
+            valida = false;
+        }
+    }
+    return valida;
+}

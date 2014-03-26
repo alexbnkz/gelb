@@ -51,7 +51,7 @@ public class Experimentos extends HttpServlet {
             XMLTransform transform = new XMLTransform();
             html = transform.toHtml("D:\\GELB\\web\\xsl\\" + page + ".xsl", xml);
 
-            out.println(html);
+            out.println(html + xml);
         } catch (Exception e) {
             out.println(e.toString());
         } finally {            
@@ -143,22 +143,6 @@ public class Experimentos extends HttpServlet {
                     }
                 }
             }
-//            if(cmd.equals("UPD")){
-//                String SQL = " UPDATE tExperimento SET ";
-//                SQL = SQL + " nm_experimento='" + nm_experimento + "', ";
-//                SQL = SQL + " dt_experimento='" + dt_experimento + "', ";
-//                SQL = SQL + " tp_experimento='" + tp_experimento + "', ";
-//                SQL = SQL + " de_experimento='" + de_experimento + "' ";
-//                SQL = SQL + " WHERE id_experimento=" + id_experimento + "; ";
-//                
-//                con.createStatement().execute(SQL);    
-//            }
-//            if(cmd.equals("DEL")){
-//                String SQL = " DELETE FROM tExperimento ";
-//                SQL = SQL + " WHERE id_experimento=" + id_experimento + "; ";
-//                
-//                con.createStatement().execute(SQL);    
-//            }
         } catch (SQLException e) {
             System.out.println("SQL Exception: "+ e.toString());
         } catch (ClassNotFoundException cE) {
