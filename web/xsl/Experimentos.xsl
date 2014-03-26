@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0">
     <xsl:output method="html"/>
     <xsl:template match="/">
@@ -30,8 +30,9 @@
                 <div class="container">
                     <strong>Lista</strong>
                     <div class="panel">
-                        <form id="frm" name="frm" method="post" action="" onsubmit="javascript:return validateForm(this);">
+                        <form id="frm" name="frm" method="post" action="Experimentos" onsubmit="javascript:return validateForm(this);">
                             <input type="hidden" id="cmd" name="cmd" value="Experimentos/lst"/>
+                            <input type="hidden" id="id_experimento" name="id_experimento" value=""/>
                             <div class="row">
                                 <div class="xmedium">
                                     <label>Nome do experimento:</label> 

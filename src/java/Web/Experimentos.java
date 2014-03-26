@@ -20,41 +20,51 @@ public class Experimentos extends HttpServlet {
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
+//        response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
+        Hashtable hash = new Hashtable();
+        String xml = "";
+        String page = "";
+        String cmd = "";
+
         try {
-            
-            Hashtable hash = new Hashtable();
-            
             for (Map.Entry en : request.getParameterMap().entrySet()) {
-                hash.put(en.getKey(), en.getValue());
+                hash.put(en.getKey(), request.getParameter(en.getKey().toString()));
             }
-            
+ 
             if(!hash.containsKey("cmd")){
                 hash.put("cmd", "Experimentos/lst");
+                cmd = "LST";
+            }else {
+                if(hash.get("id_experimento") == ""){
+                    cmd = "INS";
+                }
             }
             
-            String page = hash.get("cmd").toString().split("/")[0];
-            String cmd = hash.get("cmd").toString().split("/")[1].toUpperCase();
+            page = hash.get("cmd").toString().split("/")[0];
+//            cmd = hash.get("cmd").toString().split("/")[1].toUpperCase();
             
             if(cmd.equals("INS") || cmd.equals("UPD") || cmd.equals("DEL")){
                 salvarExperimento(cmd, hash);
             }
             
-            String xml = "<root>";
+//            xml += listarExperimento(cmd, hash);
             
-            xml += listarExperimento(cmd, hash);
-            
-            xml += "</root>";
+        } catch (Exception e) {
+            xml += "<erro1 message='" + e.toString() + "' />";
+        } 
+        
+        try{
+            xml = "<root>" + xml + "</root>";
             
             String html;
             XMLTransform transform = new XMLTransform();
             html = transform.toHtml("D:\\GELB\\web\\xsl\\" + page + ".xsl", xml);
-
+            
             out.println(html + xml);
         } catch (Exception e) {
-            out.println(e.toString());
-        } finally {            
+            xml += "<erro message='" + e.toString() + "' />";
+        } finally {
             out.close();
         }
     }
