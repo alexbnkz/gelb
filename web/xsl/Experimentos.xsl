@@ -30,7 +30,7 @@
                 <div class="container">
                     <strong>Lista</strong>
                     <div class="panel">
-                        <form id="frm" name="frm" method="post" action="" style="display: none">
+                        <form id="frm" name="frm" method="post" action="">
                             <input type="hidden" id="cmd" name="cmd" value="Experimentos/lst"/>
                             <div class="row">
                                 <div class="xmedium">
@@ -59,7 +59,7 @@
                                 </div>
                                 <div class="small">
                                     <label>&#10;</label>
-                                    <button type="butmit" id="bt_salvar" name="bt_salvar">Salvar</button>
+                                    <button type="button" id="bt_salvar" name="bt_salvar" onclick="javascript:validateForm(document.frm);">Salvar</button>
                                 </div>
                             </div>
                         </form>
