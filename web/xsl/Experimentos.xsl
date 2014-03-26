@@ -30,12 +30,12 @@
                 <div class="container">
                     <strong>Lista</strong>
                     <div class="panel">
-                        <form id="frm" name="frm" method="post" action="">
+                        <form id="frm" name="frm" method="post" action="" onsubmit="javascript:return validateForm(this);">
                             <input type="hidden" id="cmd" name="cmd" value="Experimentos/lst"/>
                             <div class="row">
                                 <div class="xmedium">
                                     <label>Nome do experimento:</label> 
-                                    <input type="text" id="nm_experimento" name="nm_experimento" required="true" />
+                                        <input type="text" id="nm_experimento" name="nm_experimento" required="true" />
                                 </div>
                                 <div class="small">
                                     <label>Data de início:</label> 
@@ -59,7 +59,7 @@
                                 </div>
                                 <div class="small">
                                     <label>&#10;</label>
-                                    <button type="button" id="bt_salvar" name="bt_salvar" onclick="javascript:validateForm(document.frm);">Salvar</button>
+                                    <button type="submit" id="bt_salvar" name="bt_salvar">Salvar</button>
                                 </div>
                             </div>
                         </form>

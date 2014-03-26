@@ -46,19 +46,32 @@ function validateDate(obj) {
     return true;
 }
 
-// Só funciona no IE
-function validateForm(frm) {
+function validateForm(frm){
     var valida = true;
-    var max = frm.all.length;
-
-    // verifica todos os input-text, input-password que são obrigatórios se estão vazios
-    for (i = 0; i < max; i++) {
-        if (valida && (frm.all.item(i).type == 'text' || frm.all.item(i).type == 'password') 
-            && (frm.all.item(i).value == '') && (frm.all.item(i).required == 'true')) {
-            alert('Campo \"' + frm.all.item(i-1).innerHTML.replace(':', '') + '\" inválido!');
-            frm.all.item(i).focus();
-            valida = false;
+    
+    var i = 0; 
+    while (valida && i < frm.childNodes.length) {
+        var j = 0; 
+        while (valida && j < frm.childNodes[i].childNodes.length) {
+            var k = 0; 
+            var label = '';
+            while (valida && k < frm.childNodes[i].childNodes[j].childNodes.length) {
+                var elem = frm.childNodes[i].childNodes[j].childNodes[k];
+                
+                if(elem.tagName == 'LABEL'){
+                    label = elem.innerHTML.replace(':', '');
+                }
+                if(elem.required && elem.value == ''){
+                    alert('Campo \"' + label + '\" inválido!');
+                    elem.focus();
+                    valida = false;
+                }
+                k++;
+            } 
+            j++;
         }
+        i++;
     }
+    
     return valida;
 }
