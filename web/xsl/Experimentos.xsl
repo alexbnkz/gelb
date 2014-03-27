@@ -28,8 +28,12 @@
             <div class="section-mid">
                 <div class="title-large">Experimentos</div>
                 <div class="container">
-                    <strong>Lista</strong>
-                    <div class="panel">
+                    <div class="panel-form" style="width: 560px;">
+                        <div class="plus">+</div><div class="plus">-</div>
+                        <div class="title-small" style="margin-left: 10px">
+                            Novo cadastro 
+                            </div>
+                        
                         <form id="frm" name="frm" method="post" action="Experimentos" onsubmit="javascript:return validateForm(this);">
                             <input type="hidden" id="cmd" name="cmd" value="Experimentos/lst"/>
                             <input type="hidden" id="id_experimento" name="id_experimento" value=""/>
@@ -51,19 +55,23 @@
                                 </div>
                             </div>
                             <div class="row">
-                                <div class="xmedium">
+                                <div class="large">
                                     <label>Observações:</label> 
-                                    <textarea id="de_experimento" name="de_experimento"></textarea>
+                                    <textarea id="de_experimento" name="de_experimento" rows="5"></textarea>
                                 </div>
-                                <div class="medium">
-
-                                </div>
-                                <div class="small">
+                            </div>
+                            <div class="row">
+                                <div class="small" style="float: right;">
                                     <label>&#10;</label>
-                                    <button type="submit" id="bt_salvar" name="bt_salvar">Salvar</button>
+                                    <button type="submit" id="bt_salvar" name="bt_salvar">
+                                        <span>Salvar</span>
+                                    </button>
                                 </div>
                             </div>
                         </form>
+                    </div>
+                    <div class="panel" style="display: none">
+                        <strong>Lista</strong>
                         <div class="grid">
                             <div class="row"></div>
                             <div class="row"><div>Indução de brotos de Vrísea Botafogensis 2014.1</div></div>
