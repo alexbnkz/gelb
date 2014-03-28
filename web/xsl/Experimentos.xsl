@@ -40,15 +40,10 @@
             <div class="section-mid">
                 <div class="title-large">Experimentos</div>
                 <div class="container">
-                    <div class="panel-form">
-                        
-                        <div id="div-cadastro-right" style="display: block;">
-                            <div id="icon-plus" class="icon" title="Expandir" onclick="javascript:ShowHide('#div-cadastro-right');ShowHide('#div-cadastro-left');ShowHide('#frm');">+</div>
-                            <div class="title-small" style="margin-left: 10px">Novo cadastro</div>
-                        </div>
-                        
+                    <div id="panel-form-cadastro" class="panel-form" style="display: none;">
+                                                
                         <div id="div-cadastro-left" style="display: none;">
-                            <div id="icon-minus" class="icon" title="Encolher" onclick="javascript:ShowHide('#frm');ShowHide('#div-cadastro-left');ShowHide('#div-cadastro-right');">-</div>
+                            <div id="icon-minus" class="icon" title="Encolher" onclick="javascript:ShowHideCadastro();">-</div>
                             <div class="title-small" style="margin-left: 10px">Novo cadastro</div>
                         </div>
                         
@@ -59,7 +54,7 @@
                                 <div class="row">
                                     <div class="xmedium">
                                         <label>Nome do experimento:</label> 
-                                            <input type="text" id="nm_experimento" name="nm_experimento" required="true" />
+                                            <input type="text" id="nm_experimento" name="nm_experimento" required="true" maxlength="100" />
                                     </div>
                                     <div class="xsmall">
                                         <label>Data de início:</label> 
@@ -93,15 +88,25 @@
                         </div>
                     </div>
                     <div class="panel-grid">
+                        
+                        <div id="div-cadastro-right" style="display: block;">
+                            <div id="icon-plus" class="icon" title="Expandir" onclick="javascript:ShowHideCadastro();">+</div>
+                            <div class="title-small" style="margin-left: 10px">Novo cadastro</div>
+                        </div>
+
                         <div class="title-small" style="margin-left: 10px; display: block;">Lista</div>
                         
                         <div class="grid">
-                            
-                            <div class="row"><div>Indução de brotos de Vrísea Botafogensis 2014.1</div></div>
-                            <div class="row"><div>Pesquisa de enzima de controle da hipertensão em ratos</div></div>
-                            <div class="row"><div>Teste de shampoo em Beagles </div></div>
-                            <div class="row"><div>Desenvolvimento de fotossíntese in vitro</div></div>
-                            <div class="row"><div>Tratamento oncológico com remédios homeopáticos</div></div>
+                            <xsl:for-each select="/root/experimento">
+                                <div class="row">
+                                    <div style="width: 600px; display: table-cell;">
+                                        <xsl:value-of select="@nm_experimento"/>
+                                    </div>
+                                    <div style="width: 100px; display: table-cell;">
+                                        <xsl:value-of select="@dt_experimento"/>
+                                    </div>
+                                </div>
+                            </xsl:for-each>
                         </div>
                     </div>
                 </div>

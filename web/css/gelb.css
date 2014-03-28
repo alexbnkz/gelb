@@ -95,7 +95,6 @@ form button {
     color: #666666;
     border: 1px dashed #999999;
     background-color: transparent; 
-    overflow: visible;
 }
 form button:link, form button:visited {
     color: #666666;
@@ -108,9 +107,11 @@ form button:hover {
     background-color: #E0E0E0; 
 }
 .panel-form {
-    background-image: url("../img/point.png");
+    width: 100%;
+    float: left;
     margin: 0px;
     margin-left: 5px;  
+    background-image: url("../img/point.png");
     border-top: 1px #999999 solid;
 }
 
@@ -183,6 +184,7 @@ form button:hover {
     box-shadow: 0px 1px 2px 0px rgb(100, 100, 100); 
     border-bottom: 1px transparent solid;
     margin: 10px;
+    padding: 10px;
     color: #333333;
     cursor: pointer;
 }
@@ -194,13 +196,12 @@ form button:hover {
     background: #F0F0F0;
     color: #336033;
 }
-.grid .row div {
-    padding: 10px;
-}
 .panel-grid {
-    background-image: url("../img/point.png");
+    width: 100%;
+    float: left;
     margin: 0px;
-    margin-left: 5px;  
+    margin-left: 5px;
+    background-image: url("../img/point.png");  
     border-top: 1px #999999 solid;
     border-bottom: 1px #999999 solid;
 }

@@ -62,7 +62,7 @@ public class Experimentos extends HttpServlet {
             XMLTransform transform = new XMLTransform();
             html = transform.toHtml("D:\\GELB\\web\\xsl\\" + page + ".xsl", xml);
             
-            out.println(html + xml);
+            out.println(html);
         } catch (Exception e) {
             xml += "<erro message='" + e.toString() + "' />";
         } finally {
@@ -157,7 +157,7 @@ public class Experimentos extends HttpServlet {
                         xml += " dt_experimento = '" + result.getString("dt_experimento") + "' ";
                         xml += " tp_experimento = '" + result.getString("tp_experimento") + "' ";
                         xml += " de_experimento = '" + result.getString("de_experimento") + "' ";
-                        xml += " > </experimento> \n";
+                        xml += " > </experimento>";
                     }
                 }
             }
