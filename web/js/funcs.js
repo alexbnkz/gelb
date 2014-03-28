@@ -14,6 +14,12 @@ function ShowHide(obj){
 function ShowHideSlide(obj, dirc){
     $(obj).toggle('slide', {direction: dirc}, 1000);
 }
+function ShowHideCadastro(){
+    ShowHide('#frm');
+    ShowHide('#div-cadastro-left');
+    ShowHide('#div-cadastro-right');  
+    ShowHide('#panel-form-cadastro');  
+}
 function validateDate(obj) {
     var vlr = obj.value;
 
