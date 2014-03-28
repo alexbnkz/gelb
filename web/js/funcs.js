@@ -4,15 +4,25 @@ function id(obj){
 function toBrowse(cmd){
     document.location = 'http://alex-work:8080/GELB/' + cmd.split('/')[0];
 }
+function ShowHide(obj){
+    if($(obj).attr('style') == 'display: none;') {
+        $(obj).show();   
+    } else {
+        $(obj).hide();
+    }
+}
+function ShowHideSlide(obj, dirc){
+    $(obj).toggle('slide', {direction: dirc}, 1000);
+}
 function validateDate(obj) {
     var vlr = obj.value;
 
-    if (vlr != "") {
+    if (vlr != '') {
         var date = vlr;
         var DtArray = new Array;
-        var ExpReg = new RegExp("(0[1-9]|[12][0-9]|3[01])/(0[1-9]|1[012])/(19|20)[0-9][0-9]");
-        var ExpReg2 = new RegExp("([1-9]|[12][0-9]|3[01])/([1-9]|1[012])/(19|20)[0-9][0-9]");
-        DtArray = date.split("/");
+        var ExpReg = new RegExp('(0[1-9]|[12][0-9]|3[01])/(0[1-9]|1[012])/(19|20)[0-9][0-9]');
+        var ExpReg2 = new RegExp('([1-9]|[12][0-9]|3[01])/([1-9]|1[012])/(19|20)[0-9][0-9]');
+        DtArray = date.split('/');
         erro = false;
         if (date.search(ExpReg) == -1 && date.search(ExpReg2) == -1) {
             erro = true;
@@ -32,8 +42,8 @@ function validateDate(obj) {
             }
         }
         if (erro) {
-            alert("\"" + vlr + "\" não é uma data válida.");
-            obj.value = "";
+            alert('\"' + vlr + '\" não é uma data válida.');
+            obj.value = '';
             obj.focus();
             return false;
         }

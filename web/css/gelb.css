@@ -11,11 +11,12 @@ body {
     background: #FFFFFF no-repeat url("../img/placa.jpg");
     color: #666666;
     font-family: "Tahoma";
+    overflow: hidden;
 }
 
 /*   FORM STYLES   */
 form {
-    margin-top: 15px;
+    margin-top: 0px;
     margin-left: 10px;
     display: block;
 }
@@ -102,15 +103,15 @@ form button:link, form button:visited {
     background-color: transparent; 
 }
 form button:hover {
-    color: #335033;
+    color: #336033;
     border: 1px dashed #666666;
     background-color: #E0E0E0; 
 }
 .panel-form {
     background-image: url("../img/point.png");
+    margin: 0px;
     margin-left: 5px;  
     border-top: 1px #999999 solid;
-    border-bottom: 1px #999999 solid;
 }
 
 /*   HEADER STYLES   */
@@ -172,12 +173,43 @@ form button:hover {
   color: #FFFFFF;
 }
 
+/*   GRID STYLES   */
+.grid {
+    margin: 5px;  
+    margin-top: 0px;  
+}
+.grid .row {
+    background-image: url("../img/point white.png");
+    box-shadow: 0px 1px 2px 0px rgb(100, 100, 100); 
+    border-bottom: 1px transparent solid;
+    margin: 10px;
+    color: #333333;
+    cursor: pointer;
+}
+.grid .row:link,.grid .row:visited {
+    background-image: url("../img/point white.png");
+    color: #333333;
+}
+.grid .row:hover {
+    background: #F0F0F0;
+    color: #336033;
+}
+.grid .row div {
+    padding: 10px;
+}
+.panel-grid {
+    background-image: url("../img/point.png");
+    margin: 0px;
+    margin-left: 5px;  
+    border-top: 1px #999999 solid;
+    border-bottom: 1px #999999 solid;
+}
+
 /*   BODY STYLES   */
 .bodier {
     width: 100%;
-    height: 80%;
     position: absolute;
-    overflow: hidden;
+    overflow: auto;
 }
 .section-mid {
     width: 800px;
@@ -210,29 +242,9 @@ form button:hover {
     color: #666666;
 }
 .container {
-    max-height: 420px; 
-    
+    max-height: 460px;  
 }
-.panel {
-    background-color: #FFFFFF;
-    border: 1px #FFFFFF solid;
-    border-left: 2px #CCCCCC solid;
-}
-.panel strong {
-    margin-left: 5px;
-}
-.grid {
-    background-color: #FFFFFF;
-    margin: 5px;
-    box-shadow: 0px 1px 2px 0px rgb(216, 216, 216); 
-}
-.grid .row {
-    border-bottom: 1px #CCCCCC solid;
-}
-.grid .row div {
-    margin: 10px 0px 10px 10px;
-}
-.plus {
+.icon {
     width: 25px;
     height: 25px;
     margin: 10px;
@@ -246,13 +258,16 @@ form button:hover {
     border: 1px dashed #999999;
     background-color: transparent; 
 }
-.plus:link, .plus:visited {
+.icon:link, .icon:visited {
     color: #666666;
     border: 1px dashed #999999;
     background-color: transparent; 
 }
-.plus:hover {
-    color: #335033;
+.icon:hover {
+    color: #336033;
     border: 1px dashed #666666;
-    background-color: #E0E0E0; 
+    background-color: #F0F0F0; 
+}
+.section-hr {
+    border-bottom: 0px #333333 solid; 
 }

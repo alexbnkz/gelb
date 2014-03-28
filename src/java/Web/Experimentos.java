@@ -36,7 +36,7 @@ public class Experimentos extends HttpServlet {
                 hash.put("cmd", "Experimentos/lst");
                 cmd = "LST";
             }else {
-                if(hash.get("id_experimento") == ""){
+                if(hash.get("id_experimento") == "" && hash.get("cmd") != "lst"){
                     cmd = "INS";
                 }else{
                     cmd = hash.get("cmd").toString().split("/")[1].toUpperCase();
