@@ -86,3 +86,10 @@ function validateForm(frm){
     
     return valida;
 }
+function Excluir(ident, nome){
+    if (confirm('Tem certeza que deseja excuir "' + nome + '"?')) {
+        id('id').value = ident;
+        id('cmd').value = id('cmd').value.split('/')[0] + '/del';
+        id('frm').submit();
+    } 
+}

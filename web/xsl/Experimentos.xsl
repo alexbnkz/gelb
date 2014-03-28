@@ -50,7 +50,7 @@
                         <div style="width: 620px; margin: 0px auto; display: block;">
                             <form id="frm" name="frm" method="post" action="Experimentos" onsubmit="javascript:return validateForm(this);" style="display: none;">
                                 <input type="hidden" id="cmd" name="cmd" value="Experimentos/lst"/>
-                                <input type="hidden" id="id_experimento" name="id_experimento" value=""/>
+                                <input type="hidden" id="id" name="id" value=""/>
                                 <div class="row">
                                     <div class="xmedium">
                                         <label>Nome do experimento:</label> 
@@ -78,7 +78,7 @@
                                     <div class="xxmedium">
                                         <div class="small" style="float: right;">
                                             <label>&#10;</label>
-                                            <button type="submit" id="bt_salvar" name="bt_salvar">
+                                            <button type="submit" id="bt_salvar" name="bt_salvar" title="Salvar">
                                                 <span>Salvar</span>
                                             </button>
                                         </div>
@@ -87,13 +87,14 @@
                             </form>
                         </div>
                     </div>
+                    
                     <div class="panel-grid">
                         
                         <div id="div-cadastro-right" style="display: block;">
                             <div id="icon-plus" class="icon" title="Expandir" onclick="javascript:ShowHideCadastro();">+</div>
                             <div class="title-small" style="margin-left: 10px">Novo cadastro</div>
                         </div>
-
+                        <xsl:if test="count(/root/experimento) > 0">
                         <div class="title-small" style="margin-left: 10px; display: block;">Lista</div>
                         
                         <div class="grid">
@@ -105,10 +106,15 @@
                                     <div style="width: 100px; display: table-cell;">
                                         <xsl:value-of select="@dt_experimento"/>
                                     </div>
+                                    <div id="icon-excluir" class="icon" style="width: 20px; height: 20px; float: none; display: table-cell; font-size: 20px;">
+                                        <xsl:attribute name="onclick">javascript:Excluir(<xsl:value-of select="@id_experimento"/>, '<xsl:value-of select="@nm_experimento"/>');</xsl:attribute>
+                                        x</div>
                                 </div>
                             </xsl:for-each>
                         </div>
+                        </xsl:if>
                     </div>
+                    
                 </div>
             </div>
         </div>
