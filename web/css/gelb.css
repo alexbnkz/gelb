@@ -209,12 +209,13 @@ form button:hover {
 /*   BODY STYLES   */
 .bodier {
     width: 100%;
+    height: 80%;
     position: absolute;
     overflow: auto;
 }
 .section-mid {
     width: 800px;
-    height: 100%;
+    height: 90%;
     position: relative;
     left: 180px;
     padding: 5px;

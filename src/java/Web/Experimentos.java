@@ -36,7 +36,7 @@ public class Experimentos extends HttpServlet {
                 hash.put("cmd", "Experimentos/lst");
                 cmd = "LST";
             }else {
-                if(hash.get("id_experimento") == "" && hash.get("cmd") != "lst"){
+                if(hash.get("id") == "" && hash.get("cmd") != "lst"){
                     cmd = "INS";
                 }else{
                     cmd = hash.get("cmd").toString().split("/")[1].toUpperCase();
@@ -78,7 +78,7 @@ public class Experimentos extends HttpServlet {
             
             Connection con = DriverManager.getConnection(connectionUrl); 
             
-            String id_experimento = hash.get("id_experimento").toString();
+            String id_experimento = hash.get("id").toString();
             String nm_experimento = hash.get("nm_experimento").toString();
             String dt_experimento = hash.get("dt_experimento").toString();
             String tp_experimento = hash.get("tp_experimento").toString();
@@ -134,12 +134,6 @@ public class Experimentos extends HttpServlet {
             
             Connection con = DriverManager.getConnection(connectionUrl); 
             
-//            String id_experimento = hash.get("id_experimento").toString();
-//            String nm_experimento = hash.get("nm_experimento").toString();
-//            String dt_experimento = hash.get("dt_experimento").toString();
-//            String tp_experimento = hash.get("tp_experimento").toString();
-//            String de_experimento = hash.get("de_experimento").toString();
-            
             cmd = "LST";
             
             if(cmd.equals("LST")){
@@ -162,7 +156,7 @@ public class Experimentos extends HttpServlet {
                 }
             }
         } catch (SQLException e) {
-            xml += "<erro message='SQL Exception: "+ e.toString() + "' />";
+            xml += "<erro message='SQL \'Exception: "+ e.toString() + "' />";
         } catch (ClassNotFoundException cE) {
             xml += "<erro message='Class Not Found Exception: "+ cE.toString() + "' />";
         } finally {
