@@ -16,3 +16,14 @@ nbproject/private/private.xml
 nbproject/genfiles.properties
 nbproject/build-impl.xml
 build/web/WEB-INF/lib/mysql-connector-java-5.1.20-bin.jar
+build/web/index.jsp
+build/web/img/point.png
+build/web/img/placa.jpg
+build/web/img/logo2.png
+build/web/img/logo.png
+build/web/css/gelb.css
+build/web/css/Segoe.ttf
+build/web/WEB-INF/classes/Utils/XMLTransform.class
+build/web/WEB-INF/beans.xml
+build/web/META-INF/context.xml
+build/web/META-INF/MANIFEST.MF
