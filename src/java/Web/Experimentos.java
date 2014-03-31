@@ -49,7 +49,7 @@ public class Experimentos extends HttpServlet {
                 xml += salvarExperimento(cmd, hash);
             }
             
-            xml += listarExperimento(cmd, hash);
+            xml += listarExperimentos(cmd, hash);
             
         } catch (Exception e) {
             xml += "<erro message='" + e.toString() + "' />";
@@ -126,7 +126,7 @@ public class Experimentos extends HttpServlet {
         }
     }
     
-    private String listarExperimento(String cmd, Hashtable hash){ 
+    private String listarExperimentos(String cmd, Hashtable hash){ 
         String xml = "";
         try {
             Class.forName("com.mysql.jdbc.Driver");
@@ -134,27 +134,23 @@ public class Experimentos extends HttpServlet {
             
             Connection con = DriverManager.getConnection(connectionUrl); 
             
-            cmd = "LST";
-            
-            if(cmd.equals("LST")){
-                String SQL = " SELECT  ";
-                SQL += " id_experimento, nm_experimento, dt_experimento, tp_experimento, de_experimento ";
-                SQL += " FROM tExperimento ORDER BY id_experimento ASC";        
-                
-                ResultSet result = con.createStatement().executeQuery(SQL);
-                
-                if(!result.wasNull()){
-                    while(result.next()){
-                        xml += " <experimento ";
-                        xml += " id_experimento = '" + result.getInt("id_experimento") + "' ";
-                        xml += " nm_experimento = '" + result.getString("nm_experimento") + "' ";
-                        xml += " dt_experimento = '" + result.getString("dt_experimento") + "' ";
-                        xml += " tp_experimento = '" + result.getString("tp_experimento") + "' ";
-                        xml += " de_experimento = '" + result.getString("de_experimento") + "' ";
-                        xml += " > </experimento>";
-                    }
-                }
-            }
+			String SQL = " SELECT  ";
+			SQL += " id_experimento, nm_experimento, dt_experimento, tp_experimento, de_experimento ";
+			SQL += " FROM tExperimento ORDER BY id_experimento ASC";        
+			
+			ResultSet result = con.createStatement().executeQuery(SQL);
+			
+			if(!result.wasNull()){
+				while(result.next()){
+					xml += " <experimento ";
+					xml += " id_experimento = '" + result.getInt("id_experimento") + "' ";
+					xml += " nm_experimento = '" + result.getString("nm_experimento") + "' ";
+					xml += " dt_experimento = '" + result.getString("dt_experimento") + "' ";
+					xml += " tp_experimento = '" + result.getString("tp_experimento") + "' ";
+					xml += " de_experimento = '" + result.getString("de_experimento") + "' ";
+					xml += " > </experimento>";
+				}
+			}
         } catch (SQLException e) {
             xml += "<erro message='SQL \'Exception: "+ e.toString() + "' />";
         } catch (ClassNotFoundException cE) {
