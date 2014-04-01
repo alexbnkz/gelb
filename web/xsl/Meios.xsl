@@ -6,14 +6,14 @@
 
 <html>
     <head>
-        <title>IFRJ - GELB - Plantas</title>
+        <title>IFRJ - GELB - Meios</title>
         <xsl:call-template name="head"/>
     </head>
     <body>
     <xsl:call-template name="menu"/>
         <div class="bodier">
             <div class="section-mid">
-                <div class="title-large">Plantas</div>
+                <div class="title-large">Meios</div>
                 <div class="container">
                     <div id="panel-form-cadastro" class="panel-form" style="display: none;">
                                                 
@@ -23,48 +23,51 @@
                         </div>
                         
                         <div style="width: 620px; margin: 0px auto; display: block;">
-                            <form id="frm" name="frm" method="post" action="Plantas" onsubmit="javascript:return validateForm(this);" style="display: none;">
-                                <input type="hidden" id="cmd" name="cmd" value="Plantas/lst"/>
+                            <form id="frm" name="frm" method="post" action="Meios" onsubmit="javascript:return validateForm(this);" style="display: none;">
+                                <input type="hidden" id="cmd" name="cmd" value="Meios/lst"/>
                                 <input type="hidden" id="id" name="id" value=""/>
                                 <div class="row">
-                                    <div class="xxsmall">
-                                        <label>Escolha o Meio:</label> 
-                                        <select type="text" id="id_meio" name="id_meio">
-					<xsl:for-each select="/root/meio">
+                                    <div class="xmedium">
+                                        <label>Escolha o Experimento:</label> 
+                                        <select type="text" id="id_experimento" name="id_experimento">
+					<xsl:for-each select="/root/experimento">
                                             <option>
-                                                <xsl:attribute name="value"><xsl:value-of select="@id_meio"/></xsl:attribute>
-                                                <xsl:value-of select="@nm_meio"/> - <xsl:value-of select="@dt_meio"/></option>
+                                                <xsl:attribute name="value"><xsl:value-of select="@id_experimento"/></xsl:attribute>
+                                                <xsl:value-of select="@nm_experimento"/></option>
 					</xsl:for-each>
                                         </select>
                                     </div>
-                                </div>
-				<div class="row">
-                                    <div class="medium">
-                                        <label>Identificacão da planta:</label> 
-                                            <input type="text" id="nm_planta" name="nm_planta" maxlength="100" />
-                                    </div>
-                                    <div class="xsmall">
-                                        <label>Data de germinação:</label> 
-                                        <input type="text" id="dt_planta" name="dt_planta" required="true" maxlength="10" onblur="javascript:validateDate(this);" />
+                                    <div class="xxsmall">
+                                        <label>Nome do meio:</label> 
+                                            <input type="text" id="nm_meio" name="nm_meio" required="true" maxlength="100" />
                                     </div>
                                     <div class="small">
-                                        <label>Quantidade:</label> 
-                                        <input type="text" id="qt_planta" name="qt_planta" required="true" maxlength="2" />
-                                    </div>
-                                    <div class="small">
-                                        <label>Último repique:</label> 
-                                        <div class="texto">--/--/----</div>
-                                        <input type="hidden" id="dt_repique" name="dt_repique" value="" />
+                                        <label>Data de preparo:</label> 
+                                        <input type="text" id="dt_meio" name="dt_meio" required="true" maxlength="10" onblur="javascript:validateDate(this);" />
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="xxlarge">
+                                        <label>Composição:</label> 
+                                        <textarea id="de_meio" name="de_meio" rows="5" maxlength="1000"></textarea>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="xxlarge">
+                                        <xsl:if test="count(/root/experimento) > 0">
                                         <div class="small" style="float: right;">
                                             <label>&#10;</label>
                                             <button type="submit" id="bt_salvar" name="bt_salvar" title="Salvar">
                                                 <span>Salvar</span>
                                             </button>
                                         </div>
+                                        </xsl:if>
+                                        <xsl:if test="count(/root/experimento) = 0">
+                                        <div class="legend" style="text-align: center;">
+                                           Não existem experimentos cadastrados!
+                                        </div>
+                                        </xsl:if>
+
                                     </div>
                                 </div>
                             </form>
