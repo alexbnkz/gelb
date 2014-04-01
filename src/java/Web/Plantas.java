@@ -142,21 +142,26 @@ public class Plantas extends HttpServlet {
             Connection con = DriverManager.getConnection(connectionUrl); 
             
             String SQL = " SELECT  ";
-            SQL += " id_planta, id_meio, nm_planta, dt_planta, dt_repique ";
+            SQL += " id_planta, id_meio, nm_planta, dt_planta, dt_repique, qt_planta ";
             SQL += " FROM tPlanta ORDER BY id_planta ASC";        
 
             ResultSet result = con.createStatement().executeQuery(SQL);
 
             if(!result.wasNull()){
-                    while(result.next()){
-                            xml += " <planta ";
-                            xml += " id_planta = '" + result.getInt("id_planta") + "' ";
-                            xml += " id_meio = '" + result.getString("id_meio") + "' ";
-                            xml += " nm_planta = '" + result.getString("nm_planta") + "' ";
-                            xml += " dt_planta = '" + result.getString("dt_planta") + "' ";
-                            xml += " dt_repique = '" + result.getString("dt_repique") + "' ";
-                            xml += " > </planta>";
+                while(result.next()){
+                    xml += " <planta ";
+                    xml += " id_planta = '" + result.getInt("id_planta") + "' ";
+                    xml += " id_meio = '" + result.getString("id_meio") + "' ";
+                    xml += " nm_planta = '" + result.getString("nm_planta") + "' ";
+                    xml += " dt_planta = '" + result.getString("dt_planta") + "' ";
+                    if(result.getString("dt_repique") == null) {
+                        xml += " dt_repique = '--/--/----' ";
+                    } else {
+                        xml += " dt_repique = '" + result.getString("dt_repique") + "' ";
                     }
+                    xml += " qt_planta = '" + result.getString("qt_planta") + "' ";
+                    xml += " > </planta>";
+                }
             }
         } catch (SQLException e) {
             xml += "<erro message='SQL \'Exception: "+ e.toString() + "' />";
@@ -167,40 +172,39 @@ public class Plantas extends HttpServlet {
         }
     }
  
-    protected String listarPlantas(){ 
-        String xml = "";
-        try {
-            Class.forName("com.mysql.jdbc.Driver");
-            String connectionUrl = "jdbc:mysql://localhost/ifrj?user=root&password=";
-            
-            Connection con = DriverManager.getConnection(connectionUrl); 
-            
-			String SQL = " SELECT  ";
-			SQL += " id_planta, id_meio, nm_planta, dt_planta, dt_repique ";
-			SQL += " FROM tPlanta ORDER BY id_planta ASC";        
-			
-			ResultSet result = con.createStatement().executeQuery(SQL);
-			
-			if(!result.wasNull()){
-				while(result.next()){
-					xml += " <planta ";
-					xml += " id_planta = '" + result.getInt("id_planta") + "' ";
-					xml += " id_meio = '" + result.getString("id_meio") + "' ";
-					xml += " nm_planta = '" + result.getString("nm_planta") + "' ";
-					xml += " dt_planta = '" + result.getString("dt_planta") + "' ";
-					xml += " dt_repique = '" + result.getString("dt_repique") + "' ";
-					xml += " > </planta>";
-				}
-			}
-        } catch (SQLException e) {
-            xml += "<erro message='SQL \'Exception: "+ e.toString() + "' />";
-        } catch (ClassNotFoundException cE) {
-            xml += "<erro message='Class Not Found Exception: "+ cE.toString() + "' />";
-        } finally {
-            return xml;
-        }
-    }
- 
+//    protected String listarPlantas(){ 
+//        String xml = "";
+//        try {
+//            Class.forName("com.mysql.jdbc.Driver");
+//            String connectionUrl = "jdbc:mysql://localhost/ifrj?user=root&password=";
+//            
+//            Connection con = DriverManager.getConnection(connectionUrl); 
+//            
+//			String SQL = " SELECT  ";
+//			SQL += " id_planta, id_meio, nm_planta, dt_planta, dt_repique ";
+//			SQL += " FROM tPlanta ORDER BY id_planta ASC";        
+//			
+//			ResultSet result = con.createStatement().executeQuery(SQL);
+//			
+//			if(!result.wasNull()){
+//				while(result.next()){
+//					xml += " <planta ";
+//					xml += " id_planta = '" + result.getInt("id_planta") + "' ";
+//					xml += " id_meio = '" + result.getString("id_meio") + "' ";
+//					xml += " nm_planta = '" + result.getString("nm_planta") + "' ";
+//					xml += " dt_planta = '" + result.getString("dt_planta") + "' ";
+//					xml += " dt_repique = '" + result.getString("dt_repique") + "' ";
+//					xml += " > </planta>";
+//				}
+//			}
+//        } catch (SQLException e) {
+//            xml += "<erro message='SQL \'Exception: "+ e.toString() + "' />";
+//        } catch (ClassNotFoundException cE) {
+//            xml += "<erro message='Class Not Found Exception: "+ cE.toString() + "' />";
+//        } finally {
+//            return xml;
+//        }
+//    }
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP

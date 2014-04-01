@@ -1,41 +1,16 @@
     
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0">
-    <xsl:output method="html" />
+    <xsl:output method="html" indent="yes"/>
+    <xsl:include href="includes.xsl"/>
     <xsl:template match="/">
 
 <html>
     <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-        <title>IFRJ - GELB</title>
-        <link type="text/css" rel="stylesheet" href="css/gelb.css"/>
-        <script type="text/javascript" src="js/funcs.js"></script>
-        <script type="text/javascript" src="js/jquery-1.9.1.min.js"></script>
-        <script type="text/javascript" src="js/jquery-ui-1.10.3.js"></script>
-        <style>
-            #div-cadastro-right {
-                width: 180px; 
-                float: right; 
-            }
-            #div-cadastro-left {
-                width: 100%; 
-                float: left;
-            }
-        </style>
+        <title>IFRJ - GELB - Experimentos</title>
+        <xsl:call-template name="head"/>
     </head>
     <body>
-        <div class="header">
-            <div><img src="img/logo2.png" /></div>
-        </div>
-        <div class="neacker">
-            <div class="menu">
-                <div>| <span onclick="javascript:toBrowse('');">Painel</span></div>
-                <div>| <span onclick="javascript:toBrowse('Experimentos');">Experimentos</span></div>
-                <div>| <span onclick="javascript:toBrowse('Plantas');">Plantas</span></div>
-                <div>| <span onclick="javascript:toBrowse('Meios');">Meios</span></div>
-                <div>| <span onclick="javascript:toBrowse('Levantamentos');">Levantamentos</span></div>
-                <div>| <span onclick="javascript:toBrowse('Usuarios');">Usuários</span></div>
-            </div>
-        </div>
+    <xsl:call-template name="menu"/>
         <div class="bodier">
             <div class="section-mid">
                 <div class="title-large">Experimentos</div>
@@ -98,6 +73,9 @@
                         <div class="title-small" style="margin-left: 10px; display: block;">Lista</div>
                         
                         <div class="grid">
+                            <div class="legend" style="width: 20px;"></div>
+                            <div class="legend" style="width: 700px;">Experimento</div>
+                            <div class="legend" style="width: 200px;">Data</div>
                             <xsl:for-each select="/root/experimento">
                                 <div class="row">
                                     <div style="width: 600px; display: table-cell;">
