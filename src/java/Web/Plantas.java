@@ -49,6 +49,9 @@ public class Plantas extends HttpServlet {
                 xml += salvarPlanta(cmd, hash);
             }
             
+            Meios m = new Meios();
+            
+            xml += m.listarMeios();
             xml += listarPlantas(cmd, hash);
             
         } catch (Exception e) {
@@ -69,8 +72,8 @@ public class Plantas extends HttpServlet {
             out.close();
         }
     }
-
-	 private String salvarPlanta(String cmd, Hashtable hash){ 
+    
+    private String salvarPlanta(String cmd, Hashtable hash){ 
         String xml = "";
         try {
             Class.forName("com.mysql.jdbc.Driver");
@@ -83,6 +86,7 @@ public class Plantas extends HttpServlet {
             String nm_planta = hash.get("nm_planta").toString();
             String dt_planta = hash.get("dt_planta").toString();
             String dt_repique = hash.get("dt_repique").toString();
+            String qt_planta = hash.get("qt_planta").toString();
                     
             if(cmd.equals("INS")){
                 ResultSet result = con.createStatement().executeQuery("SELECT MAX(id_planta)+1 AS NewCodigo FROM tPlanta;");
@@ -96,19 +100,20 @@ public class Plantas extends HttpServlet {
                 }
                 
                 String SQL = "INSERT INTO";
-                SQL += " tExperimento(id_planta, id_meio, nm_planta, dt_planta, dt_repique) ";
-                SQL += " VALUES(" + novoCodigo + ", '" + id_meio + "', '" + nm_planta + "', '" + dt_planta + "', '" + dt_repique + "');";
+                SQL += " tPlanta(id_planta, id_meio, nm_planta, dt_planta, dt_repique, qt_planta) ";
+                SQL += " VALUES(" + novoCodigo + ", " + id_meio + ", '" + nm_planta + "', '" + dt_planta + "', NULL, " + qt_planta + ");";
                 
                 con.createStatement().execute(SQL);    
             }
             if(cmd.equals("UPD")){
                 String SQL = " UPDATE tPlanta SET ";
-				if(dt_repique == ""){
-					SQL += " id_meio=" + id_meio + ", ";
-				}
+                if(dt_repique.equals("")){
+                        SQL += " id_meio=" + id_meio + ", ";
+                }
                 SQL += " nm_planta='" + nm_planta + "', ";
-                SQL += " dt_planta='" + dt_planta + "' ";
-                SQL += " dt_repique='" + dt_repique + "' ";
+                SQL += " dt_planta='" + dt_planta + "', ";
+                SQL += " dt_repique='" + dt_repique + "', ";
+                SQL += " qt_planta=" + dt_planta + " ";
                 SQL += " WHERE id_planta=" + id_planta + "; ";
                 
                 con.createStatement().execute(SQL);    
@@ -129,6 +134,40 @@ public class Plantas extends HttpServlet {
     }
     
     private String listarPlantas(String cmd, Hashtable hash){ 
+        String xml = "";
+        try {
+            Class.forName("com.mysql.jdbc.Driver");
+            String connectionUrl = "jdbc:mysql://localhost/ifrj?user=root&password=";
+            
+            Connection con = DriverManager.getConnection(connectionUrl); 
+            
+            String SQL = " SELECT  ";
+            SQL += " id_planta, id_meio, nm_planta, dt_planta, dt_repique ";
+            SQL += " FROM tPlanta ORDER BY id_planta ASC";        
+
+            ResultSet result = con.createStatement().executeQuery(SQL);
+
+            if(!result.wasNull()){
+                    while(result.next()){
+                            xml += " <planta ";
+                            xml += " id_planta = '" + result.getInt("id_planta") + "' ";
+                            xml += " id_meio = '" + result.getString("id_meio") + "' ";
+                            xml += " nm_planta = '" + result.getString("nm_planta") + "' ";
+                            xml += " dt_planta = '" + result.getString("dt_planta") + "' ";
+                            xml += " dt_repique = '" + result.getString("dt_repique") + "' ";
+                            xml += " > </planta>";
+                    }
+            }
+        } catch (SQLException e) {
+            xml += "<erro message='SQL \'Exception: "+ e.toString() + "' />";
+        } catch (ClassNotFoundException cE) {
+            xml += "<erro message='Class Not Found Exception: "+ cE.toString() + "' />";
+        } finally {
+            return xml;
+        }
+    }
+ 
+    protected String listarPlantas(){ 
         String xml = "";
         try {
             Class.forName("com.mysql.jdbc.Driver");

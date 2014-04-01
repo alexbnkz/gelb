@@ -78,7 +78,7 @@ form label {
     font-size: 10px;
     font-weight: bold;
 }
-form input, form textarea, form select {
+form input, form textarea, form select, form div.texto {
     width: 98%;
     position: relative;
     display: block;
