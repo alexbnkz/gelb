@@ -49,21 +49,42 @@ form div.medium {
     margin-bottom: 5px;
 }
 form div.xmedium { 
-    width: 440px;
+    width: 290px;
     float: left;
     position: relative;
     margin-right: 10px;
     margin-bottom: 5px;
 }
 form div.xxmedium {
-    width: 600px;
+    width: 340px;
+    float: left;
+    position: relative;
+    margin-right: 10px;
+    margin-bottom: 5px;
+}
+form div.xxxmedium {
+    width: 390px;
     float: left;
     position: relative;
     margin-right: 10px;
     margin-bottom: 5px;
 }
 form div.large {
-    width: 100%;
+    width: 440px;
+    float: left;
+    position: relative;
+    margin-right: 10px;
+    margin-bottom: 5px;
+}
+form div.xlarge {
+    width: 490px;
+    float: left;
+    position: relative;
+    margin-right: 10px;
+    margin-bottom: 5px;
+}
+form div.xxlarge {
+    width: 600px;
     float: left;
     position: relative;
     margin-right: 10px;

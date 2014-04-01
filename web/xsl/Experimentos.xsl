@@ -27,7 +27,7 @@
                                 <input type="hidden" id="cmd" name="cmd" value="Experimentos/lst"/>
                                 <input type="hidden" id="id" name="id" value=""/>
                                 <div class="row">
-                                    <div class="xmedium">
+                                    <div class="large">
                                         <label>Nome do experimento:</label> 
                                             <input type="text" id="nm_experimento" name="nm_experimento" required="true" maxlength="100" />
                                     </div>
@@ -44,13 +44,13 @@
                                     </div>
                                 </div>
                                 <div class="row">
-                                    <div class="xxmedium">
+                                    <div class="xxlarge">
                                         <label>Observações:</label> 
                                         <textarea id="de_experimento" name="de_experimento" rows="5"></textarea>
                                     </div>
                                 </div>
                                 <div class="row">
-                                    <div class="xxmedium">
+                                    <div class="xxlarge">
                                         <div class="small" style="float: right;">
                                             <label>&#10;</label>
                                             <button type="submit" id="bt_salvar" name="bt_salvar" title="Salvar">
