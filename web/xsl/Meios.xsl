@@ -86,40 +86,29 @@
                         <div class="grid">
                             <div class="legend" style="width: 20px;"></div>
                             <div class="legend" style="width: 200px;">Nome - Data de preparo</div>
-                            <div class="legend" style="width: 200px;">Identificação</div>
-                            <div class="legend" style="width: 100px;">Quantidade</div>
                             <xsl:for-each select="/root/meio">
                                 <xsl:if test="@nm_experimento != ''">
-                                    <div>
-                                    <div class="title-small" style="margin-left: 10px; font-size: 14px;"><xsl:value-of select="@nm_experimento"/></div>
-                                    </div>
+                                <div>
+                                    <div class="title-small" style="margin-left: 10px; font-size: 14px;">
+                                        <xsl:value-of select="@nm_experimento"/></div>
+                                </div>
                                 </xsl:if>
                                 <div class="row">
                                     <div style="width: 200px; display: table-cell;">
                                         <xsl:variable name="id_meio"><xsl:value-of select="@id_meio"/></xsl:variable>
                                         <xsl:value-of select="/root/meio[@id_meio = $id_meio]/@nm_meio"/> - <xsl:value-of select="/root/meio[@id_meio = $id_meio]/@dt_meio"/>
-                                        <input type="hidden" id="nm_meio_identificacao" name="nm_planta_identificacao">
+                                        
+                                        <input type="hidden" id="nm_meio_identificacao" name="nm_meio_identificacao">
                                             <xsl:attribute name="value">
-                                                <xsl:value-of select="/root/meio[@id_meio = $id_meio]/@nm_meio"/> - <xsl:value-of select="/root/meio[@id_meio = $id_meio]/@dt_meio"/>
+                                                <xsl:value-of select="/root/meio[@id_meio = $id_meio]/@nm_meio"/> - <xsl:value-of select="/root/meio[@id_meio = $id_meio]/@dt_meio"/> 
                                             </xsl:attribute>
                                         </input>
                                     </div>
-                                    <div style="width: 200px; display: table-cell;">
-                                    <xsl:if test="@dt_repique = '--/--/----'">
-                                        <xsl:value-of select="@dt_planta"/>*
-                                    </xsl:if>
-                                    <xsl:if test="@dt_repique != '--/--/----'">
-                                        <xsl:value-of select="@nm_planta"/> - <xsl:value-of select="@dt_repique"/>
-                                    </xsl:if>
-                                    </div>
-                                    <div style="width: 100px; display: table-cell; text-align: center;">
-                                        <xsl:value-of select="@qt_planta"/>
-                                    </div>
-                                    <div style="width: 200px; display: table-cell; text-align: center;">
+                                    <div style="width: 500px; display: table-cell;">
                                         
                                     </div>
-                                    <div id="icon-excluir" class="icon" style="width: 20px; height: 20px; float: none; display: table-cell; font-size: 20px;">
-                                        <xsl:attribute name="onclick">javascript:Excluir(<xsl:value-of select="@id_meio"/>, document.getElementById('nm_meio_identificacao').value);</xsl:attribute>
+                                    <div class="icon icon-excluir">
+                                        <xsl:attribute name="onclick">javascript:Excluir(<xsl:value-of select="@id_meio"/>, document.getElementsByName('nm_meio_identificacao')[<xsl:value-of select="position()-1"/>].value);</xsl:attribute>
                                         x</div>
                                 </div>
                             </xsl:for-each>

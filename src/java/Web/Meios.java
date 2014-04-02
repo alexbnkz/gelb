@@ -65,7 +65,7 @@ public class Meios extends HttpServlet {
             String html;
             html = transform.toHtml("D:\\GELB\\web\\xsl\\" + page + ".xsl", xml);
             
-            out.println(html + xml);
+            out.println(html);
         } catch (Exception e) {
             xml += "<message type= 'erro' text='" + transform.toText(e.toString()) + "' />";
         } finally {

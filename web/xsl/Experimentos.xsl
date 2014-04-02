@@ -84,7 +84,7 @@
                                     <div style="width: 100px; display: table-cell;">
                                         <xsl:value-of select="@dt_experimento"/>
                                     </div>
-                                    <div id="icon-excluir" class="icon" style="width: 20px; height: 20px; float: none; display: table-cell; font-size: 20px;">
+                                    <div class="icon icon-excluir">
                                         <xsl:attribute name="onclick">javascript:Excluir(<xsl:value-of select="@id_experimento"/>, '<xsl:value-of select="@nm_experimento"/>');</xsl:attribute>
                                         x</div>
                                 </div>

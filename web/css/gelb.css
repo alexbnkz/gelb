@@ -218,12 +218,11 @@ form button:hover {
     color: #336033;
 }
 .grid button {
-    
-    position: relative;
     display: block;
-    font-size: 14px;
+    float: left;
+    font-variant: small-caps;
+    font-size: 10px;
     text-align: center;
-    font-weight: bold;
     cursor: pointer;
     color: #666666;
     border: 1px dashed #999999;
@@ -254,6 +253,13 @@ form button:hover {
     font-size: 11px;
     font-weight: bold;
 }
+.grid .icon-excluir {
+            width: 20px; 
+            height: 20px; 
+            float: none; 
+            display: table-cell; 
+            font-size: 20px;
+        }
 /*   BODY STYLES   */
 .bodier {
     width: 100%;
