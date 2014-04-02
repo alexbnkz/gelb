@@ -17,6 +17,7 @@ import javax.servlet.http.HttpServletResponse;
 
 @WebServlet(name = "Meios", urlPatterns = {"/Meios"})
 public class Meios extends HttpServlet {
+    private XMLTransform transform = new XMLTransform();
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -49,22 +50,24 @@ public class Meios extends HttpServlet {
                 xml += salvarMeio(cmd, hash);
             }
             
+            Experimentos E = new Experimentos();
+            
+            xml += E.listarExperimentos();
             xml += listarMeios(cmd, hash);
             
         } catch (Exception e) {
-            xml += "<erro message='" + e.toString() + "' />";
+            xml += "<message type= 'erro' text='" + transform.toText(e.toString()) + "' />";
         } 
         
         try{
             xml = "<root>" + xml + "</root>";
             
             String html;
-            XMLTransform transform = new XMLTransform();
             html = transform.toHtml("D:\\GELB\\web\\xsl\\" + page + ".xsl", xml);
             
-            out.println(html);
+            out.println(html + xml);
         } catch (Exception e) {
-            xml += "<erro message='" + e.toString() + "' />";
+            xml += "<message type= 'erro' text='" + transform.toText(e.toString()) + "' />";
         } finally {
             out.close();
         }
@@ -72,13 +75,16 @@ public class Meios extends HttpServlet {
 
     private String salvarMeio(String cmd, Hashtable hash){ 
         String xml = "";
+        String SQL = "";
+                
         try {
             Class.forName("com.mysql.jdbc.Driver");
             String connectionUrl = "jdbc:mysql://localhost/ifrj?user=root&password=";
             
             Connection con = DriverManager.getConnection(connectionUrl); 
             
-            String id_meio = hash.get("id_meio").toString();
+            String id_meio = hash.get("id").toString();
+            String id_experimento = hash.get("id_experimento").toString();
             String nm_meio = hash.get("nm_meio").toString();
             String dt_meio = hash.get("dt_meio").toString();
             String de_meio = hash.get("de_meio").toString();
@@ -94,31 +100,37 @@ public class Meios extends HttpServlet {
                     }
                 }
                 
-                String SQL = "INSERT INTO";
-                SQL += " tMeio(id_meio, nm_meio, dt_meio, de_meio) ";
-                SQL += " VALUES(" + novoCodigo + ", '" + nm_meio + "', '" + dt_meio + "', '" + de_meio + "');";
+                SQL = "INSERT INTO";
+                SQL += " tMeio(id_meio, id_experimento, nm_meio, dt_meio, de_meio) ";
+                SQL += " VALUES(" + novoCodigo + ", " + id_experimento + ", '" + nm_meio + "', '" + dt_meio + "', '" + de_meio + "');";
                 
-                con.createStatement().execute(SQL);    
+                con.createStatement().execute(SQL);   
+                xml = "<message type= 'aviso' text='Incluido com sucesso!' />";
             }
             if(cmd.equals("UPD")){
-                String SQL = " UPDATE tMeio SET ";
+                SQL = " UPDATE tMeio SET ";
                 SQL += " nm_meio='" + nm_meio + "', ";
                 SQL += " dt_meio='" + dt_meio + "' ";
                 SQL += " de_meio='" + de_meio + "' ";
                 SQL += " WHERE id_meio=" + id_meio + "; ";
                 
                 con.createStatement().execute(SQL);    
+                xml = "<message type= 'aviso' text='Atualizado com sucesso!' />";
             }
             if(cmd.equals("DEL")){
-                String SQL = " DELETE FROM tMeio ";
+                SQL = " DELETE FROM tMeio ";
                 SQL += " WHERE id_meio=" + id_meio + "; ";
                 
-                con.createStatement().execute(SQL);    
+                con.createStatement().execute(SQL);  
+                xml = "<message type= 'aviso' text='Excluido com sucesso!' />";
             }
         } catch (SQLException e) {
-            xml += "<erro message='SQL Exception: "+ e.toString() + "' />";
+            xml += "<message type= 'erro' text='SQL Exception: " + transform.toText(e.toString()) + "' />";
+            if(!SQL.equals("")){
+                xml += "<message type= 'erro' text='" + transform.toText(SQL) + "' />";
+            }
         } catch (ClassNotFoundException cE) {
-            xml += "<erro message='Class Not Found Exception: "+ cE.toString() + "' />";
+            xml += "<message type= 'erro' text='Class Not Found Exception: " + transform.toText(cE.toString()) + "' />";
         } finally {
             return xml;
         }
@@ -126,22 +138,34 @@ public class Meios extends HttpServlet {
     
     private String listarMeios(String cmd, Hashtable hash){ 
         String xml = "";
+        String SQL = "";
+        
         try {
             Class.forName("com.mysql.jdbc.Driver");
             String connectionUrl = "jdbc:mysql://localhost/ifrj?user=root&password=";
             
             Connection con = DriverManager.getConnection(connectionUrl); 
             
-            String SQL = " SELECT  ";
-            SQL += " id_meio, nm_meio, dt_meio, de_meio ";
-            SQL += " FROM tMeio ORDER BY id_meio ASC";        
+            SQL = " SELECT  ";
+            SQL += " M.id_meio, E.id_experimento, E.nm_experimento, M.nm_meio, M.dt_meio, M.de_meio ";
+            SQL += " FROM tMeio M INNER JOIN tExperimento E ON (M.id_experimento = E.id_experimento) ";
+            SQL += " ORDER BY E.id_experimento ASC, M.id_meio ASC";        
 
             ResultSet result = con.createStatement().executeQuery(SQL);
-
+            
+            String primeiro = "";
+            
             if(!result.wasNull()){
                     while(result.next()){
                             xml += " <meio ";
                             xml += " id_meio = '" + result.getString("id_meio") + "' ";
+                            xml += " id_experimento = '" + result.getString("id_experimento") + "' ";
+                            if(!primeiro.equals(result.getString("nm_experimento"))){
+                                xml += " nm_experimento = '" + result.getString("nm_experimento") + "' ";
+                                primeiro = result.getString("nm_experimento");
+                            }else{
+                                xml += " nm_experimento = '' ";
+                            }
                             xml += " nm_meio = '" + result.getString("nm_meio") + "' ";
                             xml += " dt_meio = '" + result.getString("dt_meio") + "' ";
                             xml += " de_meio = '" + result.getString("de_meio") + "' ";
@@ -149,45 +173,20 @@ public class Meios extends HttpServlet {
                     }
             }
         } catch (SQLException e) {
-            xml += "<erro message='SQL \'Exception: "+ e.toString() + "' />";
+            xml += "<message type= 'erro' text='SQL \'Exception: " + transform.toText(e.toString()) + "' />";
+            if(!SQL.equals("")) {
+                xml += "<message type= 'erro' text='"+ transform.toText(SQL) + "' />";
+            }
         } catch (ClassNotFoundException cE) {
-            xml += "<erro message='Class Not Found Exception: "+ cE.toString() + "' />";
+            xml += "<message type= 'erro' text='Class Not Found Exception: " + transform.toText(cE.toString()) + "' />";
         } finally {
             return xml;
         }
     }
 
-    protected String listarMeios(){ 
-        String xml = "";
-        try {
-            Class.forName("com.mysql.jdbc.Driver");
-            String connectionUrl = "jdbc:mysql://localhost/ifrj?user=root&password=";
-            
-            Connection con = DriverManager.getConnection(connectionUrl); 
-            
-            String SQL = " SELECT  ";
-            SQL += " id_meio, nm_meio, dt_meio, de_meio ";
-            SQL += " FROM tMeio ORDER BY id_meio ASC";        
-
-            ResultSet result = con.createStatement().executeQuery(SQL);
-
-            if(!result.wasNull()){
-                    while(result.next()){
-                            xml += " <meio ";
-                            xml += " id_meio = '" + result.getString("id_meio") + "' ";
-                            xml += " nm_meio = '" + result.getString("nm_meio") + "' ";
-                            xml += " dt_meio = '" + result.getString("dt_meio") + "' ";
-                            xml += " de_meio = '" + result.getString("de_meio") + "' ";
-                            xml += " > </meio>";
-                    }
-            }
-        } catch (SQLException e) {
-            xml += "<erro message='SQL \'Exception: "+ e.toString() + "' />";
-        } catch (ClassNotFoundException cE) {
-            xml += "<erro message='Class Not Found Exception: "+ cE.toString() + "' />";
-        } finally {
-            return xml;
-        }
+    protected String listarMeios(){
+        Hashtable hash = new Hashtable();
+        return listarMeios("LST", hash);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

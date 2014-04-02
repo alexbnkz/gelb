@@ -23,4 +23,8 @@ public class XMLTransform {
             return e.toString();
         }
     }
+    public String toText(String text) {
+        text = text.replace("'", "&apos;");
+        return text;
+    }
 }

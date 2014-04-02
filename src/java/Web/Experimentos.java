@@ -17,7 +17,8 @@ import javax.servlet.http.HttpServletResponse;
 
 @WebServlet(name = "Experimentos", urlPatterns = {"/Experimentos"})
 public class Experimentos extends HttpServlet {
-
+    private XMLTransform transform = new XMLTransform();
+            
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=ISO-8859-1");
@@ -52,19 +53,18 @@ public class Experimentos extends HttpServlet {
             xml += listarExperimentos(cmd, hash);
             
         } catch (Exception e) {
-            xml += "<erro message='" + e.toString() + "' />";
+            xml += "<message type= 'erro' text='" + transform.toText(e.toString()) + "' />";
         } 
         
         try{
             xml = "<root>" + xml + "</root>";
             
             String html;
-            XMLTransform transform = new XMLTransform();
             html = transform.toHtml("D:\\GELB\\web\\xsl\\" + page + ".xsl", xml);
             
             out.println(html);
         } catch (Exception e) {
-            xml += "<erro message='" + e.toString() + "' />";
+            xml += "<message type= 'erro' text='" + transform.toText(e.toString()) + "' />";
         } finally {
             out.close();
         }
@@ -72,6 +72,8 @@ public class Experimentos extends HttpServlet {
     
     private String salvarExperimento(String cmd, Hashtable hash){ 
         String xml = "";
+        String SQL = "";
+        
         try {
             Class.forName("com.mysql.jdbc.Driver");
             String connectionUrl = "jdbc:mysql://localhost/ifrj?user=root&password=";
@@ -95,14 +97,15 @@ public class Experimentos extends HttpServlet {
                     }
                 }
                 
-                String SQL = "INSERT INTO";
+                SQL = "INSERT INTO";
                 SQL += " tExperimento(id_experimento, nm_experimento, dt_experimento, tp_experimento, de_experimento) ";
                 SQL += " VALUES(" + novoCodigo + ", '" + nm_experimento + "', '" + dt_experimento + "', '" + tp_experimento + "', '" + de_experimento + "');";
                 
                 con.createStatement().execute(SQL);    
+                xml = "<message type= 'aviso' text='Incluido com sucesso!' />";
             }
             if(cmd.equals("UPD")){
-                String SQL = " UPDATE tExperimento SET ";
+                SQL = " UPDATE tExperimento SET ";
                 SQL += " nm_experimento='" + nm_experimento + "', ";
                 SQL += " dt_experimento='" + dt_experimento + "', ";
                 SQL += " tp_experimento='" + tp_experimento + "', ";
@@ -110,17 +113,22 @@ public class Experimentos extends HttpServlet {
                 SQL += " WHERE id_experimento=" + id_experimento + "; ";
                 
                 con.createStatement().execute(SQL);    
+                xml = "<message type= 'aviso' text='Atualizado com sucesso!' />";
             }
             if(cmd.equals("DEL")){
-                String SQL = " DELETE FROM tExperimento ";
+                SQL = " DELETE FROM tExperimento ";
                 SQL += " WHERE id_experimento=" + id_experimento + "; ";
                 
                 con.createStatement().execute(SQL);    
+                xml = "<message type= 'aviso' text='Excluido com sucesso!' />";
             }
         } catch (SQLException e) {
-            xml += "<erro message='SQL Exception: "+ e.toString() + "' />";
+            xml += "<message type= 'erro' text='SQL Exception: " + transform.toText(e.toString()) + "' />";
+            if(!SQL.equals("")){
+                xml += "<message type= 'erro' text='" + transform.toText(SQL) + "' />";
+            }
         } catch (ClassNotFoundException cE) {
-            xml += "<erro message='Class Not Found Exception: "+ cE.toString() + "' />";
+            xml += "<message type= 'erro' text='Class Not Found Exception: " + transform.toText(cE.toString()) + "' />";
         } finally {
             return xml;
         }
@@ -128,70 +136,67 @@ public class Experimentos extends HttpServlet {
     
     private String listarExperimentos(String cmd, Hashtable hash){ 
         String xml = "";
+        String SQL = "";
+        
         try {
             Class.forName("com.mysql.jdbc.Driver");
             String connectionUrl = "jdbc:mysql://localhost/ifrj?user=root&password=";
             
             Connection con = DriverManager.getConnection(connectionUrl); 
             
-			String SQL = " SELECT  ";
-			SQL += " id_experimento, nm_experimento, dt_experimento, tp_experimento, de_experimento ";
-			SQL += " FROM tExperimento ORDER BY id_experimento ASC";        
-			
-			ResultSet result = con.createStatement().executeQuery(SQL);
-			
-			if(!result.wasNull()){
-				while(result.next()){
-					xml += " <experimento ";
-					xml += " id_experimento = '" + result.getInt("id_experimento") + "' ";
-					xml += " nm_experimento = '" + result.getString("nm_experimento") + "' ";
-					xml += " dt_experimento = '" + result.getString("dt_experimento") + "' ";
-					xml += " tp_experimento = '" + result.getString("tp_experimento") + "' ";
-					xml += " de_experimento = '" + result.getString("de_experimento") + "' ";
-					xml += " > </experimento>";
-				}
-			}
+            SQL = " SELECT  ";
+            SQL += " id_experimento, nm_experimento, dt_experimento, tp_experimento, de_experimento ";
+            SQL += " FROM tExperimento ";      
+            if(cmd.equals("SRCH")){
+                SQL += " WHERE ";    
+                boolean also = false;
+                
+                if(!hash.get("id_experimento").equals("")){
+                    if(also){SQL += " AND ";}
+                    SQL += " id_experimento = " + hash.get("id_experimento");  
+                    also = true;
+                }
+                if(!hash.get("nm_experimento").equals("")){
+                    if(also){SQL += " AND ";}
+                    SQL += " nm_experimento = '" + hash.get("nm_experimento") + "' ";  
+                    also = true;
+                }            
+            }
+            SQL += " ORDER BY id_experimento ASC";      
+            
+            ResultSet result = con.createStatement().executeQuery(SQL);
+            
+            if(!result.wasNull()){
+                while(result.next()){
+                    xml += " <experimento ";
+                    xml += " id_experimento = '" + result.getInt("id_experimento") + "' ";
+                    xml += " nm_experimento = '" + result.getString("nm_experimento") + "' ";
+                    xml += " dt_experimento = '" + result.getString("dt_experimento") + "' ";
+                    xml += " tp_experimento = '" + result.getString("tp_experimento") + "' ";
+                    xml += " de_experimento = '" + result.getString("de_experimento") + "' ";
+                    xml += " > </experimento>";
+                }
+            }
         } catch (SQLException e) {
-            xml += "<erro message='SQL \'Exception: "+ e.toString() + "' />";
+            xml += "<message type= 'erro' text='SQL \'Exception: " + transform.toText(e.toString()) + "' />";
+            if(!SQL.equals("")) {
+                xml += "<message type= 'erro' text='"+ transform.toText(SQL) + "' />";
+            }
         } catch (ClassNotFoundException cE) {
-            xml += "<erro message='Class Not Found Exception: "+ cE.toString() + "' />";
+            xml += "<message type= 'erro' text='Class Not Found Exception: " + transform.toText(cE.toString()) + "' />";
         } finally {
             return xml;
         }
     }
  
     protected String listarExperimentos(){ 
-        String xml = "";
-        try {
-            Class.forName("com.mysql.jdbc.Driver");
-            String connectionUrl = "jdbc:mysql://localhost/ifrj?user=root&password=";
-            
-            Connection con = DriverManager.getConnection(connectionUrl); 
-            
-			String SQL = " SELECT  ";
-			SQL += " id_experimento, nm_experimento, dt_experimento, tp_experimento, de_experimento ";
-			SQL += " FROM tExperimento ORDER BY id_experimento ASC";        
-			
-			ResultSet result = con.createStatement().executeQuery(SQL);
-			
-			if(!result.wasNull()){
-				while(result.next()){
-					xml += " <experimento ";
-					xml += " id_experimento = '" + result.getInt("id_experimento") + "' ";
-					xml += " nm_experimento = '" + result.getString("nm_experimento") + "' ";
-					xml += " dt_experimento = '" + result.getString("dt_experimento") + "' ";
-					xml += " tp_experimento = '" + result.getString("tp_experimento") + "' ";
-					xml += " de_experimento = '" + result.getString("de_experimento") + "' ";
-					xml += " > </experimento>";
-				}
-			}
-        } catch (SQLException e) {
-            xml += "<erro message='SQL \'Exception: "+ e.toString() + "' />";
-        } catch (ClassNotFoundException cE) {
-            xml += "<erro message='Class Not Found Exception: "+ cE.toString() + "' />";
-        } finally {
-            return xml;
-        }
+        Hashtable hash = new Hashtable();
+        return listarExperimentos("LST", hash);
+    }
+    
+    protected String buscarExperimentos(String id_experimento, String nm_experimento){ 
+        Hashtable hash = new Hashtable();
+        return listarExperimentos("LST", hash);
     }
  
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
