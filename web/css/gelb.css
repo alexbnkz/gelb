@@ -204,8 +204,8 @@ form button:hover {
     background-image: url("../img/point white.png");
     box-shadow: 0px 1px 2px 0px rgb(100, 100, 100); 
     border-bottom: 1px transparent solid;
-    margin: 10px;
-    padding: 10px;
+    margin: 5px 10px 5px 10px;
+    padding: 5px 10px 5px 10px;
     color: #333333;
     cursor: pointer;
 }
@@ -216,6 +216,28 @@ form button:hover {
 .grid .row:hover {
     background: #F0F0F0;
     color: #336033;
+}
+.grid button {
+    
+    position: relative;
+    display: block;
+    font-size: 14px;
+    text-align: center;
+    font-weight: bold;
+    cursor: pointer;
+    color: #666666;
+    border: 1px dashed #999999;
+    background-color: transparent; 
+}
+.grid button:link, .grid button:visited {
+    color: #666666;
+    border: 1px dashed #999999;
+    background-color: transparent; 
+}
+.grid button:hover {
+    color: #336033;
+    border: 1px dashed #666666;
+    background-color: #E0E0E0; 
 }
 .panel-grid {
     width: 100%;

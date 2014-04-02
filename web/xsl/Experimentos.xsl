@@ -90,13 +90,15 @@
                                 </div>
                             </xsl:for-each>
                         </div>
+                        <div style="padding-bottom: 10px;"></div>
                         </xsl:if>
                     </div>
-                    
                 </div>
             </div>
         </div>
-        
+        <xsl:if test="count(/root/message) > 0">
+            <xsl:call-template name="aviso"/>
+        </xsl:if>
     </body>
 </html>
 

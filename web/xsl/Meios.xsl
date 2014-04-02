@@ -80,25 +80,27 @@
                             <div id="icon-plus" class="icon" title="Expandir" onclick="javascript:ShowHideCadastro();">+</div>
                             <div class="title-small" style="margin-left: 10px">Novo cadastro</div>
                         </div>
-                        <xsl:if test="count(/root/planta) > 0">
+                        <xsl:if test="count(/root/meio) > 0">
                         <div class="title-small" style="margin-left: 10px; display: block;">Lista</div>
                         
                         <div class="grid">
                             <div class="legend" style="width: 20px;"></div>
-                            <div class="legend" style="width: 200px;">Meio</div>
+                            <div class="legend" style="width: 200px;">Nome - Data de preparo</div>
                             <div class="legend" style="width: 200px;">Identificação</div>
                             <div class="legend" style="width: 100px;">Quantidade</div>
-                            <xsl:for-each select="/root/planta">
+                            <xsl:for-each select="/root/meio">
+                                <xsl:if test="@nm_experimento != ''">
+                                    <div>
+                                    <div class="title-small" style="margin-left: 10px; font-size: 14px;"><xsl:value-of select="@nm_experimento"/></div>
+                                    </div>
+                                </xsl:if>
                                 <div class="row">
                                     <div style="width: 200px; display: table-cell;">
                                         <xsl:variable name="id_meio"><xsl:value-of select="@id_meio"/></xsl:variable>
                                         <xsl:value-of select="/root/meio[@id_meio = $id_meio]/@nm_meio"/> - <xsl:value-of select="/root/meio[@id_meio = $id_meio]/@dt_meio"/>
-                                        <input type="hidden" id="nm_planta_identificacao" name="nm_planta_identificacao">
+                                        <input type="hidden" id="nm_meio_identificacao" name="nm_planta_identificacao">
                                             <xsl:attribute name="value">
-                                                <xsl:if test="@dt_repique = '--/--/----'">
-                                                    <xsl:value-of select="/root/meio[@id_meio = $id_meio]/@nm_meio"/> - <xsl:value-of select="/root/meio[@id_meio = $id_meio]/@dt_meio"/> - <xsl:value-of select="@dt_planta"/>*</xsl:if>
-                                                <xsl:if test="@dt_repique != '--/--/----'">
-                                                    <xsl:value-of select="/root/meio[@id_meio = $id_meio]/@nm_meio"/> - <xsl:value-of select="/root/meio[@id_meio = $id_meio]/@dt_meio"/> - <xsl:value-of select="@nm_planta"/> - <xsl:value-of select="@dt_repique"/></xsl:if>
+                                                <xsl:value-of select="/root/meio[@id_meio = $id_meio]/@nm_meio"/> - <xsl:value-of select="/root/meio[@id_meio = $id_meio]/@dt_meio"/>
                                             </xsl:attribute>
                                         </input>
                                     </div>
@@ -117,19 +119,20 @@
                                         
                                     </div>
                                     <div id="icon-excluir" class="icon" style="width: 20px; height: 20px; float: none; display: table-cell; font-size: 20px;">
-                                        <xsl:attribute name="onclick">javascript:Excluir(<xsl:value-of select="@id_planta"/>, document.getElementById('nm_planta_identificacao').value);</xsl:attribute>
+                                        <xsl:attribute name="onclick">javascript:Excluir(<xsl:value-of select="@id_meio"/>, document.getElementById('nm_meio_identificacao').value);</xsl:attribute>
                                         x</div>
                                 </div>
                             </xsl:for-each>
-                            <div class="legend" style="width: 200px;">*Data de germinação</div>
                         </div>
+                        <div style="padding-bottom: 10px;"></div>
                         </xsl:if>
                     </div>
-                    
                 </div>
             </div>
         </div>
-        
+        <xsl:if test="count(/root/message) > 0">
+            <xsl:call-template name="aviso"/>
+        </xsl:if>
     </body>
 </html>
 

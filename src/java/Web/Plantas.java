@@ -17,7 +17,8 @@ import javax.servlet.http.HttpServletResponse;
 
 @WebServlet(name = "Plantas", urlPatterns = {"/Plantas"})
 public class Plantas extends HttpServlet {
-
+    private XMLTransform transform = new XMLTransform();
+            
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
@@ -49,25 +50,24 @@ public class Plantas extends HttpServlet {
                 xml += salvarPlanta(cmd, hash);
             }
             
-            Meios m = new Meios();
+            Meios M = new Meios();
             
-            xml += m.listarMeios();
+            xml += M.listarMeios();
             xml += listarPlantas(cmd, hash);
             
         } catch (Exception e) {
-            xml += "<erro message='" + e.toString() + "' />";
+            xml += "<message type= 'erro' text='" + transform.toText(e.toString()) + "' />";
         } 
         
         try{
             xml = "<root>" + xml + "</root>";
             
             String html;
-            XMLTransform transform = new XMLTransform();
             html = transform.toHtml("D:\\GELB\\web\\xsl\\" + page + ".xsl", xml);
             
             out.println(html);
         } catch (Exception e) {
-            xml += "<erro message='" + e.toString() + "' />";
+            xml += "<message type= 'erro' text='" + transform.toText(e.toString()) + "' />";
         } finally {
             out.close();
         }
@@ -75,6 +75,8 @@ public class Plantas extends HttpServlet {
     
     private String salvarPlanta(String cmd, Hashtable hash){ 
         String xml = "";
+        String SQL = "";
+        
         try {
             Class.forName("com.mysql.jdbc.Driver");
             String connectionUrl = "jdbc:mysql://localhost/ifrj?user=root&password=";
@@ -99,14 +101,15 @@ public class Plantas extends HttpServlet {
                     }
                 }
                 
-                String SQL = "INSERT INTO";
+                SQL = "INSERT INTO";
                 SQL += " tPlanta(id_planta, id_meio, nm_planta, dt_planta, dt_repique, qt_planta) ";
                 SQL += " VALUES(" + novoCodigo + ", " + id_meio + ", '" + nm_planta + "', '" + dt_planta + "', NULL, " + qt_planta + ");";
                 
                 con.createStatement().execute(SQL);    
+                xml = "<message type= 'aviso' text='Incluido com sucesso!' />";
             }
             if(cmd.equals("UPD")){
-                String SQL = " UPDATE tPlanta SET ";
+                SQL = " UPDATE tPlanta SET ";
                 if(dt_repique.equals("")){
                         SQL += " id_meio=" + id_meio + ", ";
                 }
@@ -117,17 +120,22 @@ public class Plantas extends HttpServlet {
                 SQL += " WHERE id_planta=" + id_planta + "; ";
                 
                 con.createStatement().execute(SQL);    
+                xml = "<message type= 'aviso' text='Atualizado com sucesso!' />";
             }
             if(cmd.equals("DEL")){
-                String SQL = " DELETE FROM tPlanta ";
+                SQL = " DELETE FROM tPlanta ";
                 SQL += " WHERE id_planta=" + id_planta + "; ";
                 
                 con.createStatement().execute(SQL);    
+                xml = "<message type= 'aviso' text='Excluido com sucesso!' />";
             }
         } catch (SQLException e) {
-            xml += "<erro message='SQL Exception: "+ e.toString() + "' />";
+            xml += "<message type= 'erro' text='SQL Exception: " + transform.toText(e.toString()) + "' />";
+            if(!SQL.equals("")){
+                xml += "<message type= 'erro' text='" + transform.toText(SQL) + "' />";
+            }
         } catch (ClassNotFoundException cE) {
-            xml += "<erro message='Class Not Found Exception: "+ cE.toString() + "' />";
+            xml += "<message type= 'erro' text='Class Not Found Exception: " + transform.toText(cE.toString()) + "' />";
         } finally {
             return xml;
         }
@@ -135,13 +143,15 @@ public class Plantas extends HttpServlet {
     
     private String listarPlantas(String cmd, Hashtable hash){ 
         String xml = "";
+        String SQL = "";
+        
         try {
             Class.forName("com.mysql.jdbc.Driver");
             String connectionUrl = "jdbc:mysql://localhost/ifrj?user=root&password=";
             
             Connection con = DriverManager.getConnection(connectionUrl); 
             
-            String SQL = " SELECT  ";
+            SQL = " SELECT  ";
             SQL += " id_planta, id_meio, nm_planta, dt_planta, dt_repique, qt_planta ";
             SQL += " FROM tPlanta ORDER BY id_planta ASC";        
 
@@ -164,47 +174,21 @@ public class Plantas extends HttpServlet {
                 }
             }
         } catch (SQLException e) {
-            xml += "<erro message='SQL \'Exception: "+ e.toString() + "' />";
+            xml += "<message type= 'erro' text='SQL \'Exception: " + transform.toText(e.toString()) + "' />";
+            if(!SQL.equals("")) {
+                xml += "<message type= 'erro' text='"+ transform.toText(SQL) + "' />";
+            }
         } catch (ClassNotFoundException cE) {
-            xml += "<erro message='Class Not Found Exception: "+ cE.toString() + "' />";
+            xml += "<message type= 'erro' text='Class Not Found Exception: " + transform.toText(cE.toString()) + "' />";
         } finally {
             return xml;
         }
     }
  
-//    protected String listarPlantas(){ 
-//        String xml = "";
-//        try {
-//            Class.forName("com.mysql.jdbc.Driver");
-//            String connectionUrl = "jdbc:mysql://localhost/ifrj?user=root&password=";
-//            
-//            Connection con = DriverManager.getConnection(connectionUrl); 
-//            
-//			String SQL = " SELECT  ";
-//			SQL += " id_planta, id_meio, nm_planta, dt_planta, dt_repique ";
-//			SQL += " FROM tPlanta ORDER BY id_planta ASC";        
-//			
-//			ResultSet result = con.createStatement().executeQuery(SQL);
-//			
-//			if(!result.wasNull()){
-//				while(result.next()){
-//					xml += " <planta ";
-//					xml += " id_planta = '" + result.getInt("id_planta") + "' ";
-//					xml += " id_meio = '" + result.getString("id_meio") + "' ";
-//					xml += " nm_planta = '" + result.getString("nm_planta") + "' ";
-//					xml += " dt_planta = '" + result.getString("dt_planta") + "' ";
-//					xml += " dt_repique = '" + result.getString("dt_repique") + "' ";
-//					xml += " > </planta>";
-//				}
-//			}
-//        } catch (SQLException e) {
-//            xml += "<erro message='SQL \'Exception: "+ e.toString() + "' />";
-//        } catch (ClassNotFoundException cE) {
-//            xml += "<erro message='Class Not Found Exception: "+ cE.toString() + "' />";
-//        } finally {
-//            return xml;
-//        }
-//    }
+    protected String listarPlantas(){ 
+        Hashtable hash = new Hashtable();
+        return listarPlantas("", hash);
+    }
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP

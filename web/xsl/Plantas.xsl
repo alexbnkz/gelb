@@ -49,7 +49,7 @@
                                     </div>
                                     <div class="small">
                                         <label>Quantidade:</label> 
-                                        <input type="text" id="qt_planta" name="qt_planta" required="true" maxlength="2" />
+                                        <input type="text" id="qt_planta" name="qt_planta" required="true" maxlength="3" />
                                     </div>
                                     <div class="small">
                                         <label>Último repique:</label> 
@@ -101,7 +101,7 @@
                                     </div>
                                     <div style="width: 200px; display: table-cell;">
                                     <xsl:if test="@dt_repique = '--/--/----'">
-                                        <xsl:value-of select="@dt_planta"/>*
+                                        <xsl:value-of select="@nm_planta"/> - <xsl:value-of select="@dt_planta"/>*
                                     </xsl:if>
                                     <xsl:if test="@dt_repique != '--/--/----'">
                                         <xsl:value-of select="@nm_planta"/> - <xsl:value-of select="@dt_repique"/>
@@ -111,7 +111,9 @@
                                         <xsl:value-of select="@qt_planta"/>
                                     </div>
                                     <div style="width: 200px; display: table-cell; text-align: center;">
-                                        
+                                        <button type="submit" id="bt_salvar" name="bt_salvar" title="Salvar">
+                                            <span>Transferência</span>
+                                        </button>
                                     </div>
                                     <div id="icon-excluir" class="icon" style="width: 20px; height: 20px; float: none; display: table-cell; font-size: 20px;">
                                         <xsl:attribute name="onclick">javascript:Excluir(<xsl:value-of select="@id_planta"/>, document.getElementById('nm_planta_identificacao').value);</xsl:attribute>
@@ -120,13 +122,15 @@
                             </xsl:for-each>
                             <div class="legend" style="width: 200px;">*Data de germinação</div>
                         </div>
+                        <div style="padding-bottom: 10px;"></div>
                         </xsl:if>
                     </div>
-                    
                 </div>
             </div>
         </div>
-        
+        <xsl:if test="count(/root/message) > 0">
+            <xsl:call-template name="aviso"/>
+        </xsl:if>
     </body>
 </html>
 
