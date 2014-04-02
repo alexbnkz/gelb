@@ -115,7 +115,7 @@
                                             <span>Transferência</span>
                                         </button>
                                     </div>
-                                    <div id="icon-excluir" class="icon" style="width: 20px; height: 20px; float: none; display: table-cell; font-size: 20px;">
+                                    <div class="icon icon-excluir">
                                         <xsl:attribute name="onclick">javascript:Excluir(<xsl:value-of select="@id_planta"/>, document.getElementById('nm_planta_identificacao').value);</xsl:attribute>
                                         x</div>
                                 </div>
