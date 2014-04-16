@@ -15,7 +15,7 @@ function ShowHideSlide(obj, dirc){
     $(obj).toggle('slide', {direction: dirc}, 1000);
 }
 function ShowHideCadastro(){
-    ShowHide('#frm');
+    //ShowHide('#frm');
     ShowHide('#div-cadastro-left');
     ShowHide('#div-cadastro-right');  
     ShowHide('#panel-form-cadastro');  
@@ -26,14 +26,10 @@ function validateDate(obj) {
     if (vlr != '') {
         var date = vlr;
         var DtArray = new Array;
-        var ExpReg = new RegExp('(0[1-9]|[12][0-9]|3[01])/(0[1-9]|1[012])/(19|20)[0-9][0-9]');
-        var ExpReg2 = new RegExp('([1-9]|[12][0-9]|3[01])/([1-9]|1[012])/(19|20)[0-9][0-9]');
+        var ExpReg = new RegExp('((0[1-9]|[1-9])|[12][0-9]|3[01])/((0[1-9]|[1-9])|1[012])/(19|20)[0-9][0-9]');
         DtArray = date.split('/');
         erro = false;
-        if (date.search(ExpReg) == -1 && date.search(ExpReg2) == -1) {
-            erro = true;
-        }
-        else if (date.search(ExpReg2) != -1 && date.length > 8) {
+        if (date.search(ExpReg) == -1) {
             erro = true;
         }
         else if (((DtArray[1] == 4) || (DtArray[1] == 6) || (DtArray[1] == 9) || (DtArray[1] == 11)) && (DtArray[0] > 30)) {

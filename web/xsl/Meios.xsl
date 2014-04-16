@@ -23,7 +23,7 @@
                         </div>
                         
                         <div style="width: 620px; margin: 0px auto; display: block;">
-                            <form id="frm" name="frm" method="post" action="Meios" onsubmit="javascript:return validateForm(this);" style="display: none;">
+                            <form id="frm" name="frm" method="post" action="Meios" onsubmit="javascript:return validateForm(this);">
                                 <input type="hidden" id="cmd" name="cmd" value="Meios/lst"/>
                                 <input type="hidden" id="id" name="id" value=""/>
                                 <div class="row">
