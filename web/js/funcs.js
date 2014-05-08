@@ -2,9 +2,16 @@ function id(obj){
     return document.getElementById(obj);
 }
 function toBrowse(cmd){
-    document.location = 'http://alex-work:8080/GELB/' + cmd.split('/')[0];
+    document.location = cmd.split('/')[0];
 }
 function ShowHide(obj){
+    if(id(obj).style.display == 'none') {
+        id(obj).style.display = 'block';   
+    } else {
+        id(obj).style.display = 'none';
+    }
+}
+function jShowHide(obj){
     if($(obj).attr('style') == 'display: none;') {
         $(obj).show();   
     } else {
@@ -15,10 +22,9 @@ function ShowHideSlide(obj, dirc){
     $(obj).toggle('slide', {direction: dirc}, 1000);
 }
 function ShowHideCadastro(){
-    //ShowHide('#frm');
-    ShowHide('#div-cadastro-left');
-    ShowHide('#div-cadastro-right');  
-    ShowHide('#panel-form-cadastro');  
+    ShowHide('div-cadastro-left');
+    ShowHide('div-cadastro-right');  
+    ShowHide('panel-form-cadastro');  
 }
 function validateDate(obj) {
     var vlr = obj.value;

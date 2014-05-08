@@ -4,6 +4,91 @@
     font-weight: normal;
     src: url(Segoe.ttf);
 }
+
+/** Site responsivo inicio **/
+@media screen and (max-width: 800px) and (orientation: portrait) {
+    body {
+        margin: 0px;
+        padding: 0px;
+        font-size: 14px;
+        background: #FFFFFF no-repeat url("../img/placa.jpg");
+        color: #666666;
+        font-family: "Tahoma";
+        
+    }
+    .header div {
+        position: relative;
+        left: 15px;
+    }
+    .neacker .menu {
+        position: relative;
+        left: 10px;
+        
+    }
+    .section-mid {
+        width: 550px;
+        height: 450px;
+        position: relative;
+        left: 15px;
+        padding: 5px;
+    }
+}
+@media screen and (max-width: 800px) and (orientation: landscape) {
+    body {
+        margin: 0px;
+        padding: 0px;
+        font-size: 14px;
+        background: #FFFFFF no-repeat url("../img/placa.jpg");
+        color: #666666;
+        font-family: "Tahoma";
+        
+    }
+    .header div {
+        position: relative;
+        left: 15px;
+    }
+    .neacker .menu {
+        position: relative;
+        left: 10px;
+        
+    }
+    .section-mid {
+        width: 750px;
+        height: 450px;
+        position: relative;
+        left: 15px;
+        padding: 5px;
+    }
+}
+@media screen and (min-width: 801px) and (orientation: landscape) {
+    body {
+        margin: 0px;
+        padding: 0px;
+        font-size: 14px;
+        background: #FFFFFF no-repeat url("../img/placa.jpg");
+        color: #666666;
+        font-family: "Tahoma";
+        overflow: hidden;
+    }
+    .header div {
+        position: relative;
+        left: 185px;
+    }
+    .neacker .menu {
+        position: relative;
+        left: 180px;
+        overflow-y: hidden;
+    }
+    .section-mid {
+        width: 800px;
+        height: 90%;
+        position: relative;
+        left: 180px;
+        padding: 5px;
+    }
+}
+/** Site responsivo fim **/
+
 body {
     margin: 0px;
     padding: 0px;
@@ -146,11 +231,7 @@ form button:hover {
     font-family: "Segoe";
     overflow: hidden;
 }
-.header div {
-    position: relative;
-    left: 185px;
-  
-}
+
 .header div img {
    margin: 3px 0px 5px 0px;
 }
@@ -166,11 +247,7 @@ form button:hover {
     background-color: #3A522D;
     overflow: hidden;
 }
-.neacker .menu {
-    position: relative;
-    left: 180px;
-    overflow-y: hidden;
-}
+
 .neacker .menu div {
     height: 100%;
     float: left;
@@ -267,16 +344,10 @@ form button:hover {
     position: absolute;
     overflow: auto;
 }
-.section-mid {
-    width: 800px;
-    height: 90%;
-    position: relative;
-    left: 180px;
-    padding: 5px;
-}
+
 .title-large {
-    margin-top: 20px;
-    margin-bottom: 15px;
+    margin-top: 15px;
+    margin-bottom: 10px;
     font-size: 30px;
     font-family: "Segoe";
     color: #9FCD66;
@@ -298,7 +369,7 @@ form button:hover {
     color: #666666;
 }
 .container {
-    max-height: 460px;  
+    
 }
 .icon {
     width: 25px;

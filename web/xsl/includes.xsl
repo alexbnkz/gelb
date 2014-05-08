@@ -4,7 +4,7 @@
   <xsl:output method="html" encoding="ISO-8859-1" indent="yes"/>
     <xsl:template match="/" name="head">  
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-    <link type="text/css" rel="stylesheet" href="css/gelb.css"/>
+    <link type="text/css" rel="stylesheet" href="css/gelb.css" />
     <script type="text/javascript" src="js/funcs.js"></script>
     <script type="text/javascript" src="js/jquery-1.9.1.min.js"></script>
     <script type="text/javascript" src="js/jquery-ui-1.10.3.js"></script>
