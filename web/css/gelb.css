@@ -89,15 +89,6 @@
 }
 /** Site responsivo fim **/
 
-body {
-    margin: 0px;
-    padding: 0px;
-    font-size: 14px;
-    background: #FFFFFF no-repeat url("../img/placa.jpg");
-    color: #666666;
-    font-family: "Tahoma";
-    overflow: hidden;
-}
 
 /*   FORM STYLES   */
 form {

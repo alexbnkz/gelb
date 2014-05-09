@@ -27,3 +27,16 @@ build/web/WEB-INF/classes/Utils/XMLTransform.class
 build/web/WEB-INF/beans.xml
 build/web/META-INF/context.xml
 build/web/META-INF/MANIFEST.MF
+build/web/xsl/includes.xsl
+build/web/xsl/Plantas.xsl
+build/web/xsl/Meios.xsl
+build/web/login.jsp
+build/web/js/jquery-ui-1.10.3.js
+build/web/js/jquery-1.9.1.min.js
+build/web/img/point white.png
+build/web/css/gelb.css.1.nblh~
+build/web/css/gelb.css.0.nblh~
+build/web/WEB-INF/web.xml
+build/web/WEB-INF/classes/Web/Meios.class
+build/web/WEB-INF/classes/Web/Auth.class
+build/web/WEB-INF/classes/Utils/Cripta.class
