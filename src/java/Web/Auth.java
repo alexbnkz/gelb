@@ -1,6 +1,7 @@
 package Web;
 
 import Utils.XMLTransform;
+import Utils.Cripta;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Connection;
@@ -24,10 +25,8 @@ public class Auth extends HttpServlet {
         response.setContentType("text/html;charset=ISO-8859-1");
         PrintWriter out = response.getWriter();
         Hashtable hash = new Hashtable();
-        String xml = "";
-        String page = "";
         String cmd = "";
-
+        
         try {
             for (Map.Entry en : request.getParameterMap().entrySet()) {
                 hash.put(en.getKey(), request.getParameter(en.getKey().toString()));
@@ -44,7 +43,7 @@ public class Auth extends HttpServlet {
                 }
             }
         } catch (Exception e) {
-            xml += "<message type= 'erro' text='" + transform.toText(e.toString()) + "' />";
+            //xml += "<message type= 'erro' text='" + transform.toText(e.toString()) + "' />";
         } 
     }
     
@@ -59,6 +58,8 @@ public class Auth extends HttpServlet {
         String xml = "";
         String SQL = "";
         
+        Cripta md5 = new Cripta();
+        
         try {
             Class.forName("com.mysql.jdbc.Driver");
             String connectionUrl = "jdbc:mysql://localhost/ifrj?user=root&password=";
@@ -66,36 +67,22 @@ public class Auth extends HttpServlet {
             Connection con = DriverManager.getConnection(connectionUrl); 
             
             SQL = " SELECT  ";
-            SQL += " id_experimento, nm_experimento, dt_experimento, tp_experimento, de_experimento ";
-            SQL += " FROM tUsuario ";      
-            if(cmd.equals("SRCH")){
-                SQL += " WHERE ";    
-                boolean also = false;
-                
-                if(!hash.get("id_experimento").equals("")){
-                    if(also){SQL += " AND ";}
-                    SQL += " id_experimento = " + hash.get("id_experimento");  
-                    also = true;
-                }
-                if(!hash.get("nm_experimento").equals("")){
-                    if(also){SQL += " AND ";}
-                    SQL += " nm_experimento = '" + hash.get("nm_experimento") + "' ";  
-                    also = true;
-                }            
-            }
-            SQL += " ORDER BY id_experimento ASC";      
+            SQL += " id_usuario, cd_login, nm_usuario, cd_email, ct_privilegio ";
+            SQL += " FROM tUsuario ";
+            SQL += " WHERE  cd_login = '" + hash.get("cd_login") + "' ";
+            SQL += " AND    pw_senha = '" + md5.encriptar(hash.get("pw_senha").toString()) + "' ";
             
             ResultSet result = con.createStatement().executeQuery(SQL);
             
             if(!result.wasNull()){
                 while(result.next()){
-                    xml += " <experimento ";
-                    xml += " id_experimento = '" + result.getInt("id_experimento") + "' ";
-                    xml += " nm_experimento = '" + result.getString("nm_experimento") + "' ";
-                    xml += " dt_experimento = '" + result.getString("dt_experimento") + "' ";
-                    xml += " tp_experimento = '" + result.getString("tp_experimento") + "' ";
-                    xml += " de_experimento = '" + result.getString("de_experimento") + "' ";
-                    xml += " > </experimento>";
+                    xml += " <usuario ";
+                    xml += " id_usuario = '" + result.getInt("id_usuario") + "' ";
+                    xml += " cd_login = '" + result.getString("cd_login") + "' ";
+                    xml += " nm_usuario = '" + result.getString("nm_usuario") + "' ";
+                    xml += " cd_email = '" + result.getString("cd_email") + "' ";
+                    xml += " ct_privilegio = '" + result.getString("ct_privilegio") + "' ";
+                    xml += " > </usuario>";
                 }
             }
         } catch (SQLException e) {
