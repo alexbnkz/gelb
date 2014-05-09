@@ -62,7 +62,7 @@
 				<div class="row">
                                     <div class="xmedium">
                                         <label>Senha:</label> 
-                                            <input type="password" id="cd_senha" name="cd_senha" required="true" maxlength="20" />
+                                            <input type="password" id="pw_senha" name="pw_senha" required="true" maxlength="20" />
                                     </div>
                                 </div>
 				<div class="row">
