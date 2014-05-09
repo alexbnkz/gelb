@@ -1,9 +1,7 @@
 package Web;
 
-import Utils.XMLTransform;
 import Utils.Cripta;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -15,47 +13,45 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 @WebServlet(name = "Auth", urlPatterns = {"/Auth"})
 public class Auth extends HttpServlet {
-    private XMLTransform transform = new XMLTransform();
             
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=ISO-8859-1");
-        PrintWriter out = response.getWriter();
         Hashtable hash = new Hashtable();
-        String cmd = "";
+        String cmd;
         
-        try {
-            for (Map.Entry en : request.getParameterMap().entrySet()) {
-                hash.put(en.getKey(), request.getParameter(en.getKey().toString()));
-            }
- 
-            if(hash.containsKey("cmd")){
-                cmd = hash.get("cmd").toString();
-                if(cmd.equals("Login/auth")){
-                    if(cmd.equals("Login/auth")){
-                        response.sendRedirect("Experimentos");  
-                    } else {
-                        response.sendRedirect("login.jsp");  
-                    }
+        HttpSession session = request.getSession(true);
+        
+        for (Map.Entry en : request.getParameterMap().entrySet()) {
+            hash.put(en.getKey(), request.getParameter(en.getKey().toString()));
+        }
+
+        if(hash.containsKey("cmd")){
+            cmd = hash.get("cmd").toString();
+            if(cmd.equals("Login/auth")){
+                if(goAutenticar(hash)){
+                    session.setAttribute("cd_usuario_logado", hash.get("cd_login").toString());
+                    response.sendRedirect("Experimentos");
+                } else {
+                    // No authenticate
+                    response.sendRedirect("login.jsp");
                 }
+            } else {
+                // Command not recognized
+                response.sendRedirect("login.jsp");
             }
-        } catch (Exception e) {
-            //xml += "<message type= 'erro' text='" + transform.toText(e.toString()) + "' />";
-        } 
+        } else {
+            // Bad access
+            response.sendRedirect("login.jsp");
+        }
     }
-    
-    // Terminar a Autenticação
-    // Terminar a Autenticação
-    // Terminar a Autenticação
-    // Terminar a Autenticação
-    // Terminar a Autenticação
-    // Terminar a Autenticação
         
-    private String Autenticar(Hashtable hash){ 
-        String xml = "";
+    private boolean goAutenticar(Hashtable hash){ 
+        boolean auth = false;
         String SQL = "";
         
         Cripta md5 = new Cripta();
@@ -70,30 +66,24 @@ public class Auth extends HttpServlet {
             SQL += " id_usuario, cd_login, nm_usuario, cd_email, ct_privilegio ";
             SQL += " FROM tUsuario ";
             SQL += " WHERE  cd_login = '" + hash.get("cd_login") + "' ";
-            SQL += " AND    pw_senha = '" + md5.encriptar(hash.get("pw_senha").toString()) + "' ";
+            SQL += " AND    pw_senha = '" + md5.encriptar(hash.get("pw_senha").toString()) + "'; ";
             
             ResultSet result = con.createStatement().executeQuery(SQL);
             
             if(!result.wasNull()){
                 while(result.next()){
-                    xml += " <usuario ";
-                    xml += " id_usuario = '" + result.getInt("id_usuario") + "' ";
-                    xml += " cd_login = '" + result.getString("cd_login") + "' ";
-                    xml += " nm_usuario = '" + result.getString("nm_usuario") + "' ";
-                    xml += " cd_email = '" + result.getString("cd_email") + "' ";
-                    xml += " ct_privilegio = '" + result.getString("ct_privilegio") + "' ";
-                    xml += " > </usuario>";
+                    auth = true;
                 }
             }
         } catch (SQLException e) {
-            xml += "<message type= 'erro' text='SQL \'Exception: " + transform.toText(e.toString()) + "' />";
+            //xml += "<message type= 'erro' text='SQL \'Exception: " + transform.toText(e.toString()) + "' />";
             if(!SQL.equals("")) {
-                xml += "<message type= 'erro' text='"+ transform.toText(SQL) + "' />";
+                //xml += "<message type= 'erro' text='"+ transform.toText(SQL) + "' />";
             }
         } catch (ClassNotFoundException cE) {
-            xml += "<message type= 'erro' text='Class Not Found Exception: " + transform.toText(cE.toString()) + "' />";
+            //xml += "<message type= 'erro' text='Class Not Found Exception: " + transform.toText(cE.toString()) + "' />";
         } finally {
-            return xml;
+            return auth;
         }
     }
     

@@ -1,6 +1,7 @@
 package Web;
 
 import Utils.XMLTransform;
+import Utils.Cripta;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Connection;
@@ -74,6 +75,8 @@ public class Usuarios extends HttpServlet {
         String xml = "";
         String SQL = "";
         
+        Cripta md5 = new Cripta();
+        
         try {
             Class.forName("com.mysql.jdbc.Driver");
             String connectionUrl = "jdbc:mysql://localhost/ifrj?user=root&password=";
@@ -86,7 +89,13 @@ public class Usuarios extends HttpServlet {
             String nm_usuario = hash.get("nm_usuario").toString();
             String cd_email = hash.get("cd_email").toString();
             String ct_privilegio = hash.get("ct_privilegio").toString();
-                    
+            
+            if(cmd.equals("UPD")){
+               if(!pw_senha.equals("****")){
+                   pw_senha = md5.encriptar(pw_senha);
+               }
+            }
+            
             if(cmd.equals("INS")){
                 ResultSet result = con.createStatement().executeQuery("SELECT MAX(id_usuario)+1 AS NewCodigo FROM tUsuario;");
                 
@@ -108,7 +117,11 @@ public class Usuarios extends HttpServlet {
             if(cmd.equals("UPD")){
                 SQL = " UPDATE tUsuario SET ";
                 SQL += " cd_login='" + cd_login + "', ";
-                SQL += " pw_senha='" + pw_senha + "', ";
+                
+                if(!pw_senha.equals("****")){
+                   SQL += " pw_senha='" + pw_senha + "', ";
+                }
+                
                 SQL += " nm_usuario='" + nm_usuario + "', ";
                 SQL += " cd_email='" + cd_email + "', ";
                 SQL += " ct_privilegio='" + ct_privilegio + "' ";
@@ -158,6 +171,11 @@ public class Usuarios extends HttpServlet {
                     SQL += " id_usuario = " + hash.get("id_usuario");  
                     also = true;
                 }
+                if(!hash.get("cd_login").equals("")){
+                    if(also){SQL += " AND ";}
+                    SQL += " cd_login = '" + hash.get("cd_login") + "' ";  
+                    also = true;
+                } 
                 if(!hash.get("nm_usuario").equals("")){
                     if(also){SQL += " AND ";}
                     SQL += " nm_usuario = '" + hash.get("nm_usuario") + "' ";  
@@ -178,10 +196,21 @@ public class Usuarios extends HttpServlet {
                     xml += " <usuario ";
                     xml += " id_usuario = '" + result.getInt("id_usuario") + "' ";
                     xml += " cd_login = '" + result.getString("cd_login") + "' ";
-                    xml += " pw_senha = '" + result.getString("pw_senha") + "' ";
+                    xml += " pw_senha = '****' ";
                     xml += " nm_usuario = '" + result.getString("nm_usuario") + "' ";
                     xml += " cd_email = '" + result.getString("cd_email") + "' ";
                     xml += " ct_privilegio = '" + result.getString("ct_privilegio") + "' ";
+                    
+                    if(result.getString("ct_privilegio").equals("A")){ // A - Administrador
+                        xml += " nm_privilegio = 'Administrador' ";
+                    } else {
+                        if(result.getString("ct_privilegio").equals("U")){ // U - Usuário
+                            xml += " nm_privilegio = 'Usuário' ";
+                        } else {
+                            xml += " nm_privilegio = 'Inativo' "; // I - Inativo
+                        }
+                    }
+                    
                     xml += " > </usuario>";
                 }
             }
@@ -202,8 +231,20 @@ public class Usuarios extends HttpServlet {
         return listarUsuarios("LST", hash);
     }
     
-    protected String buscarUsuarios(String id_experimento, String nm_experimento){ 
+    protected String buscarUsuarios(String id_usuario, String cd_login, String nm_usuario, String cd_email){ 
         Hashtable hash = new Hashtable();
+        if(!id_usuario.equals("")){
+            hash.put("id_usuario", id_usuario);
+        }
+        if(!cd_login.equals("")){
+            hash.put("cd_login", cd_login);
+        }
+        if(!nm_usuario.equals("")){
+            hash.put("nm_usuario", nm_usuario);
+        }
+        if(!cd_email.equals("")){
+            hash.put("cd_email", cd_email);
+        }
         return listarUsuarios("LST", hash);
     }
 
