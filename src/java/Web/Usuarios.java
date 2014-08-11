@@ -194,12 +194,12 @@ public class Usuarios extends HttpServlet {
             if(!result.wasNull()){
                 while(result.next()){
                     xml += " <usuario ";
-                    xml += " id_usuario = '" + result.getInt("id_usuario") + "' ";
-                    xml += " cd_login = '" + result.getString("cd_login") + "' ";
+                    xml += " id_usuario = '" + transform.toText(result.getString("id_usuario")) + "' ";
+                    xml += " cd_login = '" + transform.toText(result.getString("cd_login")) + "' ";
                     xml += " pw_senha = '****' ";
-                    xml += " nm_usuario = '" + result.getString("nm_usuario") + "' ";
-                    xml += " cd_email = '" + result.getString("cd_email") + "' ";
-                    xml += " ct_privilegio = '" + result.getString("ct_privilegio") + "' ";
+                    xml += " nm_usuario = '" + transform.toText(result.getString("nm_usuario")) + "' ";
+                    xml += " cd_email = '" + transform.toText(result.getString("cd_email")) + "' ";
+                    xml += " ct_privilegio = '" + transform.toText(result.getString("ct_privilegio")) + "' ";
                     
                     if(result.getString("ct_privilegio").equals("A")){ // A - Administrador
                         xml += " nm_privilegio = 'Administrador' ";
@@ -215,7 +215,7 @@ public class Usuarios extends HttpServlet {
                 }
             }
         } catch (SQLException e) {
-            xml += "<message type= 'erro' text='SQL \'Exception: " + transform.toText(e.toString()) + "' />";
+            xml += "<message type= 'erro' text='SQL Exception: " + transform.toText(e.toString()) + "' />";
             if(!SQL.equals("")) {
                 xml += "<message type= 'erro' text='"+ transform.toText(SQL) + "' />";
             }

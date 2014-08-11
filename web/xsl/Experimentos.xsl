@@ -73,18 +73,21 @@
                         <div class="title-small" style="margin-left: 10px; display: block;">Lista</div>
                         
                         <div class="grid">
-                            <div class="legend" style="width: 20px;"></div>
-                            <div class="legend" style="width: 700px;">Experimento</div>
+                            <div class="legend" style="width: 30px;"></div>
+                            <div class="legend" style="width: 200px;">Experimento</div>
                             <div class="legend" style="width: 200px;">Data</div>
                             <xsl:for-each select="/root/experimento">
                                 <div class="row">
-                                    <div style="width: 600px; display: table-cell;">
-                                        <xsl:value-of select="@nm_experimento"/>
+                                    <div class="cell icon icon-editar">
+                                        <xsl:attribute name="onclick">javascript:Editar(<xsl:value-of select="@id_experimento"/>);</xsl:attribute>
+                                        E</div>
+                                    <div class="cellpadd" style="width: 200px;">
+                                        <div><xsl:value-of select="@nm_experimento"/></div>
                                     </div>
-                                    <div style="width: 100px; display: table-cell;">
+                                    <div class="cellpadd" style="width: 200px;">
                                         <xsl:value-of select="@dt_experimento"/>
                                     </div>
-                                    <div class="icon icon-excluir">
+                                    <div class="cell icon icon-excluir">
                                         <xsl:attribute name="onclick">javascript:Excluir(<xsl:value-of select="@id_experimento"/>, '<xsl:value-of select="@nm_experimento"/>');</xsl:attribute>
                                         x</div>
                                 </div>

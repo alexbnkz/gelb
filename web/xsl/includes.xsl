@@ -45,7 +45,7 @@
             margin: 15px auto;
             left: 25%;
             position: absolute;
-            background: #EEFFEE;
+            background: #FFFFEE;
             text-align: center;
             font-size: 11px;
             display: none;

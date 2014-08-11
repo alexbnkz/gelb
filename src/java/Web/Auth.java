@@ -1,5 +1,6 @@
 package Web;
 
+import Utils.XMLTransform;
 import Utils.Cripta;
 import java.io.IOException;
 import java.sql.Connection;
@@ -17,6 +18,8 @@ import javax.servlet.http.HttpSession;
 
 @WebServlet(name = "Auth", urlPatterns = {"/Auth"})
 public class Auth extends HttpServlet {
+    private XMLTransform transform = new XMLTransform();
+    String erro = "";
             
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -37,15 +40,15 @@ public class Auth extends HttpServlet {
                     session.setAttribute("cd_usuario_logado", hash.get("cd_login").toString());
                     response.sendRedirect("Experimentos");
                 } else {
-                    // No authenticate
+                    session.setAttribute("root_message", "<message type= 'erro' text='Usuário/senha incorretos!' />" + erro);
                     response.sendRedirect("login.jsp");
                 }
             } else {
-                // Command not recognized
+                session.setAttribute("root_message", "<message type= 'erro' text='Comando não reconhecido!' />" + erro);
                 response.sendRedirect("login.jsp");
             }
         } else {
-            // Bad access
+            session.setAttribute("root_message", "<message type= 'erro' text='Acesso incorreto!' />" + erro);
             response.sendRedirect("login.jsp");
         }
     }
@@ -76,12 +79,12 @@ public class Auth extends HttpServlet {
                 }
             }
         } catch (SQLException e) {
-            //xml += "<message type= 'erro' text='SQL \'Exception: " + transform.toText(e.toString()) + "' />";
+            erro = "<message type= 'erro' text='SQL Exception: " + transform.toText(e.toString()) + "' />";
             if(!SQL.equals("")) {
-                //xml += "<message type= 'erro' text='"+ transform.toText(SQL) + "' />";
+                erro += "<message type= 'erro' text='"+ transform.toText(SQL) + "' />";
             }
         } catch (ClassNotFoundException cE) {
-            //xml += "<message type= 'erro' text='Class Not Found Exception: " + transform.toText(cE.toString()) + "' />";
+            erro = "<message type= 'erro' text='Class Not Found Exception: " + transform.toText(cE.toString()) + "' />";
         } finally {
             return auth;
         }

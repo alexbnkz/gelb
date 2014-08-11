@@ -285,6 +285,18 @@ form button:hover {
     background: #F0F0F0;
     color: #336033;
 }
+.grid .row .cell {
+    display: table-cell;
+    overflow: hidden;
+}
+.grid .row .cellpadd {
+    display: table-cell;
+    padding-left: 10px;
+    overflow: hidden;
+}
+.grid .row .cellpadd div {
+    height: 20px;
+}
 .grid button {
     display: block;
     float: left;
@@ -317,17 +329,26 @@ form button:hover {
 }
 .grid .legend {
     display: table-cell;
-    padding-left: 5px;
+    padding-left: 10px;
     font-size: 11px;
     font-weight: bold;
 }
+.grid .icon-editar {
+    width: 20px; 
+    height: 20px;
+    float: none; 
+    display: table-cell; 
+    font-size: 16px;
+    line-height: 100%;
+    font-weight: bold;
+}
 .grid .icon-excluir {
-            width: 20px; 
-            height: 20px; 
-            float: none; 
-            display: table-cell; 
-            font-size: 20px;
-        }
+    width: 20px; 
+    height: 20px;
+    float: none; 
+    display: table-cell; 
+    font-size: 20px;
+}
 /*   BODY STYLES   */
 .bodier {
     width: 100%;
