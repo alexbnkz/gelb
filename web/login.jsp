@@ -1,3 +1,4 @@
+<%@page import="Utils.XMLTransform" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 
 <html>
@@ -6,6 +7,8 @@
         <title>IFRJ - GELB - Login</title>
         <link type="text/css" rel="stylesheet" href="css/gelb.css" />
         <script type="text/javascript" src="js/funcs.js"></script>
+        <script type="text/javascript" src="js/jquery-1.9.1.min.js"></script>
+        <script type="text/javascript" src="js/jquery-ui-1.10.3.js"></script>
         <style>
             @media screen and (max-width: 800px) and (orientation: portrait) {
             .div-login {
@@ -87,5 +90,20 @@
                 </div>
             </div>
         </div>
+<%=alertaErro((String)session.getAttribute("root_message") + "")%>
     </body>
 </html>
+
+<%!
+String alertaErro(String texto) {
+    String html = "";
+    if(!texto.equals("") && texto != "null" && texto != null) {
+        XMLTransform transform = new XMLTransform();
+        html = transform.toHtml("D:\\GELB\\web\\xsl\\login_aviso.xsl", "<root>" + texto + "</root>");
+    }
+    return html;
+}
+%>
+<%
+    session.setAttribute("root_message", "");
+%>

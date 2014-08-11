@@ -169,16 +169,16 @@ public class Experimentos extends HttpServlet {
             if(!result.wasNull()){
                 while(result.next()){
                     xml += " <experimento ";
-                    xml += " id_experimento = '" + result.getInt("id_experimento") + "' ";
-                    xml += " nm_experimento = '" + result.getString("nm_experimento") + "' ";
-                    xml += " dt_experimento = '" + result.getString("dt_experimento") + "' ";
-                    xml += " tp_experimento = '" + result.getString("tp_experimento") + "' ";
-                    xml += " de_experimento = '" + result.getString("de_experimento") + "' ";
+                    xml += " id_experimento = '" + transform.toText(result.getString("id_experimento")) + "' ";
+                    xml += " nm_experimento = '" + transform.toText(result.getString("nm_experimento")) + "' ";
+                    xml += " dt_experimento = '" + transform.toText(result.getString("dt_experimento")) + "' ";
+                    xml += " tp_experimento = '" + transform.toText(result.getString("tp_experimento")) + "' ";
+                    xml += " de_experimento = '" + transform.toText(result.getString("de_experimento")) + "' ";
                     xml += " > </experimento>";
                 }
             }
         } catch (SQLException e) {
-            xml += "<message type= 'erro' text='SQL \'Exception: " + transform.toText(e.toString()) + "' />";
+            xml += "<message type= 'erro' text='SQL Exception: " + transform.toText(e.toString()) + "' />";
             if(!SQL.equals("")) {
                 xml += "<message type= 'erro' text='"+ transform.toText(SQL) + "' />";
             }

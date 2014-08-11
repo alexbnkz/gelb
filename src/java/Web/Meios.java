@@ -158,22 +158,22 @@ public class Meios extends HttpServlet {
             if(!result.wasNull()){
                     while(result.next()){
                             xml += " <meio ";
-                            xml += " id_meio = '" + result.getString("id_meio") + "' ";
-                            xml += " id_experimento = '" + result.getString("id_experimento") + "' ";
+                            xml += " id_meio = '" + transform.toText(result.getString("id_meio")) + "' ";
+                            xml += " id_experimento = '" + transform.toText(result.getString("id_experimento")) + "' ";
                             if(!primeiro.equals(result.getString("nm_experimento"))){
-                                xml += " nm_experimento = '" + result.getString("nm_experimento") + "' ";
+                                xml += " nm_experimento = '" + transform.toText(result.getString("nm_experimento")) + "' ";
                                 primeiro = result.getString("nm_experimento");
                             }else{
                                 xml += " nm_experimento = '' ";
                             }
-                            xml += " nm_meio = '" + result.getString("nm_meio") + "' ";
-                            xml += " dt_meio = '" + result.getString("dt_meio") + "' ";
-                            xml += " de_meio = '" + result.getString("de_meio") + "' ";
+                            xml += " nm_meio = '" + transform.toText(result.getString("nm_meio")) + "' ";
+                            xml += " dt_meio = '" + transform.toText(result.getString("dt_meio")) + "' ";
+                            xml += " de_meio = '" + transform.toText(result.getString("de_meio")) + "' ";
                             xml += " > </meio>";
                     }
             }
         } catch (SQLException e) {
-            xml += "<message type= 'erro' text='SQL \'Exception: " + transform.toText(e.toString()) + "' />";
+            xml += "<message type= 'erro' text='SQL Exception: " + transform.toText(e.toString()) + "' />";
             if(!SQL.equals("")) {
                 xml += "<message type= 'erro' text='"+ transform.toText(SQL) + "' />";
             }
