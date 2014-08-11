@@ -41,3 +41,5 @@ build/web/WEB-INF/classes/Web/Meios.class
 build/web/WEB-INF/classes/Web/Auth.class
 build/web/WEB-INF/classes/Utils/Cripta.class
 build/web/WEB-INF/classes/Web/Usuarios.class
+build/web/WEB-INF/classes/.netbeans_update_resources
+build/web/WEB-INF/classes/.netbeans_automatic_build

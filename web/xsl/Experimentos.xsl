@@ -13,8 +13,65 @@
     <xsl:call-template name="menu"/>
         <div class="bodier">
             <div class="section-mid">
-                <div class="title-large">Experimentos</div>
+                <div class="title-large">Experimentos <xsl:value-of select="/root/cmd"/></div>
                 <div class="container">
+                    
+                    <xsl:if test="/root/cmd = 'DET'">
+                    <div id="panel-form-cadastro" class="panel-form" style="display: ;">
+                                                
+                        <div id="div-cadastro-left" style="display: ;">
+                            <div class="title-small" style="margin-left: 10px">Alterar</div>
+                        </div>
+                        
+                        <div style="width: 620px; margin: 0px auto; display: block;">
+                            <form id="frm" name="frm" method="post" action="Experimentos" onsubmit="javascript:return validateForm(this);">
+                                <input type="hidden" id="cmd" name="cmd" value="Experimentos/upd"/>
+                                <input type="hidden" id="id" name="id">
+                                    <xsl:attribute name="value"><xsl:value-of select="/root/experimento/@id_experimento"/></xsl:attribute>
+                                </input>
+                                <div class="row">
+                                    <div class="large">
+                                        <label>Nome do experimento:</label> 
+                                            <input type="text" id="nm_experimento" name="nm_experimento" required="true" maxlength="100">
+                                                <xsl:attribute name="value"><xsl:value-of select="/root/experimento/@nm_experimento"/></xsl:attribute>
+                                            </input>
+                                    </div>
+                                    <div class="xsmall">
+                                        <label>Data de início:</label> 
+                                        <input type="text" id="dt_experimento" name="dt_experimento" required="true" maxlength="10" onblur="javascript:validateDate(this);">
+                                            <xsl:attribute name="value"><xsl:value-of select="/root/experimento/@dt_experimento"/></xsl:attribute>
+                                        </input>
+                                    </div>
+                                    <div class="xsmall" style="display: none;">
+                                        <label>Tipo:</label> 
+                                        <select type="text" id="tp_experimento" name="tp_experimento">
+                                            <option value="V">Vegetal</option>
+                                            <option value="A">Animal</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="xxlarge">
+                                        <label>Observações:</label> 
+                                        <textarea id="de_experimento" name="de_experimento" rows="5"><xsl:value-of select="/root/experimento/@de_experimento"/></textarea>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="xxlarge">
+                                        <div class="small" style="float: right;">
+                                            <label>&#10;</label>
+                                            <button type="submit" id="bt_salvar" name="bt_salvar" title="Salvar">
+                                                <span>Salvar</span>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    </xsl:if>
+                    
+                    <xsl:if test="/root/cmd != 'DET'">
                     <div id="panel-form-cadastro" class="panel-form" style="display: none;">
                                                 
                         <div id="div-cadastro-left" style="display: none;">
@@ -74,14 +131,14 @@
                         
                         <div class="grid">
                             <div class="legend" style="width: 30px;"></div>
-                            <div class="legend" style="width: 200px;">Experimento</div>
+                            <div class="legend" style="width: 400px;">Experimento</div>
                             <div class="legend" style="width: 200px;">Data</div>
                             <xsl:for-each select="/root/experimento">
                                 <div class="row">
+                                    <xsl:attribute name="onclick">javascript:Editar(<xsl:value-of select="@id_experimento"/>);</xsl:attribute>
                                     <div class="cell icon icon-editar">
-                                        <xsl:attribute name="onclick">javascript:Editar(<xsl:value-of select="@id_experimento"/>);</xsl:attribute>
-                                        E</div>
-                                    <div class="cellpadd" style="width: 200px;">
+                                        </div>
+                                    <div class="cellpadd" style="width: 400px;">
                                         <div><xsl:value-of select="@nm_experimento"/></div>
                                     </div>
                                     <div class="cellpadd" style="width: 200px;">
@@ -96,6 +153,7 @@
                         <div style="padding-bottom: 10px;"></div>
                         </xsl:if>
                     </div>
+                    </xsl:if>
                 </div>
             </div>
         </div>

@@ -84,16 +84,18 @@
                         <div class="title-small" style="margin-left: 10px; display: block;">Lista</div>
                         
                         <div class="grid">
-                            <div class="legend" style="width: 20px;"></div>
-                            <div class="legend" style="width: 200px;">Nome - Data de preparo</div>
                             <xsl:for-each select="/root/meio">
                                 <xsl:if test="@nm_experimento != ''">
                                 <div>
                                     <div class="title-small" style="margin-left: 10px; font-size: 14px;">
                                         <xsl:value-of select="@nm_experimento"/></div>
                                 </div>
+                            <div class="legend" style="width: 20px;"></div>
+                            <div class="legend" style="width: 200px;">Nome - Data de preparo</div>
                                 </xsl:if>
                                 <div class="row">
+                                    <div class="cell icon icon-editar">
+                                        </div>
                                     <div style="width: 200px; display: table-cell;">
                                         <xsl:variable name="id_meio"><xsl:value-of select="@id_meio"/></xsl:variable>
                                         <xsl:value-of select="/root/meio[@id_meio = $id_meio]/@nm_meio"/> - <xsl:value-of select="/root/meio[@id_meio = $id_meio]/@dt_meio"/>
