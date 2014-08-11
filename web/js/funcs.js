@@ -88,6 +88,11 @@ function validateForm(frm){
     
     return valida;
 }
+function Editar(ident){
+    id('id').value = ident;
+    id('cmd').value = id('cmd').value.split('/')[0] + '/det';
+    id('frm').submit();
+}
 function Excluir(ident, nome){
     if (confirm('Tem certeza que deseja excuir "' + nome + '"?')) {
         id('id').value = ident;

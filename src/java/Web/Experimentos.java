@@ -57,7 +57,8 @@ public class Experimentos extends HttpServlet {
         } 
         
         try{
-            xml = "<root>" + xml + "</root>";
+            
+            xml = "<root>" + "<cmd>" + transform.toText(cmd) + "</cmd>" + xml + "</root>";
             
             String html;
             html = transform.toHtml("D:\\GELB\\web\\xsl\\" + page + ".xsl", xml);
@@ -151,6 +152,11 @@ public class Experimentos extends HttpServlet {
                 SQL += " WHERE ";    
                 boolean also = false;
                 
+                if(!hash.get("id").equals("")){
+                    if(also){SQL += " AND ";}
+                    SQL += " id_experimento = " + hash.get("id");  
+                    also = true;
+                }
                 if(!hash.get("id_experimento").equals("")){
                     if(also){SQL += " AND ";}
                     SQL += " id_experimento = " + hash.get("id_experimento");  
@@ -162,6 +168,10 @@ public class Experimentos extends HttpServlet {
                     also = true;
                 }            
             }
+            if(cmd.equals("DET")){
+                SQL += " WHERE id_experimento = " + hash.get("id");    
+            }
+            
             SQL += " ORDER BY id_experimento ASC";      
             
             ResultSet result = con.createStatement().executeQuery(SQL);
