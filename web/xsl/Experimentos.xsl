@@ -13,13 +13,13 @@
     <xsl:call-template name="menu"/>
         <div class="bodier">
             <div class="section-mid">
-                <div class="title-large">Experimentos <xsl:value-of select="/root/cmd"/></div>
+                <div class="title-large">Experimentos</div>
                 <div class="container">
                     
                     <xsl:if test="/root/cmd = 'DET'">
-                    <div id="panel-form-cadastro" class="panel-form" style="display: ;">
+                    <div id="panel-form-cadastro" class="panel-form" style="display: block;">
                                                 
-                        <div id="div-cadastro-left" style="display: ;">
+                        <div id="div-cadastro-left" style="display: block;">
                             <div class="title-small" style="margin-left: 10px">Alterar</div>
                         </div>
                         
