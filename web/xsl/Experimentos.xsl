@@ -64,6 +64,13 @@
                                                 <span>Salvar</span>
                                             </button>
                                         </div>
+                                        <div class="small" style="float: left;">
+                                            <label>&#10;</label>
+                                            <button type="button" id="bt_excluir" name="bt_excluir" title="Excluir">
+                                                <xsl:attribute name="onclick">javascript:Excluir(<xsl:value-of select="/root/experimento/@id_experimento"/>, '<xsl:value-of select="/root/experimento/@nm_experimento"/>');</xsl:attribute>
+                                                <span>Excluir</span>
+                                            </button>
+                                        </div>
                                     </div>
                                 </div>
                             </form>
@@ -144,9 +151,9 @@
                                     <div class="cellpadd" style="width: 200px;">
                                         <xsl:value-of select="@dt_experimento"/>
                                     </div>
-                                    <div class="cell icon icon-excluir">
+                                    <!--<div class="cell icon icon-excluir">
                                         <xsl:attribute name="onclick">javascript:Excluir(<xsl:value-of select="@id_experimento"/>, '<xsl:value-of select="@nm_experimento"/>');</xsl:attribute>
-                                        x</div>
+                                        x</div>-->
                                 </div>
                             </xsl:for-each>
                         </div>
