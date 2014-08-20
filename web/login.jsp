@@ -91,7 +91,7 @@
             </div>
         </div>
 <%=alertaErro((String)session.getAttribute("root_message") + "")%>
-    </body>
+    </body> 
 </html>
 
 <%!
@@ -99,7 +99,7 @@ String alertaErro(String texto) {
     String html = "";
     if(!texto.equals("") && texto != "null" && texto != null) {
         XMLTransform transform = new XMLTransform();
-        html = transform.toHtml("D:\\GELB\\web\\xsl\\login_aviso.xsl", "<root>" + texto + "</root>");
+        html = transform.toHtml("D:\\GELB\\web\\xsl\\aviso.xsl", "<root>" + texto + "</root>");
     }
     return html;
 }

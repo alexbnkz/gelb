@@ -43,3 +43,6 @@ build/web/WEB-INF/classes/Utils/Cripta.class
 build/web/WEB-INF/classes/Web/Usuarios.class
 build/web/WEB-INF/classes/.netbeans_update_resources
 build/web/WEB-INF/classes/.netbeans_automatic_build
+build/web/xsl/aviso.xsl
+build/web/xsl/Repiques.xsl
+build/web/WEB-INF/classes/Web/Repiques.class

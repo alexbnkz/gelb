@@ -28,8 +28,6 @@
             <div>| <span onclick="javascript:toBrowse('');">Painel</span></div>
             <div>| <span onclick="javascript:toBrowse('Experimentos');">Experimentos</span></div>
             <div>| <span onclick="javascript:toBrowse('Meios');">Meios</span></div>
-            <div>| <span onclick="javascript:toBrowse('Plantas');">Plantas</span></div>
-            <div>| <span onclick="javascript:toBrowse('Clones');">Clones</span></div>
             <div>| <span onclick="javascript:toBrowse('Repiques');">Repiques</span></div>
             <div>| <span onclick="javascript:toBrowse('Levantamentos');">Levantamentos</span></div>
             <div>| <span onclick="javascript:toBrowse('Usuarios');">Usuários</span></div>
