@@ -20,6 +20,7 @@
                     <div id="panel-form-cadastro" class="panel-form" style="display: block;">
                                                 
                         <div id="div-cadastro-left" style="display: block;">
+                            <div id="icon-minus" class="icon" title="Voltar" onclick="javascript:history.back();">-</div>
                             <div class="title-small" style="margin-left: 10px">Alterar</div>
                         </div>
                         
@@ -143,7 +144,7 @@
                             <xsl:for-each select="/root/experimento">
                                 <div class="row">
                                     <xsl:attribute name="onclick">javascript:Editar(<xsl:value-of select="@id_experimento"/>);</xsl:attribute>
-                                    <div class="cell icon icon-editar">
+                                    <div class="cell icon icon-editar" style="display: none;">
                                         </div>
                                     <div class="cellpadd" style="width: 400px;">
                                         <div><xsl:value-of select="@nm_experimento"/></div>
