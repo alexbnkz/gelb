@@ -100,3 +100,16 @@ function Excluir(ident, nome){
         id('frm').submit();
     } 
 }
+function CalculaMeio(){
+    if(id('qt_solucao').value != ''){
+        id('qt_sais').value = id('qt_solucao').value * 4.3 / 1000; // Sais MS (g/L)
+        id('qt_vitaminas').value = id('qt_solucao').value * 1.0 / 1000; // Vitaminas
+        id('qt_sacarose').value = id('qt_solucao').value * 30 / 1000; // Sacarose
+        id('qt_agar').value = id('qt_solucao').value * 8 / 1000; // Ágar
+    } else {
+        id('qt_sais').value = ''; 
+        id('qt_vitaminas').value = ''; 
+        id('qt_sacarose').value = ''; 
+        id('qt_agar').value = ''; 
+    }
+}
