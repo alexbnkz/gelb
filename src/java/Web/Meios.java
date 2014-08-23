@@ -60,7 +60,8 @@ public class Meios extends HttpServlet {
         } 
         
         try{
-            xml = "<root>" + xml + "</root>";
+            
+            xml = "<root>" + "<cmd>" + transform.toText(cmd) + "</cmd>" + xml + "</root>";
             
             String html;
             html = transform.toHtml("D:\\GELB\\web\\xsl\\" + page + ".xsl", xml);
@@ -149,6 +150,11 @@ public class Meios extends HttpServlet {
             SQL = " SELECT  ";
             SQL += " M.id_meio, E.id_experimento, E.nm_experimento, M.nm_meio, M.dt_meio, M.de_meio ";
             SQL += " FROM tMeio M INNER JOIN tExperimento E ON (M.id_experimento = E.id_experimento) ";
+            
+            if(cmd.equals("DET")){
+                SQL += " WHERE id_meio = " + hash.get("id");    
+            }
+            
             SQL += " ORDER BY E.id_experimento ASC, M.id_meio ASC";        
 
             ResultSet result = con.createStatement().executeQuery(SQL);

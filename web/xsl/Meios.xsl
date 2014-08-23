@@ -15,6 +15,114 @@
             <div class="section-mid">
                 <div class="title-large">Meios</div>
                 <div class="container">
+                    
+                    <xsl:if test="/root/cmd = 'DET'">
+                    <div id="panel-form-cadastro" class="panel-form" style="display: block;">
+                                                
+                        <div id="div-cadastro-left" style="display: block;">
+                            <div id="icon-minus" class="icon" title="Voltar" onclick="javascript:history.back();">-</div>
+                            <div class="title-small" style="margin-left: 10px">Alterar</div>
+                        </div>
+                        
+                        <div style="width: 620px; margin: 0px auto; display: block;">
+                            <form id="frm" name="frm" method="post" action="Meios" onsubmit="javascript:return validateForm(this);">
+                                <input type="hidden" id="cmd" name="cmd" value="Meios/lst"/>
+                                <input type="hidden" id="id" name="id" value=""/>
+                                <div class="row">
+                                    <div class="xmedium">
+                                        <label>Escolha o Experimento:</label> 
+                                        <select type="text" id="id_experimento" name="id_experimento">
+					<xsl:for-each select="/root/experimento">
+                                            <option>
+                                                <xsl:attribute name="value"><xsl:value-of select="@id_experimento"/></xsl:attribute>
+                                                <xsl:value-of select="@nm_experimento"/></option>
+					</xsl:for-each>
+                                        </select>
+                                    </div>
+                                    <div class="xxsmall">
+                                        <label>Nome do meio:</label> 
+                                            <input type="text" id="nm_meio" name="nm_meio" required="true" maxlength="100">
+                                                <xsl:attribute name="value"><xsl:value-of select="/root/meio/@nm_meio"/></xsl:attribute>
+                                            </input>
+                                    </div>
+                                    <div class="small">
+                                        <label>Data de preparo:</label> 
+                                        <input type="text" id="dt_meio" name="dt_meio" required="true" maxlength="10" onblur="javascript:validateDate(this);">
+                                                <xsl:attribute name="value"><xsl:value-of select="/root/meio/@dt_meio"/></xsl:attribute>
+                                            </input>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="small">
+                                        <label>Água (ml):</label> 
+                                        <input type="text" id="qt_solucao" name="qt_solucao" required="true" maxlength="10" onblur="javascript:CalculaMeio();">
+                                            <xsl:attribute name="value"><xsl:value-of select="/root/meio/@qt_solucao"/></xsl:attribute>
+                                        </input> 
+                                    </div>
+                                    
+                                    <div class="small" style="margin-left: 100px;">
+                                        <label>Sais MS (g/L):</label> 
+                                        <input type="text" id="qt_sais" name="qt_sais" required="true" maxlength="10">
+                                            <xsl:attribute name="value"><xsl:value-of select="/root/meio/@qt_sais"/></xsl:attribute>
+                                        </input> 
+                                    </div>
+                                    <div class="small">
+                                        <label>Vitaminas (µl):</label> 
+                                        <input type="text" id="qt_vitaminas" name="qt_vitaminas" required="true" maxlength="10">
+                                            <xsl:attribute name="value"><xsl:value-of select="/root/meio/@qt_sais"/></xsl:attribute>
+                                        </input> 
+                                    </div>
+                                    <div class="small">
+                                        <label>Sacarose (g):</label> 
+                                        <input type="text" id="qt_sacarose" name="qt_sacarose" required="true" maxlength="10">
+                                            <xsl:attribute name="value"><xsl:value-of select="/root/meio/@qt_sacarose"/></xsl:attribute>
+                                        </input> 
+                                    </div>
+                                    <div class="small">
+                                        <label>Ágar (g):</label> 
+                                        <input type="text" id="qt_agar" name="qt_agar" required="true" maxlength="10">
+                                            <xsl:attribute name="value"><xsl:value-of select="/root/meio/@qt_agar"/></xsl:attribute>
+                                        </input> 
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="xxlarge">
+                                        <label>Composição:</label> 
+                                        <textarea id="de_meio" name="de_meio" rows="5" maxlength="1000"><xsl:value-of select="/root/meio/@de_meio"/></textarea>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="xxlarge">
+                                        <xsl:if test="count(/root/experimento) > 0">
+                                        <div class="small" style="float: right;">
+                                            <label>&#10;</label>
+                                            <button type="submit" id="bt_salvar" name="bt_salvar" title="Salvar">
+                                                <span>Salvar</span>
+                                            </button>
+                                        </div>
+                                        <div class="small" style="float: left;">
+                                            <label>&#10;</label>
+                                            <button type="button" id="bt_excluir" name="bt_excluir" title="Excluir">
+                                                <xsl:attribute name="onclick">javascript:Excluir(<xsl:value-of select="/root/meio/@id_meio"/>, '<xsl:value-of select="/root/meio/@nm_meio"/>');</xsl:attribute>
+                                                <span>Excluir</span>
+                                            </button>
+                                        </div>
+
+                                        </xsl:if>
+                                        <xsl:if test="count(/root/experimento) = 0">
+                                        <div class="legend" style="text-align: center;">
+                                           Não existem experimentos cadastrados!
+                                        </div>
+                                        </xsl:if>
+
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    </xsl:if>
+                    
+                    <xsl:if test="/root/cmd != 'DET'">
                     <div id="panel-form-cadastro" class="panel-form" style="display: none;">
                                                 
                         <div id="div-cadastro-left" style="display: none;">
@@ -94,9 +202,10 @@
                             <div class="legend" style="width: 200px;">Nome - Data de preparo</div>
                                 </xsl:if>
                                 <div class="row">
-                                    <div class="cell icon icon-editar">
+                                    <xsl:attribute name="onclick">javascript:Editar(<xsl:value-of select="@id_meio"/>);</xsl:attribute>
+                                    <div class="cell icon icon-editar" style="display: none;">
                                         </div>
-                                    <div style="width: 200px; display: table-cell;">
+                                    <div class="cellpadd" style="width: 200px;">
                                         <xsl:variable name="id_meio"><xsl:value-of select="@id_meio"/></xsl:variable>
                                         <xsl:value-of select="/root/meio[@id_meio = $id_meio]/@nm_meio"/> - <xsl:value-of select="/root/meio[@id_meio = $id_meio]/@dt_meio"/>
                                         
@@ -106,18 +215,17 @@
                                             </xsl:attribute>
                                         </input>
                                     </div>
-                                    <div style="width: 500px; display: table-cell;">
-                                        
-                                    </div>
-                                    <div class="icon icon-excluir">
+                                    
+                                    <!--<div class="cell icon icon-excluir">
                                         <xsl:attribute name="onclick">javascript:Excluir(<xsl:value-of select="@id_meio"/>, document.getElementsByName('nm_meio_identificacao')[<xsl:value-of select="position()-1"/>].value);</xsl:attribute>
-                                        x</div>
+                                        x</div>-->
                                 </div>
                             </xsl:for-each>
                         </div>
                         <div style="padding-bottom: 10px;"></div>
                         </xsl:if>
                     </div>
+                    </xsl:if>
                 </div>
             </div>
         </div>
