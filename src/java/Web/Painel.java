@@ -47,8 +47,7 @@ public class Painel extends HttpServlet {
             page = Base.getDados("SELECT nm_arquivo FROM tExperimento WHERE ct_painel = 'S';"); //Vriesea
             String id_experimento = Base.getDados("SELECT id_experimento FROM tExperimento WHERE ct_painel = 'S';");
             
-            Meios M = new Meios();
-            xml += M.buscarMeios("", id_experimento);
+            xml += Base.buscarMeios("", id_experimento);
             
         } catch (Exception e) {
             xml += "<message type= 'erro' text='" + transform.toText(e.toString()) + "' />";

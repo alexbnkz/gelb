@@ -48,9 +48,7 @@ public class Meios extends HttpServlet {
                 xml += Base.salvarMeio(cmd, hash);
             }
             
-            Experimentos E = new Experimentos();
-            
-            xml += E.listarExperimentos();
+            xml += Base.listarExperimentos();
             xml += Base.listarMeios(cmd, hash);
             
         } catch (Exception e) {
@@ -71,19 +69,6 @@ public class Meios extends HttpServlet {
             out.close();
         }
     }
-
-    protected String listarMeios(){
-        Hashtable hash = new Hashtable();
-        return Base.listarMeios("LST", hash);
-    }
-    
-    protected String buscarMeios(String id_meio, String id_experimento){ 
-        Hashtable hash = new Hashtable();
-        hash.put("id_meio", id_meio);
-        hash.put("id_experimento", id_experimento);
-        return Base.listarMeios("SRCH", hash);
-    }
-
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**

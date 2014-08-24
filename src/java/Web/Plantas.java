@@ -52,7 +52,7 @@ public class Plantas extends HttpServlet {
             
             Meios M = new Meios();
             
-            xml += M.listarMeios();
+            //xml += M.listarMeios();
             xml += listarPlantas(cmd, hash);
             
         } catch (Exception e) {

@@ -12,7 +12,8 @@ public class DataAccess {
     String erro = "";
     private XMLTransform transform = new XMLTransform();
     
-    public String getDados(String SQL){ 
+    public String getDados(String SQL)// <editor-fold defaultstate="collapsed">
+    {
         erro = " ";
         try {
             Class.forName("com.mysql.jdbc.Driver");
@@ -37,8 +38,7 @@ public class DataAccess {
         } finally {
             return erro;
         }
-    }
-    
+    }// </editor-fold>
     public String goAutenticar(Hashtable hash){ 
         String SQL = "";
         erro = " ";
@@ -75,7 +75,7 @@ public class DataAccess {
             return erro;
         }
     }
-
+    
     public String salvarExperimento(String cmd, Hashtable hash){ 
         String xml = "";
         String SQL = "";
@@ -202,7 +202,17 @@ public class DataAccess {
             return xml;
         }
     }
-    
+    public String listarExperimentos()// <editor-fold defaultstate="collapsed">
+    {
+        Hashtable hash = new Hashtable();
+        return listarExperimentos("LST", hash);
+    }// </editor-fold>
+    public String buscarExperimentos(String id_experimento, String nm_experimento)// <editor-fold defaultstate="collapsed">
+    {
+        Hashtable hash = new Hashtable();
+        return listarExperimentos("LST", hash);
+    }// </editor-fold>
+
     public String salvarMeio(String cmd, Hashtable hash){ 
         String xml = "";
         String SQL = "";
@@ -332,5 +342,17 @@ public class DataAccess {
             return xml;
         }
     }
+    public String listarMeios() // <editor-fold defaultstate="collapsed">
+    {
+        Hashtable hash = new Hashtable();
+        return listarMeios("LST", hash);
+    }// </editor-fold>
+    public String buscarMeios(String id_meio, String id_experimento) // <editor-fold defaultstate="collapsed">
+    {
+        Hashtable hash = new Hashtable();
+        hash.put("id_meio", id_meio);
+        hash.put("id_experimento", id_experimento);
+        return listarMeios("SRCH", hash);
+    }// </editor-fold>
 
 }
