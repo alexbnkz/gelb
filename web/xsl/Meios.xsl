@@ -53,39 +53,6 @@
                                     </div>
                                 </div>
                                 <div class="row">
-                                    <div class="small">
-                                        <label>Água (ml):</label> 
-                                        <input type="text" id="qt_solucao" name="qt_solucao" required="true" maxlength="10" onblur="javascript:CalculaMeio();">
-                                            <xsl:attribute name="value"><xsl:value-of select="/root/meio/@qt_solucao"/></xsl:attribute>
-                                        </input> 
-                                    </div>
-                                    
-                                    <div class="small" style="margin-left: 100px;">
-                                        <label>Sais MS (g/L):</label> 
-                                        <input type="text" id="qt_sais" name="qt_sais" required="true" maxlength="10">
-                                            <xsl:attribute name="value"><xsl:value-of select="/root/meio/@qt_sais"/></xsl:attribute>
-                                        </input> 
-                                    </div>
-                                    <div class="small">
-                                        <label>Vitaminas (µl):</label> 
-                                        <input type="text" id="qt_vitaminas" name="qt_vitaminas" required="true" maxlength="10">
-                                            <xsl:attribute name="value"><xsl:value-of select="/root/meio/@qt_sais"/></xsl:attribute>
-                                        </input> 
-                                    </div>
-                                    <div class="small">
-                                        <label>Sacarose (g):</label> 
-                                        <input type="text" id="qt_sacarose" name="qt_sacarose" required="true" maxlength="10">
-                                            <xsl:attribute name="value"><xsl:value-of select="/root/meio/@qt_sacarose"/></xsl:attribute>
-                                        </input> 
-                                    </div>
-                                    <div class="small">
-                                        <label>Ágar (g):</label> 
-                                        <input type="text" id="qt_agar" name="qt_agar" required="true" maxlength="10">
-                                            <xsl:attribute name="value"><xsl:value-of select="/root/meio/@qt_agar"/></xsl:attribute>
-                                        </input> 
-                                    </div>
-                                </div>
-                                <div class="row">
                                     <div class="xxlarge">
                                         <label>Composição:</label> 
                                         <textarea id="de_meio" name="de_meio" rows="5" maxlength="1000"><xsl:value-of select="/root/meio/@de_meio"/></textarea>

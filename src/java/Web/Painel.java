@@ -12,8 +12,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-@WebServlet(name = "Experimentos", urlPatterns = {"/Experimentos"})
-public class Experimentos extends HttpServlet {
+@WebServlet(name = "Painel", urlPatterns = {"/Painel"})
+public class Painel extends HttpServlet {
     private XMLTransform transform = new XMLTransform();
     private DataAccess Base = new DataAccess();
             
@@ -32,7 +32,7 @@ public class Experimentos extends HttpServlet {
             }
  
             if(!hash.containsKey("cmd")){
-                hash.put("cmd", "Experimentos/lst");
+                hash.put("cmd", "Painel/lst");
                 cmd = "LST";
             }else {
                 if(hash.get("id") == "" && hash.get("cmd") != "lst"){
@@ -42,13 +42,13 @@ public class Experimentos extends HttpServlet {
                 }
             }
             
-            page = hash.get("cmd").toString().split("/")[0];           
+            //page = hash.get("cmd").toString().split("/")[0];
             
-            if(cmd.equals("INS") || cmd.equals("UPD") || cmd.equals("DEL")){
-                xml += Base.salvarExperimento(cmd, hash);
-            }
+            page = Base.getDados("SELECT nm_arquivo FROM tExperimento WHERE ct_painel = 'S';"); //Vriesea
+            String id_experimento = Base.getDados("SELECT id_experimento FROM tExperimento WHERE ct_painel = 'S';");
             
-            xml += Base.listarExperimentos(cmd, hash);
+            Meios M = new Meios();
+            xml += M.buscarMeios("", id_experimento);
             
         } catch (Exception e) {
             xml += "<message type= 'erro' text='" + transform.toText(e.toString()) + "' />";
@@ -68,17 +68,7 @@ public class Experimentos extends HttpServlet {
             out.close();
         }
     }
-    
-    protected String listarExperimentos(){ 
-        Hashtable hash = new Hashtable();
-        return Base.listarExperimentos("LST", hash);
-    }
-    
-    protected String buscarExperimentos(String id_experimento, String nm_experimento){ 
-        Hashtable hash = new Hashtable();
-        return Base.listarExperimentos("LST", hash);
-    }
- 
+
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP

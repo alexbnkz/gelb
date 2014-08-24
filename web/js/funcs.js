@@ -88,6 +88,10 @@ function validateForm(frm){
     
     return valida;
 }
+function TrocaComando(cmd){
+    id('frm').action = 'Meios';
+    id('cmd').value = cmd;
+}
 function Editar(ident){
     id('id').value = ident;
     id('cmd').value = id('cmd').value.split('/')[0] + '/det';
@@ -101,15 +105,17 @@ function Excluir(ident, nome){
     } 
 }
 function CalculaMeio(){
-    if(id('qt_solucao').value != ''){
-        id('qt_sais').value = id('qt_solucao').value * 4.3 / 1000; // Sais MS (g/L)
-        id('qt_vitaminas').value = id('qt_solucao').value * 1.0 / 1000; // Vitaminas
-        id('qt_sacarose').value = id('qt_solucao').value * 30 / 1000; // Sacarose
-        id('qt_agar').value = id('qt_solucao').value * 8 / 1000; // Ágar
+    if(id('volume').value != '' && id('quantidade').value != ''){
+        id('solucao').value = id('volume').value * id('quantidade').value; 
+        id('sais').value = id('solucao').value * 4.3 / 1000; // Sais MS (g/L)
+        id('vitaminas').value = id('solucao').value * 1.0 / 1000; // Vitaminas
+        id('sacarose').value = id('solucao').value * 30 / 1000; // Sacarose
+        id('agar').value = id('solucao').value * 8 / 1000; // Ágar
     } else {
-        id('qt_sais').value = ''; 
-        id('qt_vitaminas').value = ''; 
-        id('qt_sacarose').value = ''; 
-        id('qt_agar').value = ''; 
+        id('solucao').value = ''; 
+        id('sais').value = ''; 
+        id('vitaminas').value = ''; 
+        id('sacarose').value = ''; 
+        id('agar').value = ''; 
     }
 }

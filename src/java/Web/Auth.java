@@ -1,12 +1,7 @@
 package Web;
 
-import Utils.XMLTransform;
-import Utils.Cripta;
+import Base.DataAccess;
 import java.io.IOException;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.Hashtable;
 import java.util.Map;
 import javax.servlet.ServletException;
@@ -18,9 +13,8 @@ import javax.servlet.http.HttpSession;
 
 @WebServlet(name = "Auth", urlPatterns = {"/Auth"})
 public class Auth extends HttpServlet {
-    private XMLTransform transform = new XMLTransform();
-    String erro = "";
-            
+    private DataAccess Base = new DataAccess();
+    
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=ISO-8859-1");
@@ -36,60 +30,29 @@ public class Auth extends HttpServlet {
         if(hash.containsKey("cmd")){
             cmd = hash.get("cmd").toString();
             if(cmd.equals("Login/auth")){
-                if(goAutenticar(hash)){
+                String erro_autenticacao = Base.goAutenticar(hash);
+                if(erro_autenticacao.equals("")){
                     session.setAttribute("cd_usuario_logado", hash.get("cd_login").toString());
-                    response.sendRedirect("Experimentos");
+                    response.sendRedirect("Painel");
                 } else {
-                    session.setAttribute("root_message", "<message type= 'erro' text='Usuário/senha incorretos!' />" + erro);
-                    response.sendRedirect("login.jsp");
+                    if(erro_autenticacao.equals(" ")){
+                        session.setAttribute("root_message", "<message type= 'erro' text='Usuário/senha incorretos!' />" + erro_autenticacao);
+                        response.sendRedirect("login.jsp");
+                    } else {
+                        session.setAttribute("root_message", "<message type= 'erro' text='Banco de Dados!' />" + erro_autenticacao);
+                        response.sendRedirect("login.jsp");
+                    }
                 }
             } else {
-                session.setAttribute("root_message", "<message type= 'erro' text='Comando não reconhecido!' />" + erro);
+                session.setAttribute("root_message", "<message type= 'erro' text='Comando não reconhecido!' />");
                 response.sendRedirect("login.jsp");
             }
         } else {
-            session.setAttribute("root_message", "<message type= 'erro' text='Acesso incorreto!' />" + erro);
+            session.setAttribute("root_message", "<message type= 'erro' text='Acesso incorreto!' />");
             response.sendRedirect("login.jsp");
         }
     }
-        
-    private boolean goAutenticar(Hashtable hash){ 
-        boolean auth = false;
-        String SQL = "";
-        
-        Cripta md5 = new Cripta();
-        
-        try {
-            Class.forName("com.mysql.jdbc.Driver");
-            String connectionUrl = "jdbc:mysql://localhost/ifrj?user=root&password=";
             
-            Connection con = DriverManager.getConnection(connectionUrl); 
-            
-            SQL = " SELECT  ";
-            SQL += " id_usuario, cd_login, nm_usuario, cd_email, ct_privilegio ";
-            SQL += " FROM tUsuario ";
-            SQL += " WHERE  cd_login = '" + hash.get("cd_login") + "' ";
-            SQL += " AND    pw_senha = '" + md5.encriptar(hash.get("pw_senha").toString()) + "'; ";
-            
-            ResultSet result = con.createStatement().executeQuery(SQL);
-            
-            if(!result.wasNull()){
-                while(result.next()){
-                    auth = true;
-                }
-            }
-        } catch (SQLException e) {
-            erro = "<message type= 'erro' text='SQL Exception: " + transform.toText(e.toString()) + "' />";
-            if(!SQL.equals("")) {
-                erro += "<message type= 'erro' text='"+ transform.toText(SQL) + "' />";
-            }
-        } catch (ClassNotFoundException cE) {
-            erro = "<message type= 'erro' text='Class Not Found Exception: " + transform.toText(cE.toString()) + "' />";
-        } finally {
-            return auth;
-        }
-    }
-    
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP
