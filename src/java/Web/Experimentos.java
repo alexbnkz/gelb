@@ -68,17 +68,7 @@ public class Experimentos extends HttpServlet {
             out.close();
         }
     }
-    
-    protected String listarExperimentos(){ 
-        Hashtable hash = new Hashtable();
-        return Base.listarExperimentos("LST", hash);
-    }
-    
-    protected String buscarExperimentos(String id_experimento, String nm_experimento){ 
-        Hashtable hash = new Hashtable();
-        return Base.listarExperimentos("LST", hash);
-    }
- 
+     
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP
