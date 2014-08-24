@@ -25,9 +25,9 @@
     </div>
     <div class="neacker">
         <div class="menu">
-            <div>| <span onclick="javascript:toBrowse('');">Painel</span></div>
+            <div>| <span onclick="javascript:toBrowse('Painel');">Painel</span></div>
             <div>| <span onclick="javascript:toBrowse('Experimentos');">Experimentos</span></div>
-            <div>| <span onclick="javascript:toBrowse('Meios');">Meios</span></div>
+            <div>| <span onclick="javascript:toBrowse('Meios');">Meios de cultura</span></div>
             <div>| <span onclick="javascript:toBrowse('Repiques');">Repiques</span></div>
             <div>| <span onclick="javascript:toBrowse('Levantamentos');">Levantamentos</span></div>
             <div>| <span onclick="javascript:toBrowse('Usuarios');">Usuários</span></div>
