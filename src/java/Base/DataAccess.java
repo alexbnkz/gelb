@@ -103,9 +103,15 @@ public class DataAccess {
                     }
                 }
                 
-                SQL = "INSERT INTO";
-                SQL += " tExperimento(id_experimento, nm_experimento, dt_experimento, tp_experimento, de_experimento) ";
-                SQL += " VALUES(" + novoCodigo + ", '" + nm_experimento + "', '" + dt_experimento + "', '" + tp_experimento + "', '" + de_experimento + "');";
+                if(novoCodigo.equals("1")) {
+                    SQL = "INSERT INTO";
+                    SQL += " tExperimento(id_experimento, nm_experimento, dt_experimento, tp_experimento, de_experimento, ct_painel, nm_arquivo) ";
+                    SQL += " VALUES(" + novoCodigo + ", '" + nm_experimento + "', '" + dt_experimento + "', '" + tp_experimento + "', '" + de_experimento + "', 'S', 'Vriesea');";
+                } else {
+                    SQL = "INSERT INTO";
+                    SQL += " tExperimento(id_experimento, nm_experimento, dt_experimento, tp_experimento, de_experimento) ";
+                    SQL += " VALUES(" + novoCodigo + ", '" + nm_experimento + "', '" + dt_experimento + "', '" + tp_experimento + "', '" + de_experimento + "');";
+                }
                 
                 con.createStatement().execute(SQL);    
                 xml = "<message type= 'aviso' text='Incluido com sucesso!' />";
@@ -125,8 +131,18 @@ public class DataAccess {
                 SQL = " DELETE FROM tExperimento ";
                 SQL += " WHERE id_experimento=" + id_experimento + "; ";
                 
-                con.createStatement().execute(SQL);    
-                xml = "<message type= 'aviso' text='Excluido com sucesso!' />";
+                if(buscarMeios("", id_experimento).equals("")){
+                    if(getDados("!SELECT ct_painel FROM tExperimento WHERE id_experimento = " + id_experimento + ";").equals("S")){
+                        con.createStatement().execute(SQL);    
+                        xml = "<message type= 'aviso' text='Excluido com sucesso!' />";
+                    }else{
+                        xml = "<message type= 'erro' text='Exclusão cancelada!' />";
+                        xml += "<message type= 'erro' text='Indução de brotos em Vriesea Botafogensis é o experimento principal!' />";
+                    }
+                }else{
+                    xml = "<message type= 'erro' text='Exclusão cancelada!' />";
+                    xml += "<message type= 'erro' text='Esse experimento tem relacionamento em Meios!' />";
+                }
             }
         } catch (SQLException e) {
             xml += "<message type= 'erro' text='SQL Exception: " + transform.toText(e.toString()) + "' />";
@@ -210,6 +226,8 @@ public class DataAccess {
     public String buscarExperimentos(String id_experimento, String nm_experimento)// <editor-fold defaultstate="collapsed">
     {
         Hashtable hash = new Hashtable();
+        hash.put("id_experimento", id_experimento);
+        hash.put("nm_experimento", nm_experimento);
         return listarExperimentos("LST", hash);
     }// </editor-fold>
 

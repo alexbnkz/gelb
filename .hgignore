@@ -49,3 +49,4 @@ build/web/WEB-INF/classes/Web/Repiques.class
 build/web/WEB-INF/classes/Web/Painel.class
 build/web/WEB-INF/classes/Base/DataAccess.class
 build/web/xsl/Vriesea.xsl
+build/web/xsl/painel.xsl
