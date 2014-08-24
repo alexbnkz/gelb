@@ -132,7 +132,7 @@ public class DataAccess {
                 SQL += " WHERE id_experimento=" + id_experimento + "; ";
                 
                 if(buscarMeios("", id_experimento).equals("")){
-                    if(getDados("!SELECT ct_painel FROM tExperimento WHERE id_experimento = " + id_experimento + ";").equals("S")){
+                    if(!getDados("SELECT ct_painel FROM tExperimento WHERE id_experimento = " + id_experimento + ";").equals("S")){
                         con.createStatement().execute(SQL);    
                         xml = "<message type= 'aviso' text='Excluido com sucesso!' />";
                     }else{
