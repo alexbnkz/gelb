@@ -48,7 +48,7 @@ public class Experimentos extends HttpServlet {
                 xml += Base.salvarExperimento(cmd, hash);
             }
             
-            xml += Base.listarExperimentos(cmd, hash);
+            xml += Base.listarExperimento(cmd, hash);
             
         } catch (Exception e) {
             xml += "<message type= 'erro' text='" + transform.toText(e.toString()) + "' />";

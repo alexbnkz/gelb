@@ -39,7 +39,8 @@ public class DataAccess {
             return erro;
         }
     }// </editor-fold>
-    public String goAutenticar(Hashtable hash){ 
+    public String goAutenticar(Hashtable hash)// <editor-fold defaultstate="collapsed">
+    { 
         String SQL = "";
         erro = " ";
         
@@ -74,9 +75,10 @@ public class DataAccess {
         } finally {
             return erro;
         }
-    }
+    }// </editor-fold>
     
-    public String salvarExperimento(String cmd, Hashtable hash){ 
+    public String salvarExperimento(String cmd, Hashtable hash)// <editor-fold defaultstate="collapsed">
+    { 
         String xml = "";
         String SQL = "";
         
@@ -131,7 +133,7 @@ public class DataAccess {
                 SQL = " DELETE FROM tExperimento ";
                 SQL += " WHERE id_experimento=" + id_experimento + "; ";
                 
-                if(buscarMeios("", id_experimento).equals("")){
+                if(buscarMeio("", id_experimento).equals("")){
                     if(!getDados("SELECT ct_painel FROM tExperimento WHERE id_experimento = " + id_experimento + ";").equals("S")){
                         con.createStatement().execute(SQL);    
                         xml = "<message type= 'aviso' text='Excluido com sucesso!' />";
@@ -154,8 +156,9 @@ public class DataAccess {
         } finally {
             return xml;
         }
-    }
-    public String listarExperimentos(String cmd, Hashtable hash){ 
+    }// </editor-fold>
+    public String listarExperimento(String cmd, Hashtable hash)// <editor-fold defaultstate="collapsed">
+    { 
         String xml = "";
         String SQL = "";
         
@@ -217,21 +220,22 @@ public class DataAccess {
         } finally {
             return xml;
         }
-    }
-    public String listarExperimentos()// <editor-fold defaultstate="collapsed">
+    }// </editor-fold>
+    public String listarExperimento()// <editor-fold defaultstate="collapsed">
     {
         Hashtable hash = new Hashtable();
-        return listarExperimentos("LST", hash);
+        return listarExperimento("LST", hash);
     }// </editor-fold>
-    public String buscarExperimentos(String id_experimento, String nm_experimento)// <editor-fold defaultstate="collapsed">
+    public String buscarExperimento(String id_experimento, String nm_experimento)// <editor-fold defaultstate="collapsed">
     {
         Hashtable hash = new Hashtable();
         hash.put("id_experimento", id_experimento);
         hash.put("nm_experimento", nm_experimento);
-        return listarExperimentos("LST", hash);
+        return listarExperimento("LST", hash);
     }// </editor-fold>
 
-    public String salvarMeio(String cmd, Hashtable hash){ 
+    public String salvarMeio(String cmd, Hashtable hash)// <editor-fold defaultstate="collapsed">
+    { 
         String xml = "";
         String SQL = "";
                 
@@ -292,8 +296,9 @@ public class DataAccess {
         } finally {
             return xml;
         }
-    }
-    public String listarMeios(String cmd, Hashtable hash){ 
+    }// </editor-fold>
+    public String listarMeio(String cmd, Hashtable hash)// <editor-fold defaultstate="collapsed">
+    { 
         String xml = "";
         String SQL = "";
         
@@ -359,18 +364,18 @@ public class DataAccess {
         } finally {
             return xml;
         }
-    }
-    public String listarMeios() // <editor-fold defaultstate="collapsed">
+    }// </editor-fold>
+    public String listarMeio() // <editor-fold defaultstate="collapsed">
     {
         Hashtable hash = new Hashtable();
-        return listarMeios("LST", hash);
+        return listarMeio("LST", hash);
     }// </editor-fold>
-    public String buscarMeios(String id_meio, String id_experimento) // <editor-fold defaultstate="collapsed">
+    public String buscarMeio(String id_meio, String id_experimento) // <editor-fold defaultstate="collapsed">
     {
         Hashtable hash = new Hashtable();
         hash.put("id_meio", id_meio);
         hash.put("id_experimento", id_experimento);
-        return listarMeios("SRCH", hash);
+        return listarMeio("SRCH", hash);
     }// </editor-fold>
 
 }
