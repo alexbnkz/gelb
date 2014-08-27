@@ -48,8 +48,8 @@ public class Meios extends HttpServlet {
                 xml += Base.salvarMeio(cmd, hash);
             }
             
-            xml += Base.listarExperimentos();
-            xml += Base.listarMeios(cmd, hash);
+            xml += Base.listarExperimento();
+            xml += Base.listarMeio(cmd, hash);
             
         } catch (Exception e) {
             xml += "<message type= 'erro' text='" + transform.toText(e.toString()) + "' />";

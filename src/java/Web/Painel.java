@@ -48,7 +48,7 @@ public class Painel extends HttpServlet {
             
             if(!id_experimento.trim().equals("")){
                 page = Base.getDados("SELECT nm_arquivo FROM tExperimento WHERE ct_painel = 'S';"); //Vriesea
-                xml += Base.buscarMeios("", id_experimento);
+                xml += Base.buscarMeio("", id_experimento);
             } else {
                 page = "painel";
             }
