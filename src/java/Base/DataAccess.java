@@ -378,4 +378,192 @@ public class DataAccess {
         return listarMeio("SRCH", hash);
     }// </editor-fold>
 
+    public String salvarUsuario(String cmd, Hashtable hash)// <editor-fold defaultstate="collapsed">
+    { 
+        String xml = "";
+        String SQL = "";
+        
+        Cripta md5 = new Cripta();
+        
+        try {
+            Class.forName("com.mysql.jdbc.Driver");
+            String connectionUrl = "jdbc:mysql://localhost/ifrj?user=root&password=";
+            
+            Connection con = DriverManager.getConnection(connectionUrl); 
+            
+            String id_usuario = hash.get("id").toString();
+            String cd_login = hash.get("cd_login").toString();
+            String pw_senha = hash.get("pw_senha").toString();
+            String nm_usuario = hash.get("nm_usuario").toString();
+            String cd_email = hash.get("cd_email").toString();
+            String ct_privilegio = hash.get("ct_privilegio").toString();
+            
+            if(cmd.equals("INS")){
+               if(!pw_senha.equals("****")){
+                   pw_senha = md5.encriptar(pw_senha);
+               }
+            }
+            if(cmd.equals("UPD")){
+               if(!pw_senha.equals("****")){
+                   pw_senha = md5.encriptar(pw_senha);
+               }
+            }
+            
+            if(cmd.equals("INS")){
+                ResultSet result = con.createStatement().executeQuery("SELECT MAX(id_usuario)+1 AS NewCodigo FROM tUsuario;");
+                
+                String novoCodigo = "1";
+                
+                if(result.next()){
+                    if(result.getString(1) != null){
+                        novoCodigo = result.getString("NewCodigo");
+                    }
+                }
+                
+                SQL = "INSERT INTO";
+                SQL += " tUsuario(id_usuario, cd_login, pw_senha, nm_usuario, cd_email, ct_privilegio) ";
+                SQL += " VALUES(" + novoCodigo + ", '" + cd_login + "', '" + pw_senha + "', '" + nm_usuario + "', '" + cd_email + "', '" + ct_privilegio + "');";                    
+                
+                con.createStatement().execute(SQL);    
+                xml = "<message type= 'aviso' text='Incluido com sucesso!' />";
+            }
+            if(cmd.equals("UPD")){
+                SQL = " UPDATE tUsuario SET ";
+                SQL += " cd_login='" + cd_login + "', ";
+                
+                if(!pw_senha.equals("****")){
+                   SQL += " pw_senha='" + pw_senha + "', ";
+                }
+                
+                SQL += " nm_usuario='" + nm_usuario + "', ";
+                SQL += " cd_email='" + cd_email + "', ";
+                SQL += " ct_privilegio='" + ct_privilegio + "' ";
+                SQL += " WHERE id_usuario=" + id_usuario + "; ";
+                
+                con.createStatement().execute(SQL);    
+                xml = "<message type= 'aviso' text='Atualizado com sucesso!' />";
+            }
+            if(cmd.equals("DEL")){
+                SQL = " DELETE FROM tUsuario ";
+                SQL += " WHERE id_usuario=" + id_usuario + "; ";
+                
+                con.createStatement().execute(SQL);    
+                xml = "<message type= 'aviso' text='Excluido com sucesso!' />";
+            }
+        } catch (SQLException e) {
+            xml += "<message type= 'erro' text='SQL Exception: " + transform.toText(e.toString()) + "' />";
+            if(!SQL.equals("")){
+                xml += "<message type= 'erro' text='" + transform.toText(SQL) + "' />";
+            }
+        } catch (ClassNotFoundException cE) {
+            xml += "<message type= 'erro' text='Class Not Found Exception: " + transform.toText(cE.toString()) + "' />";
+        } finally {
+            return xml;
+        }
+    }// </editor-fold>
+    public String listarUsuario(String cmd, Hashtable hash)// <editor-fold defaultstate="collapsed">
+    { 
+        String xml = "";
+        String SQL = "";
+        
+        try {
+            Class.forName("com.mysql.jdbc.Driver");
+            String connectionUrl = "jdbc:mysql://localhost/ifrj?user=root&password=";
+            
+            Connection con = DriverManager.getConnection(connectionUrl); 
+            
+            SQL = " SELECT  ";
+            SQL += " id_usuario, cd_login, pw_senha, nm_usuario, cd_email, ct_privilegio ";
+            SQL += " FROM tUsuario ";      
+            
+            if(cmd.equals("DET")){
+                SQL += " WHERE id_usuario = " + hash.get("id");    
+            }
+            
+            if(cmd.equals("SRCH")){
+                SQL += " WHERE ";    
+                boolean also = false;
+                
+                if(!hash.get("id_usuario").equals("")){
+                    if(also){SQL += " AND ";}
+                    SQL += " id_usuario = " + hash.get("id_usuario");  
+                    also = true;
+                }
+                if(!hash.get("cd_login").equals("")){
+                    if(also){SQL += " AND ";}
+                    SQL += " cd_login = '" + hash.get("cd_login") + "' ";  
+                    also = true;
+                } 
+                if(!hash.get("nm_usuario").equals("")){
+                    if(also){SQL += " AND ";}
+                    SQL += " nm_usuario = '" + hash.get("nm_usuario") + "' ";  
+                    also = true;
+                } 
+                if(!hash.get("cd_email").equals("")){
+                    if(also){SQL += " AND ";}
+                    SQL += " cd_email = '" + hash.get("cd_email") + "' ";  
+                    also = true;
+                }            
+            }
+            SQL += " ORDER BY ct_privilegio, nm_usuario ASC;";      
+            
+            ResultSet result = con.createStatement().executeQuery(SQL);
+            
+            if(!result.wasNull()){
+                while(result.next()){
+                    xml += " <usuario ";
+                    xml += " id_usuario = '" + transform.toText(result.getString("id_usuario")) + "' ";
+                    xml += " cd_login = '" + transform.toText(result.getString("cd_login")) + "' ";
+                    xml += " pw_senha = '****' ";
+                    xml += " nm_usuario = '" + transform.toText(result.getString("nm_usuario")) + "' ";
+                    xml += " cd_email = '" + transform.toText(result.getString("cd_email")) + "' ";
+                    xml += " ct_privilegio = '" + transform.toText(result.getString("ct_privilegio")) + "' ";
+                    
+                    if(result.getString("ct_privilegio").equals("A")){ // A - Administrador
+                        xml += " nm_privilegio = 'Administrador' ";
+                    } else {
+                        if(result.getString("ct_privilegio").equals("P")){ // P - Pesquisador
+                            xml += " nm_privilegio = 'Pesquisador' ";
+                        } else {
+                            xml += " nm_privilegio = 'Inativo' "; // X - Inativo
+                        }
+                    }
+                    
+                    xml += " > </usuario>";
+                }
+            }
+        } catch (SQLException e) {
+            xml += "<message type= 'erro' text='SQL Exception: " + transform.toText(e.toString()) + "' />";
+            if(!SQL.equals("")) {
+                xml += "<message type= 'erro' text='"+ transform.toText(SQL) + "' />";
+            }
+        } catch (ClassNotFoundException cE) {
+            xml += "<message type= 'erro' text='Class Not Found Exception: " + transform.toText(cE.toString()) + "' />";
+        } finally {
+            return xml;
+        }
+    }// </editor-fold>
+    public String listarUsuarios() // <editor-fold defaultstate="collapsed">
+    { 
+        Hashtable hash = new Hashtable();
+        return listarUsuario("LST", hash);
+    }// </editor-fold>
+    public String buscarUsuarios(String id_usuario, String cd_login, String nm_usuario, String cd_email)// <editor-fold defaultstate="collapsed">
+    { 
+        Hashtable hash = new Hashtable();
+        if(!id_usuario.equals("")){
+            hash.put("id_usuario", id_usuario);
+        }
+        if(!cd_login.equals("")){
+            hash.put("cd_login", cd_login);
+        }
+        if(!nm_usuario.equals("")){
+            hash.put("nm_usuario", nm_usuario);
+        }
+        if(!cd_email.equals("")){
+            hash.put("cd_email", cd_email);
+        }
+        return listarUsuario("LST", hash);
+    }// </editor-fold>
+
 }

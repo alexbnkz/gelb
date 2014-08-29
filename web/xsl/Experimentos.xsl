@@ -138,7 +138,7 @@
                         <div class="title-small" style="margin-left: 10px; display: block;">Lista</div>
                         
                         <div class="grid">
-                            <div class="legend" style="width: 30px;"></div>
+                            <div class="legend" style="width: 10px;"></div>
                             <div class="legend" style="width: 400px;">Experimento</div>
                             <div class="legend" style="width: 200px;">Data</div>
                             <xsl:for-each select="/root/experimento">

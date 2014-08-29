@@ -165,7 +165,7 @@
                                     <div class="title-small" style="margin-left: 10px; font-size: 14px;">
                                         <xsl:value-of select="@nm_experimento"/></div>
                                 </div>
-                            <div class="legend" style="width: 20px;"></div>
+                            <div class="legend" style="width: 10px;"></div>
                             <div class="legend" style="width: 200px;">Nome - Data de preparo</div>
                                 </xsl:if>
                                 <div class="row">
