@@ -41,7 +41,7 @@
                                     </div>
                                     <div class="xxsmall">
                                         <label>Nome do meio:</label> 
-                                            <input type="text" id="nm_meio" name="nm_meio" required="true" maxlength="100">
+                                            <input type="text" id="nm_meio" name="nm_meio" required="true" maxlength="10">
                                                 <xsl:attribute name="value"><xsl:value-of select="/root/meio/@nm_meio"/></xsl:attribute>
                                             </input>
                                     </div>
@@ -114,7 +114,7 @@
                                     </div>
                                     <div class="xxsmall">
                                         <label>Nome do meio:</label> 
-                                            <input type="text" id="nm_meio" name="nm_meio" required="true" maxlength="100" />
+                                            <input type="text" id="nm_meio" name="nm_meio" required="true" maxlength="10" />
                                     </div>
                                     <div class="small">
                                         <label>Data de preparo:</label> 
@@ -174,11 +174,11 @@
                                         </div>
                                     <div class="cellpadd" style="width: 200px;">
                                         <xsl:variable name="id_meio"><xsl:value-of select="@id_meio"/></xsl:variable>
-                                        <xsl:value-of select="/root/meio[@id_meio = $id_meio]/@nm_meio"/> - <xsl:value-of select="/root/meio[@id_meio = $id_meio]/@dt_meio"/>
+                                        <xsl:value-of select="@nm_meio"/> - <xsl:value-of select="@dt_meio"/>
                                         
                                         <input type="hidden" id="nm_meio_identificacao" name="nm_meio_identificacao">
                                             <xsl:attribute name="value">
-                                                <xsl:value-of select="/root/meio[@id_meio = $id_meio]/@nm_meio"/> - <xsl:value-of select="/root/meio[@id_meio = $id_meio]/@dt_meio"/> 
+                                                <xsl:value-of select="@nm_meio"/> - <xsl:value-of select="@dt_meio"/> 
                                             </xsl:attribute>
                                         </input>
                                     </div>
