@@ -37,7 +37,9 @@
                                                 <xsl:attribute name="value"><xsl:value-of select="/root/usuario/@nm_usuario"/></xsl:attribute>
                                             </input>
                                     </div>
-                                    <div class="xxsmall">
+                                </div>
+                                <div class="row">
+                                    <div class="xxxmedium">
                                         <label>E-mail do usuário:</label> 
                                             <input type="text" id="cd_email" name="cd_email" required="true" maxlength="50">
                                                 <xsl:attribute name="value"><xsl:value-of select="/root/usuario/@cd_email"/></xsl:attribute>
@@ -128,7 +130,9 @@
                                         <label>Nome do usuário:</label> 
                                             <input type="text" id="nm_usuario" name="nm_usuario" required="true" maxlength="30" />
                                     </div>
-                                    <div class="xxsmall">
+                                </div>
+                                <div class="row">
+                                    <div class="xxxmedium">
                                         <label>E-mail do usuário:</label> 
                                             <input type="text" id="cd_email" name="cd_email" required="true" maxlength="50" />
                                     </div>

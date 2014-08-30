@@ -11,6 +11,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 @WebServlet(name = "Painel", urlPatterns = {"/Painel"})
 public class Painel extends HttpServlet {
@@ -25,6 +26,8 @@ public class Painel extends HttpServlet {
         String xml = "";
         String page = "";
         String cmd = "";
+        
+        HttpSession session = request.getSession(true);
 
         try {
             for (Map.Entry en : request.getParameterMap().entrySet()) {
@@ -43,7 +46,16 @@ public class Painel extends HttpServlet {
             }
             
             //page = hash.get("cmd").toString().split("/")[0];
-
+            
+            String login = (String)session.getAttribute("login");
+            
+//            if(!login.equals("")){
+//                xml += Base.buscarUsuarios( "", login, "", "");
+//            } else {
+//                session.setAttribute("root_message", "<message type= 'erro' text='Usuário deslogado!' />");
+//                response.sendRedirect("login.jsp");
+//            }
+            
             String id_experimento = Base.getDados("SELECT id_experimento FROM tExperimento WHERE ct_painel = 'S';");
             
             if(!id_experimento.trim().equals("")){

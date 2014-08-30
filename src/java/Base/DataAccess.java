@@ -7,6 +7,10 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Hashtable;
+import java.util.Date;
+import java.util.Locale;
+import java.text.SimpleDateFormat;
+import java.util.concurrent.TimeUnit;
 
 public class DataAccess {
     String erro = "";
@@ -339,6 +343,15 @@ public class DataAccess {
             
             if(!result.wasNull()){
                     while(result.next()){
+                        
+                            SimpleDateFormat DateFormatBra = new SimpleDateFormat("dd/MM/yyyy", new Locale("pt", "BR"));
+                            SimpleDateFormat DateFormatUsa = new SimpleDateFormat("EEE MMM dd HH:mm:ss z yyyy", new Locale("en", "US"));
+                                                        
+                            Date d1 = DateFormatUsa.parse((new Date()).toString());
+                            Date d2 = DateFormatBra.parse(result.getString("dt_meio"));
+                                                                                    
+                            long nu_validade = 30 - (TimeUnit.MILLISECONDS.toHours(d1.getTime() - d2.getTime())/24);
+
                             xml += " <meio ";
                             xml += " id_meio = '" + transform.toText(result.getString("id_meio")) + "' ";
                             xml += " id_experimento = '" + transform.toText(result.getString("id_experimento")) + "' ";
@@ -349,7 +362,9 @@ public class DataAccess {
                                 xml += " nm_experimento = '' ";
                             }
                             xml += " nm_meio = '" + transform.toText(result.getString("nm_meio")) + "' ";
-                            xml += " dt_meio = '" + transform.toText(result.getString("dt_meio")) + "' ";
+                            xml += " dt_meio = '" + transform.toText(result.getString("dt_meio")) + "' ";                            
+                            xml += " dt_hoje = '" + DateFormatBra.format(d1).toString() + "' ";
+                            xml += " nu_validade = '" + nu_validade  + " dias ' ";
                             xml += " de_meio = '" + transform.toText(result.getString("de_meio")) + "' ";
                             xml += " > </meio>";
                     }

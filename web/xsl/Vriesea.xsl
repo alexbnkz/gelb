@@ -125,41 +125,87 @@
                     </div>
                     
                     
+                    <xsl:if test="count(/root/meio) > 0">
                     <div class="panel-grid">
                         
-                        
-                        <xsl:if test="count(/root/meio) > 0">
                         <div class="title-small" style="margin-left: 10px; display: block;">Meios de cultura</div>
                         
-                        <div class="grid">
+                        <div class="table">
                             <xsl:for-each select="/root/meio">
                                 <xsl:if test="@nm_experimento != ''">
                                
-                            <div class="legend" style="width: 20px;"></div>
-                            <div class="legend" style="width: 200px;">Nome - Data de preparo</div>
+                            <div class="legend" style="width: 10px;"></div>
+                            <div class="legend" style="width: 40px;">Nome</div>
+                            <div class="legend" style="width: 100px;">Data de preparo</div>
+                            <div class="legend" style="width: 220px;">Validade</div>
+                            <div class="legend" style="width: 90px;">Data Repique</div>
+                            <div class="legend" style="width: 100px;">Quantidade</div>
                                 </xsl:if>
                                 <div class="row">
-                                    <xsl:attribute name="onclick">javascript:TrocaComando('Meios/lst');Editar(<xsl:value-of select="@id_meio"/>);</xsl:attribute>
+                                    <!-- <xsl:attribute name="onclick">javascript:TrocaComando('Meios/lst');Editar(<xsl:value-of select="@id_meio"/>);</xsl:attribute> -->
                                     <div class="cell icon icon-editar" style="display: none;">
                                         </div>
-                                    <div class="cellpadd" style="width: 200px;">
-                                        <xsl:variable name="id_meio"><xsl:value-of select="@id_meio"/></xsl:variable>
-                                        <xsl:value-of select="/root/meio[@id_meio = $id_meio]/@nm_meio"/> - <xsl:value-of select="/root/meio[@id_meio = $id_meio]/@dt_meio"/>
-                                        
-                                        <input type="hidden" id="nm_meio_identificacao" name="nm_meio_identificacao">
-                                            <xsl:attribute name="value">
-                                                <xsl:value-of select="/root/meio[@id_meio = $id_meio]/@nm_meio"/> - <xsl:value-of select="/root/meio[@id_meio = $id_meio]/@dt_meio"/> 
-                                            </xsl:attribute>
-                                        </input>
+                                    <div class="cellpadd" style="width: 40px;">
+                                        <xsl:value-of select="@nm_meio"/>
                                     </div>
-                                   
+                                    <div class="cellpadd" style="width: 100px;">
+                                        <xsl:value-of select="@dt_meio"/>
+                                    </div>
+                                    <div class="cellpadd" style="width: 120px;">
+                                        <xsl:value-of select="@nu_validade"/>
+                                    </div>
+                                    <div class="cell" style="width: 110px;">
+                                        <button type="button" id="bt_repicar" name="bt_repicar" title="Repicar" onclick="javascript:alert('Repicar');">
+                                            <span>Repicar</span>
+                                        </button>
+                                    </div>
+                                    <div class="cell" style="width: 100px;">
+                                            <input type="text" id="dt_repique" name="dt_repique" disabled="true" required="true" maxlength="10" onblur="javascript:validateDate(this);" style="width: 90px;">
+                                                <xsl:attribute name="value"><xsl:value-of select="@dt_hoje"/></xsl:attribute>
+                                            </input>
+                                    </div>
+                                    <div class="cell" style="width: 100px;">
+                                            <input type="text" id="nu_planta" name="nu_planta" disabled="true" required="true" maxlength="10" onblur="javascript:validateDate(this);" style="width: 80px;" />
+                                    </div>
+                                    <div class="cell" style="width: 50px;">
+                                        <button type="button" id="bt_ok" name="bt_ok" title="Ok" onclick="javascript:alert('Ok');" style="display: block;">
+                                            <span>Ok</span>
+                                        </button>
+                                    </div>
+
                                 </div>
                             </xsl:for-each>
                         </div>
                         <div style="padding-bottom: 10px;"></div>
-                        </xsl:if>
                     </div>
+                    </xsl:if>
                     
+                    
+                    
+                    <xsl:if test="count(/root/login) > 0">
+                    <div class="panel-grid">
+                        
+                        <div class="title-small" style="margin-left: 10px; display: block;">Usuário logado</div>
+                        
+                        <div class="table">
+                            <div class="legend" style="width: 10px;"></div>
+                            <div class="legend" style="width: 200px;">Nome</div>
+                            <div class="legend" style="width: 300px;">E-mail</div>
+                            <div class="row">
+                                <div class="cell icon icon-editar" style="display: none;">
+                                    </div>
+                                <div class="cellpadd" style="width: 200px;">
+                                    <div><xsl:value-of select="/root/login/@nm_usuario"/></div>
+                                </div>
+                                <div class="cellpadd" style="width: 300px;">
+                                    <xsl:value-of select="/root/login/@cd_email"/>
+                                </div>
+                            </div>
+                        </div>
+                        <div style="padding-bottom: 10px;"></div>
+                    </div>
+                    </xsl:if>
+
                     
                 </div>
             </div>

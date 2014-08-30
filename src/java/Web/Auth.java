@@ -32,7 +32,7 @@ public class Auth extends HttpServlet {
             if(cmd.equals("Login/auth")){
                 String erro_autenticacao = Base.goAutenticar(hash);
                 if(erro_autenticacao.equals("")){
-                    session.setAttribute("cd_usuario_logado", hash.get("cd_login").toString());
+                    session.setAttribute("login", hash.get("cd_login").toString());
                     response.sendRedirect("Painel");
                 } else {
                     if(erro_autenticacao.equals(" ")){
