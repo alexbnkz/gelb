@@ -29,7 +29,7 @@
                 <div class="container">
                     
                     
-                    <div id="panel-form-cadastro" class="panel-form" style="display: block;">
+                    <div id="panel-form-cadastro" class="panel-form" style="display: none;">
                                                 
                         <div id="div-cadastro-left" style="display: block;">
                             
@@ -138,7 +138,7 @@
                             <div class="legend" style="width: 40px;">Nome</div>
                             <div class="legend" style="width: 100px;">Data de preparo</div>
                             <div class="legend" style="width: 220px;">Validade</div>
-                            <div class="legend" style="width: 90px;">Data Repique</div>
+                            <div class="legend" style="width: 90px;">Data de repique</div>
                             <div class="legend" style="width: 100px;">Quantidade</div>
                                 </xsl:if>
                                 <div class="row">
@@ -147,6 +147,9 @@
                                         </div>
                                     <div class="cellpadd" style="width: 40px;">
                                         <xsl:value-of select="@nm_meio"/>
+                                        <input type="hidden" id="id_meio" name="id_meio">
+                                            <xsl:attribute name="value"><xsl:value-of select="@id_meio"/></xsl:attribute>
+                                        </input>
                                     </div>
                                     <div class="cellpadd" style="width: 100px;">
                                         <xsl:value-of select="@dt_meio"/>
@@ -155,21 +158,29 @@
                                         <xsl:value-of select="@nu_validade"/>
                                     </div>
                                     <div class="cell" style="width: 110px;">
-                                        <button type="button" id="bt_repicar" name="bt_repicar" title="Repicar" onclick="javascript:alert('Repicar');">
+                                        <button type="button" id="bt_repicar" name="bt_repicar" title="Repicar">
+                                            <xsl:attribute name="onclick">javascript:Repicar(<xsl:value-of select="position()"/>);</xsl:attribute>
                                             <span>Repicar</span>
                                         </button>
                                     </div>
                                     <div class="cell" style="width: 100px;">
-                                            <input type="text" id="dt_repique" name="dt_repique" disabled="true" required="true" maxlength="10" onblur="javascript:validateDate(this);" style="width: 90px;">
-                                                <xsl:attribute name="value"><xsl:value-of select="@dt_hoje"/></xsl:attribute>
-                                            </input>
+                                        <input type="text" id="dt_repique" name="dt_repique" disabled="true" required="true" maxlength="10" onblur="javascript:validateDate(this);" style="width: 90px;">
+                                            <xsl:attribute name="value"><xsl:value-of select="@dt_hoje"/></xsl:attribute>
+                                        </input>
                                     </div>
                                     <div class="cell" style="width: 100px;">
-                                            <input type="text" id="nu_planta" name="nu_planta" disabled="true" required="true" maxlength="10" onblur="javascript:validateDate(this);" style="width: 80px;" />
+                                        <input type="text" id="qt_planta" name="qt_planta" disabled="true" required="true" maxlength="10" style="width: 80px;" />
+                                    </div>
+                                    <div class="cell" style="width: 80px;">
+                                        <button type="button" id="bt_ok" name="bt_ok" title="Ok" style="display: none;">
+                                            <xsl:attribute name="onclick">javascript:RepicarOK(<xsl:value-of select="position()"/>);</xsl:attribute>
+                                            <span>Ok</span>
+                                        </button>
                                     </div>
                                     <div class="cell" style="width: 50px;">
-                                        <button type="button" id="bt_ok" name="bt_ok" title="Ok" onclick="javascript:alert('Ok');" style="display: block;">
-                                            <span>Ok</span>
+                                        <button type="button" id="bt_cancelar" name="bt_cancelar" title="Cancelar" style="display: none;">
+                                            <xsl:attribute name="onclick">javascript:Repicar(<xsl:value-of select="position()"/>);</xsl:attribute>
+                                            <span style="color: #603030;">X</span>
                                         </button>
                                     </div>
 
@@ -191,6 +202,7 @@
                             <div class="legend" style="width: 10px;"></div>
                             <div class="legend" style="width: 200px;">Nome</div>
                             <div class="legend" style="width: 300px;">E-mail</div>
+                            <div class="legend" style="width: 300px;">Privilégio</div>
                             <div class="row">
                                 <div class="cell icon icon-editar" style="display: none;">
                                     </div>
@@ -199,6 +211,9 @@
                                 </div>
                                 <div class="cellpadd" style="width: 300px;">
                                     <xsl:value-of select="/root/login/@cd_email"/>
+                                </div>
+                                <div class="cellpadd" style="width: 300px;">
+                                    <xsl:value-of select="/root/login/@nm_privilegio"/>
                                 </div>
                             </div>
                         </div>

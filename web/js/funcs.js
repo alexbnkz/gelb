@@ -1,6 +1,9 @@
 function id(obj){
     return document.getElementById(obj);
 }
+function name(obj, i){
+    return document.getElementsByName(obj)[i];
+}
 function toBrowse(cmd){
     document.location = cmd.split('/')[0];
 }
@@ -117,5 +120,36 @@ function CalculaMeio(){
         id('vitaminas').value = ''; 
         id('sacarose').value = ''; 
         id('agar').value = ''; 
+    }
+}
+function Repicar(i){
+    if(name('bt_ok', i-1).style.display == 'none') {
+        name('bt_ok', i-1).style.display = 'block';   
+        name('bt_cancelar', i-1).style.display = 'block';      
+        name('bt_repicar', i-1).style.display = 'none';      
+        name('dt_repique', i-1).disabled = false;   
+        name('qt_planta', i-1).disabled = false;   
+        name('qt_planta', i-1).focus();   
+    } else {
+        name('bt_ok', i-1).style.display = 'none';
+        name('bt_cancelar', i-1).style.display = 'none';      
+        name('bt_repicar', i-1).style.display = 'block';      
+        name('dt_repique', i-1).disabled = true;   
+        name('qt_planta', i-1).disabled = true;   
+        name('qt_planta', i-1).value = '';   
+    }
+}
+function RepicarOK(i){
+    if(name('dt_repique', i-1).value != '') {
+        if(name('qt_planta', i-1).value != '') {
+            var sparam = 'id_meio=' + name('id_meio', i-1).value + '&dt_repique=' + name('dt_repique', i-1).value + '&qt_planta=' + name('qt_planta', i-1).value + '';
+            alert(sparam);
+        } else {
+            alert('Campo Quantidade inválido!');
+            name('qt_planta', i-1).focus();
+        }
+    } else {
+        alert('Campo Data de repique inválido!');
+        name('dt_repique', i-1).focus();
     }
 }
