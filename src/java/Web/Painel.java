@@ -49,12 +49,12 @@ public class Painel extends HttpServlet {
             
             String login = (String)session.getAttribute("login");
             
-//            if(!login.equals("")){
-//                xml += Base.buscarUsuarios( "", login, "", "");
-//            } else {
-//                session.setAttribute("root_message", "<message type= 'erro' text='Usuário deslogado!' />");
-//                response.sendRedirect("login.jsp");
-//            }
+            if(!login.equals("")){
+                xml += Base.getLogin(login);
+            } else {
+                session.setAttribute("root_message", "<message type= 'erro' text='Usuário deslogado!' />");
+                response.sendRedirect("login.jsp");
+            }
             
             String id_experimento = Base.getDados("SELECT id_experimento FROM tExperimento WHERE ct_painel = 'S';");
             
