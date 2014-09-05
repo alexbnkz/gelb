@@ -29,15 +29,6 @@ function ShowHideCadastro(){
     ShowHide('div-cadastro-right');  
     ShowHide('panel-form-cadastro');  
 }
-function slideAlert(text){
-    if(text != ''){
-        $('#slideAlert').text(encod_(text));
-    }
-    $('#slideAlert').toggle('slide', {direction: 'up'}, 1000);
-}
-function encod_(txt) {
-  return decodeURIComponent(escape(txt));
-}
 function validateDate(obj) {
     var vlr = obj.value;
 
@@ -152,9 +143,9 @@ function RepicarOK(i){
     if(name('dt_repique', i-1).value != '') {
         if(name('qt_planta', i-1).value != '') {
             var sparam = 'id_meio=' + name('id_meio', i-1).value + '&dt_repique=' + name('dt_repique', i-1).value + '&qt_planta=' + name('qt_planta', i-1).value + '';
-            slideAlert(sparam);
+            alert(sparam);
         } else {
-            alert(encod_('Campo Quantidade inválido!'));
+            alert('Campo Quantidade inválido!');
             name('qt_planta', i-1).focus();
         }
     } else {
