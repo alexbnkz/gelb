@@ -49,7 +49,7 @@ public class Painel extends HttpServlet {
             
             String login = (String)session.getAttribute("login");
             
-            if(!login.equals("")){
+            if(login != null && !login.isEmpty()){
                 xml += Base.getLogin(login);
             } else {
                 session.setAttribute("root_message", "<message type= 'erro' text='Usuário deslogado!' />");
