@@ -29,7 +29,7 @@
                 <div class="container">
                     
                     
-                    <div id="panel-form-cadastro" class="panel-form" style="display: none;">
+                    <div id="panel-form-cadastro" class="panel-form" style="display: block;">
                                                 
                         <div id="div-cadastro-left" style="display: block;">
                             
@@ -126,7 +126,7 @@
                     
                     
                     <xsl:if test="count(/root/meio) > 0">
-                    <div class="panel-grid">
+                    <div class="panel-grid" style="border-bottom: none;">
                         
                         <div class="title-small" style="margin-left: 10px; display: block;">Meios de cultura</div>
                         
@@ -228,6 +228,9 @@
         <xsl:if test="count(/root/message) > 0">
             <xsl:call-template name="aviso"/>
         </xsl:if>
+        <div id="slideAlert" name="slideAlert" class="aviso" onclick="javascript: slideAlert('');"> 
+        </div>
+
     </body>
 </html>
 

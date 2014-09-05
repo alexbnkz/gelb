@@ -29,6 +29,15 @@ function ShowHideCadastro(){
     ShowHide('div-cadastro-right');  
     ShowHide('panel-form-cadastro');  
 }
+function slideAlert(text){
+    if(text != ''){
+        $('#slideAlert').text(encod_(text));
+    }
+    $('#slideAlert').toggle('slide', {direction: 'up'}, 1000);
+}
+function encod_(txt) {
+  return decodeURIComponent(escape(txt));
+}
 function validateDate(obj) {
     var vlr = obj.value;
 
@@ -53,7 +62,7 @@ function validateDate(obj) {
             }
         }
         if (erro) {
-            alert('\"' + vlr + '\" não é uma data válida.');
+            alert(encod_('\"' + vlr + '\" não é uma data válida.'));
             obj.value = '';
             obj.focus();
             return false;
@@ -78,7 +87,7 @@ function validateForm(frm){
                     label = elem.innerHTML.replace(':', '');
                 }
                 if(elem.required && elem.value == ''){
-                    alert('Campo \"' + label + '\" inválido!');
+                    alert(encod_('Campo \"' + label + '\" inválido!'));
                     elem.focus();
                     valida = false;
                 }
@@ -143,13 +152,13 @@ function RepicarOK(i){
     if(name('dt_repique', i-1).value != '') {
         if(name('qt_planta', i-1).value != '') {
             var sparam = 'id_meio=' + name('id_meio', i-1).value + '&dt_repique=' + name('dt_repique', i-1).value + '&qt_planta=' + name('qt_planta', i-1).value + '';
-            alert(sparam);
+            slideAlert(sparam);
         } else {
-            alert('Campo Quantidade inválido!');
+            alert(encod_('Campo Quantidade inválido!'));
             name('qt_planta', i-1).focus();
         }
     } else {
-        alert('Campo Data de repique inválido!');
+        alert(encod_('Campo Data de repique inválido!'));
         name('dt_repique', i-1).focus();
     }
 }

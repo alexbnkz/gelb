@@ -35,36 +35,6 @@
     </div>
     </xsl:template>
     <xsl:template match="/" name="aviso">  
-    <style>
-        .aviso
-        {
-            width: 50%; 
-            padding: 10px; 
-            margin: 15px auto;
-            left: 25%;
-            position: absolute;
-            background: #FFFFEE;
-            text-align: center;
-            font-size: 11px;
-            display: none;
-            border: 1px solid #CCCCCC;
-            cursor: pointer;
-        }
-        .erro
-        {
-            width: 50%; 
-            padding: 10px; 
-            margin: 15px auto;
-            left: 25%;
-            position: absolute;
-            background: #FFEEEE;
-            text-align: center;
-            font-size: 11px;
-            display: none;
-            border: 1px solid #CCCCCC;
-            cursor: pointer;
-        }
-    </style>
     <script type="text/javascript">
         function aviso(obj){
             $(obj).toggle('slide', { direction: 'up' }, 1000);
