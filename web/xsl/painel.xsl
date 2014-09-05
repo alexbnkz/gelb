@@ -19,6 +19,15 @@
                 text-align: center;
                 border: 1px solid #666666;
             }
+            .hormonios tr{
+                padding: 5px;
+            }
+            .hormonios tr :link, :visited{
+                border: 1px solid #CCC;
+            }
+            .hormonios tr :hover{
+                border: 1px solid #333;
+            }
         </style>
     </head>
     <body>
@@ -33,6 +42,8 @@
                                                 
                         <div id="div-cadastro-left" style="display: block;">
                             
+                            <div class="title-small" style="margin-left: 10px">Crie um novo experimento!</div>
+                            <div class="title-small" style="margin-left: 10px">Crie um novo experimento!</div>
                             <div class="title-small" style="margin-left: 10px">Crie um novo experimento!</div>
                         </div>
                         
