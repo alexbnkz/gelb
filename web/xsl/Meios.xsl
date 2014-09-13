@@ -26,8 +26,10 @@
                         
                         <div style="width: 620px; margin: 0px auto; display: block;">
                             <form id="frm" name="frm" method="post" action="Meios" onsubmit="javascript:return validateForm(this);">
-                                <input type="hidden" id="cmd" name="cmd" value="Meios/lst"/>
-                                <input type="hidden" id="id" name="id" value=""/>
+                                <input type="hidden" id="cmd" name="cmd" value="Meios/upd"/>
+                                <input type="hidden" id="id" name="id">
+                                    <xsl:attribute name="value"><xsl:value-of select="/root/meio/@id_meio"/></xsl:attribute>
+                                </input>
                                 <div class="row">
                                     <div class="xmedium">
                                         <label>Escolha o Experimento:</label> 

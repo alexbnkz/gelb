@@ -486,31 +486,3 @@ form button:hover {
 .section-hr {
     border-bottom: 0px #333333 solid; 
 }
-.aviso
-{
-    width: 50%; 
-    padding: 10px; 
-    margin: 15px auto;
-    left: 25%;
-    position: absolute;
-    background: #FFFFEE;
-    text-align: center;
-    font-size: 11px;
-    display: none;
-    border: 1px solid #CCCCCC;
-    cursor: pointer;
-}
-.erro
-{
-    width: 50%; 
-    padding: 10px; 
-    margin: 15px auto;
-    left: 25%;
-    position: absolute;
-    background: #FFEEEE;
-    text-align: center;
-    font-size: 11px;
-    display: none;
-    border: 1px solid #CCCCCC;
-    cursor: pointer;
-}
