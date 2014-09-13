@@ -53,7 +53,7 @@ function validateDate(obj) {
             }
         }
         if (erro) {
-            alert(encod_('\"' + vlr + '\" não é uma data válida.'));
+            alert('\"' + vlr + '\" não é uma data válida.');
             obj.value = '';
             obj.focus();
             return false;
@@ -78,7 +78,7 @@ function validateForm(frm){
                     label = elem.innerHTML.replace(':', '');
                 }
                 if(elem.required && elem.value == ''){
-                    alert(encod_('Campo \"' + label + '\" inválido!'));
+                    alert('Campo \"' + label + '\" inválido!');
                     elem.focus();
                     valida = false;
                 }
@@ -149,7 +149,7 @@ function RepicarOK(i){
             name('qt_planta', i-1).focus();
         }
     } else {
-        alert(encod_('Campo Data de repique inválido!'));
+        alert('Campo Data de repique inválido!');
         name('dt_repique', i-1).focus();
     }
 }

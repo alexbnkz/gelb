@@ -1,7 +1,6 @@
 package Base;
 
-import Utils.Cripta;
-import Utils.XMLTransform;
+import Utils.*;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -14,16 +13,15 @@ import java.util.concurrent.TimeUnit;
 
 public class DataAccess {
     String erro = "";
+    private Settings s = new Settings();
     private XMLTransform transform = new XMLTransform();
     
     public String getDados(String SQL)// <editor-fold defaultstate="collapsed">
     {
         erro = " ";
         try {
-            Class.forName("com.mysql.jdbc.Driver");
-            String connectionUrl = "jdbc:mysql://localhost/ifrj?user=root&password=";
-            
-            Connection con = DriverManager.getConnection(connectionUrl); 
+            Class.forName(s.getSetting("driver"));
+            Connection con = DriverManager.getConnection(s.getSetting("stringconnection")); 
                            
             ResultSet result = con.createStatement().executeQuery(SQL);
             
@@ -51,10 +49,8 @@ public class DataAccess {
         Cripta md5 = new Cripta();
         
         try {
-            Class.forName("com.mysql.jdbc.Driver");
-            String connectionUrl = "jdbc:mysql://localhost/ifrj?user=root&password=";
-            
-            Connection con = DriverManager.getConnection(connectionUrl); 
+            Class.forName(s.getSetting("driver"));
+            Connection con = DriverManager.getConnection(s.getSetting("stringconnection")); 
             
             SQL = " SELECT  ";
             SQL += " id_usuario, cd_login, nm_usuario, cd_email, ct_privilegio ";
@@ -86,10 +82,8 @@ public class DataAccess {
         String SQL = "";
         
         try {
-            Class.forName("com.mysql.jdbc.Driver");
-            String connectionUrl = "jdbc:mysql://localhost/ifrj?user=root&password=";
-            
-            Connection con = DriverManager.getConnection(connectionUrl); 
+            Class.forName(s.getSetting("driver"));
+            Connection con = DriverManager.getConnection(s.getSetting("stringconnection")); 
             
             SQL = " SELECT  ";
             SQL += " id_usuario, cd_login, pw_senha, nm_usuario, cd_email, ct_privilegio ";
@@ -139,10 +133,8 @@ public class DataAccess {
         String SQL = "";
         
         try {
-            Class.forName("com.mysql.jdbc.Driver");
-            String connectionUrl = "jdbc:mysql://localhost/ifrj?user=root&password=";
-            
-            Connection con = DriverManager.getConnection(connectionUrl); 
+            Class.forName(s.getSetting("driver"));
+            Connection con = DriverManager.getConnection(s.getSetting("stringconnection")); 
             
             String id_experimento = hash.get("id").toString();
             String nm_experimento = hash.get("nm_experimento").toString();
@@ -219,10 +211,8 @@ public class DataAccess {
         String SQL = "";
         
         try {
-            Class.forName("com.mysql.jdbc.Driver");
-            String connectionUrl = "jdbc:mysql://localhost/ifrj?user=root&password=";
-            
-            Connection con = DriverManager.getConnection(connectionUrl); 
+            Class.forName(s.getSetting("driver"));
+            Connection con = DriverManager.getConnection(s.getSetting("stringconnection")); 
             
             SQL = " SELECT  ";
             SQL += " id_experimento, nm_experimento, dt_experimento, tp_experimento, de_experimento, nm_arquivo ";
@@ -328,7 +318,7 @@ public class DataAccess {
             if(cmd.equals("UPD")){
                 SQL = " UPDATE tMeio SET ";
                 SQL += " nm_meio='" + nm_meio + "', ";
-                SQL += " dt_meio='" + dt_meio + "' ";
+                SQL += " dt_meio='" + dt_meio + "', ";
                 SQL += " de_meio='" + de_meio + "' ";
                 SQL += " WHERE id_meio=" + id_meio + "; ";
                 

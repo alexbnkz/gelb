@@ -1,7 +1,7 @@
 package Web;
 
 import Base.DataAccess;
-import Utils.XMLTransform;
+import Utils.*;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Hashtable;
@@ -15,6 +15,7 @@ import javax.servlet.http.HttpSession;
 
 @WebServlet(name = "Painel", urlPatterns = {"/Painel"})
 public class Painel extends HttpServlet {
+    private Settings s = new Settings();
     private XMLTransform transform = new XMLTransform();
     private DataAccess Base = new DataAccess();
             
@@ -49,7 +50,7 @@ public class Painel extends HttpServlet {
             
             String login = (String)session.getAttribute("login");
             
-            if(login != null && !login.isEmpty()){
+            if(!login.equals("")){
                 xml += Base.getLogin(login);
             } else {
                 session.setAttribute("root_message", "<message type= 'erro' text='Usuário deslogado!' />");
@@ -75,7 +76,7 @@ public class Painel extends HttpServlet {
             xml = "<root>" + "<cmd>" + transform.toText(cmd) + "</cmd>" + xml + "</root>";
             
             String html;
-            html = transform.toHtml("D:\\GELB\\web\\xsl\\" + page + ".xsl", xml);
+            html = transform.toHtml(s.getSetting("root") + "web\\xsl\\" + page + ".xsl", xml);
             
             out.println(html);
         } catch (Exception e) {
