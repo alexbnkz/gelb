@@ -4,8 +4,12 @@ import Base.DataAccess;
 import Utils.*;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Hashtable;
+import java.util.Locale;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -62,6 +66,22 @@ public class Painel extends HttpServlet {
             if(!id_experimento.trim().equals("")){
                 page = Base.getDados("SELECT nm_arquivo FROM tExperimento WHERE ct_painel = 'S';"); //Vriesea
                 xml += Base.buscarMeio("", id_experimento);
+                
+                // Nome da planta
+                String dt_experimento = Base.getDados("SELECT dt_experimento FROM tExperimento " +
+                "WHERE id_experimento = " + id_experimento);
+
+                SimpleDateFormat DateFormatBra = new SimpleDateFormat("dd/MM/yyyy", new Locale("pt", "BR"));
+                SimpleDateFormat DateFormatUsa = new SimpleDateFormat("EEE MMM dd HH:mm:ss z yyyy", new Locale("en", "US"));
+
+                Date d1 = DateFormatUsa.parse((new Date()).toString());
+                Date d2 = DateFormatBra.parse(dt_experimento);
+
+                long nm_planta = TimeUnit.MILLISECONDS.toHours(d1.getTime() - d2.getTime())/24;
+                
+                xml += "<sistema nm_planta='VB" + nm_planta + "D' />";
+                xml += "<sistema dt_hoje='" + (new SimpleDateFormat("EEEE, dd/MM/yyyy HH:mm:ss").format(new Date()).toString()) + "' />";
+
             } else {
                 page = "painel";
             }
