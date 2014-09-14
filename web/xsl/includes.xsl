@@ -22,6 +22,7 @@
             <div onclick="javascript:toBrowse('Meios');">| <span>Meios de cultura</span></div>
             <div onclick="javascript:toBrowse('Repiques');">| <span>Repiques</span></div>
             <div onclick="javascript:toBrowse('Levantamentos');">| <span>Levantamentos</span></div>
+            <div onclick="javascript:toBrowse('Brotos');">| <span>Brotos</span></div>
             <div onclick="javascript:toBrowse('Usuarios');">| <span>Usuários</span></div>
         </div>
     </div>
