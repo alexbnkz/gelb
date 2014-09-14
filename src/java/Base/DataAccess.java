@@ -35,8 +35,8 @@ public class DataAccess {
             if(!SQL.equals("")) {
                 erro += "<message type= 'erro' text='"+ transform.toText(SQL) + "' />";
             }
-        } catch (ClassNotFoundException cE) {
-            erro = "<message type= 'erro' text='Class Not Found Exception: " + transform.toText(cE.toString()) + "' />";
+        } catch (Exception E) {
+            erro = "<message type= 'erro' text='Exception: " + transform.toText(E.toString()) + "' />";
         } finally {
             return erro;
         }
@@ -70,8 +70,8 @@ public class DataAccess {
             if(!SQL.equals("")) {
                 erro += "<message type= 'erro' text='"+ transform.toText(SQL) + "' />";
             }
-        } catch (ClassNotFoundException cE) {
-            erro = "<message type= 'erro' text='Class Not Found Exception: " + transform.toText(cE.toString()) + "' />";
+        } catch (Exception E) {
+            erro = "<message type= 'erro' text='Class Not Found Exception: " + transform.toText(E.toString()) + "' />";
         } finally {
             return erro;
         }
@@ -116,12 +116,12 @@ public class DataAccess {
                 }
             }
         } catch (SQLException e) {
-            xml += "<message type= 'erro' text='SQL Exception: " + transform.toText(e.toString()) + "' />";
+            xml = "<message type= 'erro' text='SQL Exception: " + transform.toText(e.toString()) + "' />";
             if(!SQL.equals("")) {
                 xml += "<message type= 'erro' text='"+ transform.toText(SQL) + "' />";
             }
-        } catch (ClassNotFoundException cE) {
-            xml += "<message type= 'erro' text='Class Not Found Exception: " + transform.toText(cE.toString()) + "' />";
+        } catch (Exception E) {
+            xml = "<message type= 'erro' text='Exception: " + transform.toText(E.toString()) + "' />";
         } finally {
             return xml;
         }
@@ -139,7 +139,6 @@ public class DataAccess {
             String id_experimento = hash.get("id").toString();
             String nm_experimento = hash.get("nm_experimento").toString();
             String dt_experimento = hash.get("dt_experimento").toString();
-            String tp_experimento = hash.get("tp_experimento").toString();
             String de_experimento = hash.get("de_experimento").toString();
                     
             if(cmd.equals("INS")){
@@ -155,12 +154,12 @@ public class DataAccess {
                 
                 if(novoCodigo.equals("1")) {
                     SQL = "INSERT INTO";
-                    SQL += " tExperimento(id_experimento, nm_experimento, dt_experimento, tp_experimento, de_experimento, ct_painel, nm_arquivo) ";
-                    SQL += " VALUES(" + novoCodigo + ", '" + nm_experimento + "', '" + dt_experimento + "', '" + tp_experimento + "', '" + de_experimento + "', 'S', 'Vriesea');";
+                    SQL += " tExperimento(id_experimento, nm_experimento, dt_experimento, de_experimento, ct_painel, nm_arquivo) ";
+                    SQL += " VALUES(" + novoCodigo + ", '" + nm_experimento + "', '" + dt_experimento + "', '" + de_experimento + "', 'S', 'Vriesea');";
                 } else {
                     SQL = "INSERT INTO";
-                    SQL += " tExperimento(id_experimento, nm_experimento, dt_experimento, tp_experimento, de_experimento) ";
-                    SQL += " VALUES(" + novoCodigo + ", '" + nm_experimento + "', '" + dt_experimento + "', '" + tp_experimento + "', '" + de_experimento + "');";
+                    SQL += " tExperimento(id_experimento, nm_experimento, dt_experimento, de_experimento) ";
+                    SQL += " VALUES(" + novoCodigo + ", '" + nm_experimento + "', '" + dt_experimento + "', '" + de_experimento + "');";
                 }
                 
                 con.createStatement().execute(SQL);    
@@ -170,7 +169,6 @@ public class DataAccess {
                 SQL = " UPDATE tExperimento SET ";
                 SQL += " nm_experimento='" + nm_experimento + "', ";
                 SQL += " dt_experimento='" + dt_experimento + "', ";
-                SQL += " tp_experimento='" + tp_experimento + "', ";
                 SQL += " de_experimento='" + de_experimento + "' ";
                 SQL += " WHERE id_experimento=" + id_experimento + "; ";
                 
@@ -199,8 +197,8 @@ public class DataAccess {
             if(!SQL.equals("")){
                 xml += "<message type= 'erro' text='" + transform.toText(SQL) + "' />";
             }
-        } catch (ClassNotFoundException cE) {
-            xml += "<message type= 'erro' text='Class Not Found Exception: " + transform.toText(cE.toString()) + "' />";
+        } catch (Exception E) {
+            xml += "<message type= 'erro' text='Class Not Found Exception: " + transform.toText(E.toString()) + "' />";
         } finally {
             return xml;
         }
@@ -215,7 +213,7 @@ public class DataAccess {
             Connection con = DriverManager.getConnection(s.getSetting("stringconnection")); 
             
             SQL = " SELECT  ";
-            SQL += " id_experimento, nm_experimento, dt_experimento, tp_experimento, de_experimento, nm_arquivo ";
+            SQL += " id_experimento, nm_experimento, dt_experimento, de_experimento, nm_arquivo ";
             SQL += " FROM tExperimento ";      
             if(cmd.equals("SRCH")){
                 SQL += " WHERE ";    
@@ -251,18 +249,15 @@ public class DataAccess {
                     xml += " id_experimento = '" + transform.toText(result.getString("id_experimento")) + "' ";
                     xml += " nm_experimento = '" + transform.toText(result.getString("nm_experimento")) + "' ";
                     xml += " dt_experimento = '" + transform.toText(result.getString("dt_experimento")) + "' ";
-                    xml += " tp_experimento = '" + transform.toText(result.getString("tp_experimento")) + "' ";
                     xml += " de_experimento = '" + transform.toText(result.getString("de_experimento")) + "' ";
                     xml += " > </experimento>";
                 }
             }
-        } catch (SQLException e) {
-            xml += "<message type= 'erro' text='SQL Exception: " + transform.toText(e.toString()) + "' />";
+        } catch (Exception E) {
+            xml = "<message type= 'erro' text='Exception: " + transform.toText(E.toString()) + "' />";
             if(!SQL.equals("")) {
                 xml += "<message type= 'erro' text='"+ transform.toText(SQL) + "' />";
             }
-        } catch (ClassNotFoundException cE) {
-            xml += "<message type= 'erro' text='Class Not Found Exception: " + transform.toText(cE.toString()) + "' />";
         } finally {
             return xml;
         }
@@ -294,6 +289,7 @@ public class DataAccess {
             String nm_meio = "";
             String dt_meio = "";
             String de_meio = "";
+            String ct_bloqueio = "";
             
             if(!cmd.equals("PREP")){
                 id_meio = hash.get("id").toString();
@@ -301,6 +297,7 @@ public class DataAccess {
                 nm_meio = hash.get("nm_meio").toString();
                 dt_meio = hash.get("dt_meio").toString();
                 de_meio = hash.get("de_meio").toString();
+                ct_bloqueio = hash.get("ct_bloqueio").toString();
             } else  {
                 id_meio = hash.get("id").toString();
                 dt_meio = hash.get("dt_meio").toString();
@@ -318,8 +315,8 @@ public class DataAccess {
                 }
                 
                 SQL = "INSERT INTO";
-                SQL += " tMeio(id_meio, id_experimento, nm_meio, dt_meio, de_meio) ";
-                SQL += " VALUES(" + novoCodigo + ", " + id_experimento + ", '" + nm_meio + "', '" + dt_meio + "', '" + de_meio + "');";
+                SQL += " tMeio(id_meio, id_experimento, nm_meio, dt_meio, de_meio, ct_bloqueio) ";
+                SQL += " VALUES(" + novoCodigo + ", " + id_experimento + ", '" + nm_meio + "', '" + dt_meio + "', '" + de_meio + "', '" + ct_bloqueio + "');";
                 
                 con.createStatement().execute(SQL);   
                 xml = "<message type= 'aviso' text='Incluido com sucesso!' />";
@@ -336,7 +333,8 @@ public class DataAccess {
                 SQL = " UPDATE tMeio SET ";
                 SQL += " nm_meio='" + nm_meio + "', ";
                 SQL += " dt_meio='" + dt_meio + "', ";
-                SQL += " de_meio='" + de_meio + "' ";
+                SQL += " de_meio='" + de_meio + "', ";
+                SQL += " ct_bloqueio='" + ct_bloqueio + "' ";
                 SQL += " WHERE id_meio=" + id_meio + "; ";
                 
                 con.createStatement().execute(SQL);    
@@ -354,8 +352,8 @@ public class DataAccess {
             if(!SQL.equals("")){
                 xml += "<message type= 'erro' text='" + transform.toText(SQL) + "' />";
             }
-        } catch (ClassNotFoundException cE) {
-            xml += "<message type= 'erro' text='Class Not Found Exception: " + transform.toText(cE.toString()) + "' />";
+        } catch (Exception E) {
+            xml += "<message type= 'erro' text='Exception: " + transform.toText(E.toString()) + "' />";
         } finally {
             return xml;
         }
@@ -372,7 +370,7 @@ public class DataAccess {
             Connection con = DriverManager.getConnection(connectionUrl); 
             
             SQL = " SELECT  ";
-            SQL += " M.id_meio, E.id_experimento, E.nm_experimento, M.nm_meio, M.dt_meio, M.de_meio ";
+            SQL += " M.id_meio, E.id_experimento, E.nm_experimento, M.nm_meio, M.dt_meio, M.de_meio, M.ct_bloqueio ";
             SQL += " FROM tMeio M INNER JOIN tExperimento E ON (M.id_experimento = E.id_experimento) ";
             
             if(cmd.equals("DET")){
@@ -425,16 +423,15 @@ public class DataAccess {
                             xml += " dt_hoje = '" + DateFormatBra.format(d1).toString() + "' ";
                             xml += " nu_validade = '" + nu_validade  + " dias ' ";
                             xml += " de_meio = '" + transform.toText(result.getString("de_meio")) + "' ";
+                            xml += " ct_bloqueio = '" + transform.toText(result.getString("ct_bloqueio")) + "' ";
                             xml += " > </meio>";
                     }
             }
-        } catch (SQLException e) {
-            xml += "<message type= 'erro' text='SQL Exception: " + transform.toText(e.toString()) + "' />";
+        } catch (Exception E) {
+            xml = "<message type= 'erro' text='Exception: " + transform.toText(E.toString()) + "' />";
             if(!SQL.equals("")) {
                 xml += "<message type= 'erro' text='"+ transform.toText(SQL) + "' />";
             }
-        } catch (ClassNotFoundException cE) {
-            xml += "<message type= 'erro' text='Class Not Found Exception: " + transform.toText(cE.toString()) + "' />";
         } finally {
             return xml;
         }
@@ -518,8 +515,8 @@ public class DataAccess {
             if(!SQL.equals("")){
                 xml += "<message type= 'erro' text='" + transform.toText(SQL) + "' />";
             }
-        } catch (ClassNotFoundException cE) {
-            xml += "<message type= 'erro' text='Class Not Found Exception: " + transform.toText(cE.toString()) + "' />";
+        } catch (Exception E) {
+            xml += "<message type= 'erro' text='Exception: " + transform.toText(E.toString()) + "' />";
         } finally {
             return xml;
         }
@@ -589,13 +586,11 @@ public class DataAccess {
                     xml += " > </repique>";
                 }
             }
-        } catch (SQLException e) {
-            xml += "<message type= 'erro' text='SQL Exception: " + transform.toText(e.toString()) + "' />";
+        } catch (Exception E) {
+            xml = "<message type= 'erro' text='Exception: " + transform.toText(E.toString()) + "' />";
             if(!SQL.equals("")) {
                 xml += "<message type= 'erro' text='"+ transform.toText(SQL) + "' />";
             }
-        } catch (ClassNotFoundException cE) {
-            xml += "<message type= 'erro' text='Class Not Found Exception: " + transform.toText(cE.toString()) + "' />";
         } finally {
             return xml;
         }
@@ -678,8 +673,8 @@ public class DataAccess {
             if(!SQL.equals("")){
                 xml += "<message type= 'erro' text='" + transform.toText(SQL) + "' />";
             }
-        } catch (ClassNotFoundException cE) {
-            xml += "<message type= 'erro' text='Class Not Found Exception: " + transform.toText(cE.toString()) + "' />";
+        } catch (Exception E) {
+            xml += "<message type= 'erro' text='Class Not Found Exception: " + transform.toText(E.toString()) + "' />";
         } finally {
             return xml;
         }
@@ -755,13 +750,11 @@ public class DataAccess {
                     xml += " > </usuario>";
                 }
             }
-        } catch (SQLException e) {
-            xml += "<message type= 'erro' text='SQL Exception: " + transform.toText(e.toString()) + "' />";
+        } catch (Exception E) {
+            xml = "<message type= 'erro' text='Exception: " + transform.toText(E.toString()) + "' />";
             if(!SQL.equals("")) {
                 xml += "<message type= 'erro' text='"+ transform.toText(SQL) + "' />";
             }
-        } catch (ClassNotFoundException cE) {
-            xml += "<message type= 'erro' text='Class Not Found Exception: " + transform.toText(cE.toString()) + "' />";
         } finally {
             return xml;
         }

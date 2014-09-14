@@ -80,7 +80,7 @@ public class Painel extends HttpServlet {
                 long nm_planta = TimeUnit.MILLISECONDS.toHours(d1.getTime() - d2.getTime())/24;
                 
                 xml += "<sistema nm_planta='VB" + nm_planta + "D' />";
-                xml += "<sistema dt_hoje='" + (new SimpleDateFormat("EEEE, dd/MM/yyyy HH:mm:ss").format(new Date()).toString()) + "' />";
+                xml += "<sistema dt_hoje='" + (new SimpleDateFormat("EEEE, dd/MM/yyyy HH:mm").format(new Date()).toString()) + "' />";
 
             } else {
                 page = "painel";
