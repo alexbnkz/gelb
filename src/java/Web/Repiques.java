@@ -55,23 +55,16 @@ public class Repiques extends HttpServlet {
                     String id_repique = Base.getDados("SELECT id_repique FROM tRepique " +
                             "WHERE id_meio = " + hash.get("id_meio").toString() + " AND ct_primeiro = 'S';");
                     if(id_repique.indexOf("'erro'") == -1){
+                        long nm_planta = 0;
+                        String dt_experimento = "";
+                        String ct_primeiro = "";
                         if(id_repique.trim().equals("")){
-                            
-                            String dt_experimento = Base.getDados("SELECT dt_experimento FROM tExperimento " +
-                            "WHERE id_experimento = " + hash.get("id_experimento").toString());
-
-                            SimpleDateFormat DateFormatBra = new SimpleDateFormat("dd/MM/yyyy", new Locale("pt", "BR"));
-                            SimpleDateFormat DateFormatUsa = new SimpleDateFormat("EEE MMM dd HH:mm:ss z yyyy", new Locale("en", "US"));
-                                                        
-                            Date d1 = DateFormatUsa.parse((new Date()).toString());
-                            Date d2 = DateFormatBra.parse(dt_experimento);
-                                                                                    
-                            long nm_planta = TimeUnit.MILLISECONDS.toHours(d1.getTime() - d2.getTime())/24;
-
-                            hash.put("nm_planta", "VB" + nm_planta + "D");
-                            hash.put("dt_planta", dt_experimento);
-                            hash.put("ct_primeiro", "S");
+                            ct_primeiro = "S";
                         }
+
+                            hash.put("nm_planta", "");
+                            hash.put("dt_planta", "");
+                            hash.put("ct_primeiro", ct_primeiro);
                     }
                 }
                 xml += Base.salvarRepique(cmd, hash);

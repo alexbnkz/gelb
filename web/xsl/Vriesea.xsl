@@ -28,8 +28,19 @@
                 <div class="title-large">Indução de brotos em Vriesea Botafogensis 2014.1</div>
                 <div class="container">
                     
+                    <div class="panel-grid" style="border-bottom: none;">
+                        
+                        <div class="title-small" style="text-align: center;">Nome da planta 
+                            <xsl:value-of select="/root/sistema/@nm_planta"/></div>
+                        
+                        <div style="text-align: center; font-size: 12px;"> 
+                            <xsl:value-of select="/root/sistema/@dt_hoje"/></div>
+
+                        <div style="padding-bottom: 10px;"></div>
+
+                    </div>
                     
-                    <div id="panel-form-cadastro" class="panel-form" style="display: none;">
+                    <div id="panel-form-cadastro" class="panel-form" style="display: block;">
                                                 
                         <div id="div-cadastro-left" style="display: block;">
                             
@@ -123,10 +134,9 @@
                             </form>
                         </div>
                     </div>
-                    
-                    
+                                        
                     <xsl:if test="count(/root/meio) > 0">
-                    <div class="panel-grid">
+                    <div class="panel-grid" style="border-bottom: none;">
                         
                         <div class="title-small" style="margin-left: 10px; display: block;">Meios de cultura</div>
                         
