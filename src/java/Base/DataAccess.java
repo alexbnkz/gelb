@@ -286,17 +286,26 @@ public class DataAccess {
         String SQL = "";
                 
         try {
-            Class.forName("com.mysql.jdbc.Driver");
-            String connectionUrl = "jdbc:mysql://localhost/ifrj?user=root&password=";
+            Class.forName(s.getSetting("driver"));
+            Connection con = DriverManager.getConnection(s.getSetting("stringconnection")); 
             
-            Connection con = DriverManager.getConnection(connectionUrl); 
+            String id_meio = "";
+            String id_experimento = "";
+            String nm_meio = "";
+            String dt_meio = "";
+            String de_meio = "";
             
-            String id_meio = hash.get("id").toString();
-            String id_experimento = hash.get("id_experimento").toString();
-            String nm_meio = hash.get("nm_meio").toString();
-            String dt_meio = hash.get("dt_meio").toString();
-            String de_meio = hash.get("de_meio").toString();
-                    
+            if(!cmd.equals("PREP")){
+                id_meio = hash.get("id").toString();
+                id_experimento = hash.get("id_experimento").toString();
+                nm_meio = hash.get("nm_meio").toString();
+                dt_meio = hash.get("dt_meio").toString();
+                de_meio = hash.get("de_meio").toString();
+            } else  {
+                id_meio = hash.get("id").toString();
+                dt_meio = hash.get("dt_meio").toString();
+            }
+            
             if(cmd.equals("INS")){
                 ResultSet result = con.createStatement().executeQuery("SELECT MAX(id_meio)+1 AS NewCodigo FROM tMeio;");
                 
@@ -314,6 +323,14 @@ public class DataAccess {
                 
                 con.createStatement().execute(SQL);   
                 xml = "<message type= 'aviso' text='Incluido com sucesso!' />";
+            }
+            if(cmd.equals("PREP")){
+                SQL = " UPDATE tMeio SET ";
+                SQL += " dt_meio='" + dt_meio + "' ";
+                SQL += " WHERE id_meio=" + id_meio + "; ";
+                
+                con.createStatement().execute(SQL);    
+                xml = "<message type= 'aviso' text='Atualizado com sucesso!' />";
             }
             if(cmd.equals("UPD")){
                 SQL = " UPDATE tMeio SET ";
@@ -446,7 +463,10 @@ public class DataAccess {
             
             Connection con = DriverManager.getConnection(connectionUrl); 
             
-            String id_repique = hash.get("id").toString();
+            String id_repique = "";
+            if(!cmd.equals("INS")){
+                id_repique = hash.get("id").toString();
+            }
             String id_meio = hash.get("id_meio").toString();
             String dt_repique = hash.get("dt_repique").toString();
             String nm_planta = hash.get("nm_planta").toString();
@@ -484,6 +504,7 @@ public class DataAccess {
                  
                 con.createStatement().execute(SQL);    
                 xml = "<message type= 'aviso' text='Atualizado com sucesso!' />";
+                xml += "<message type= 'erro' text='" + transform.toText(SQL) + "' />";
             }
             if(cmd.equals("DEL")){
                 SQL = " DELETE FROM tRepique ";
@@ -515,7 +536,7 @@ public class DataAccess {
             Connection con = DriverManager.getConnection(connectionUrl); 
             
             SQL = " SELECT  ";
-            SQL += " id_repique, id_meio, dt_repique, nm_planta, dt_planta, qt_planta ";
+            SQL += " id_repique, id_meio, dt_repique, nm_planta, dt_planta, qt_planta, ct_primeiro ";
             SQL += " FROM tRepique ";      
             if(cmd.equals("SRCH")){
                 SQL += " WHERE ";    

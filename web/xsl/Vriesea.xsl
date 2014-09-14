@@ -151,14 +151,14 @@
                                             <xsl:attribute name="value"><xsl:value-of select="@id_meio"/></xsl:attribute>
                                         </input>
                                     </div>
-                                    <div id="dvDtMeio" name="dvDtMeio" class="cell" style="width: 110px;">
+                                    <div id="dvDtMeio" name="dvDtMeio" class="cell" style="width: 100px;">
                                        <xsl:value-of select="@dt_meio"/>
                                     </div>
                                     <div id="inDtMeio" name="inDtMeio" class="cell" style="width: 110px; display: none;">
                                         <input type="text" id="dt_meio" name="dt_meio" required="true" maxlength="10" onblur="javascript:validateDate(this);" onfocus="$(this).mask('99/99/9999');" style="width: 90px;" />
                                     </div>
                                     <div id="btAtualiza" name="btAtualiza" class="cell" style="width: 120px; display: none;">
-                                        <button type="button" id="bt_salvar" name="bt_salvar" title="Atualizar data de preparo">
+                                        <button type="button" id="bt_atualiza" name="bt_atualiza" title="Atualizar data de preparo">
                                             <xsl:attribute name="onclick">javascript:AtualizarDtPreparo(<xsl:value-of select="position()"/>);</xsl:attribute>
                                             <span>Atualizar</span>
                                         </button>
@@ -234,8 +234,9 @@
                 </div>
             </div>
         </div>
-        <iframe id="iRepique" name="iRepique" style="width: 200px; float: right;" />
-        <iframe id="iPreparo" name="iRepique" style="width: 200px; float: right;" />
+        
+        <div><iframe id="iRepique" name="iRepique" style="display: none;" /></div>
+        <div><iframe id="iPreparo" name="iPreparo" style="display: none;" /></div>
         <xsl:if test="count(/root/message) > 0">
             <xsl:call-template name="aviso"/>
         </xsl:if>
