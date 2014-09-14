@@ -8,16 +8,8 @@
     <script type="text/javascript" src="js/funcs.js"></script>
     <script type="text/javascript" src="js/jquery-1.9.1.min.js"></script>
     <script type="text/javascript" src="js/jquery-ui-1.10.3.js"></script>
-    <style>
-        #div-cadastro-right {
-            width: 180px; 
-            float: right; 
-        }
-        #div-cadastro-left {
-            width: 100%; 
-            float: left;
-        }
-    </style>
+    <script type="text/javascript" src="js/jquery.maskedinput.min.js"></script>
+    
     </xsl:template>
     <xsl:template match="/" name="menu">  
     <div class="header">

@@ -49,7 +49,7 @@
                                     </div>
                                     <div class="small">
                                         <label>Data de preparo:</label> 
-                                        <input type="text" id="dt_meio" name="dt_meio" required="true" maxlength="10" onblur="javascript:validateDate(this);">
+                                        <input type="text" id="dt_meio" name="dt_meio" required="true" maxlength="10" onblur="javascript:validateDate(this);" onfocus="javascript:$(this).mask('99/99/9999');">
                                                 <xsl:attribute name="value"><xsl:value-of select="/root/meio/@dt_meio"/></xsl:attribute>
                                             </input>
                                     </div>
@@ -120,7 +120,7 @@
                                     </div>
                                     <div class="small">
                                         <label>Data de preparo:</label> 
-                                        <input type="text" id="dt_meio" name="dt_meio" required="true" maxlength="10" onblur="javascript:validateDate(this);" />
+                                        <input type="text" id="dt_meio" name="dt_meio" required="true" maxlength="10" onblur="javascript:validateDate(this);" onfocus="javascript:$(this).mask('99/99/9999');" />
                                     </div>
                                 </div>
                                 <div class="row">

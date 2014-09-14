@@ -89,6 +89,14 @@
 }
 /** Site responsivo fim **/
 
+#div-cadastro-right {
+    width: 180px; 
+    float: right; 
+}
+#div-cadastro-left {
+    width: 100%; 
+    float: left;
+}
 
 /*   FORM STYLES   */
 form {
