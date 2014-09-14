@@ -160,8 +160,14 @@ function Repicar(i){
 function RepicarOK(i){
     if(name('dt_repique', i-1).value != '') {
         if(name('qt_planta', i-1).value != '') {
-            var sparam = 'id_meio=' + name('id_meio', i-1).value + '&dt_repique=' + name('dt_repique', i-1).value + '&qt_planta=' + name('qt_planta', i-1).value + '';
-            alert(sparam);
+            var sparam = 'Repiques?cmd=blank/ins';
+                sparam += '&id_experimento=1';
+                sparam += '&id_meio=' + name('id_meio', i-1).value;
+                sparam += '&dt_repique=' + name('dt_repique', i-1).value;
+                sparam += '&qt_planta=' + name('qt_planta', i-1).value + '';
+            
+            id('iRepique').src = sparam;
+            
             name('bt_ok', i-1).style.display = 'none';
             name('bt_cancelar', i-1).style.display = 'none';   
             name('qt_planta', i-1).style.display = 'none';    
@@ -182,5 +188,19 @@ function RepicarOK(i){
     } else {
         alert(enco('Campo Data de repique inválido!'));
         name('dt_repique', i-1).focus();
+    }
+}
+function AtualizarDtPreparo(i){
+    if(name('dt_meio', i-1).value != '') {
+         var sparam = 'Meios?cmd=blank/prep&id=' + name('id_meio', i-1).value + '&dt_meio=' + name('dt_meio', i-1).value + '';
+        
+        id('iPreparo').src = sparam;
+        
+        name('btAtualiza', i-1).style.display = 'none';
+        name('inDtMeio', i-1).style.display = 'none';
+        
+    } else {
+        alert(enco('Campo Data de preparo inválido!'));
+        name('dt_meio', i-1).focus();
     }
 }

@@ -45,12 +45,15 @@ public class Meios extends HttpServlet {
             
             page = hash.get("cmd").toString().split("/")[0];           
             
-            if(cmd.equals("INS") || cmd.equals("UPD") || cmd.equals("DEL")){
+            if(cmd.equals("PREP")){
                 xml += Base.salvarMeio(cmd, hash);
+            }else {
+                if(cmd.equals("INS") || cmd.equals("UPD") || cmd.equals("DEL")){
+                    xml += Base.salvarMeio(cmd, hash);
+                } 
+                xml += Base.listarExperimento();
+                xml += Base.listarMeio(cmd, hash);
             }
-            
-            xml += Base.listarExperimento();
-            xml += Base.listarMeio(cmd, hash);
             
         } catch (Exception e) {
             xml += "<message type= 'erro' text='" + transform.toText(e.toString()) + "' />";
@@ -61,7 +64,11 @@ public class Meios extends HttpServlet {
             xml = "<root>" + "<cmd>" + transform.toText(cmd) + "</cmd>" + xml + "</root>";
             
             String html;
-            html = transform.toHtml(s.getSetting("root") + "web\\xsl\\" + page + ".xsl", xml);
+            if(!page.equals("blank") && !page.equals("")) {
+                html = transform.toHtml(s.getSetting("root") + "web\\xsl\\" + page + ".xsl", xml);
+            }else{
+                html = xml.replace("<", "<br /|").replace(">", "<br />").replace("/|", "/>");
+            }
             
             out.println(html);
         } catch (Exception e) {
