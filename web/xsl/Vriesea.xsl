@@ -145,31 +145,40 @@
                                     <!-- <xsl:attribute name="onclick">javascript:TrocaComando('Meios/lst');Editar(<xsl:value-of select="@id_meio"/>);</xsl:attribute> -->
                                     <div class="cell icon icon-editar" style="display: none;">
                                         </div>
-                                    <div class="cellpadd" style="width: 40px;">
+                                    <div class="cellpadd" style="width: 50px;">
                                         <xsl:value-of select="@nm_meio"/>
                                         <input type="hidden" id="id_meio" name="id_meio">
                                             <xsl:attribute name="value"><xsl:value-of select="@id_meio"/></xsl:attribute>
                                         </input>
                                     </div>
-                                    <div class="cellpadd" style="width: 100px;">
-                                        <xsl:value-of select="@dt_meio"/>
+                                    <div id="dvDtMeio" name="dvDtMeio" class="cell" style="width: 110px;">
+                                       <xsl:value-of select="@dt_meio"/>
                                     </div>
-                                    <div class="cellpadd" style="width: 120px;">
+                                    <div id="inDtMeio" name="inDtMeio" class="cell" style="width: 110px; display: none;">
+                                        <input type="text" id="dt_meio" name="dt_meio" required="true" maxlength="10" onblur="javascript:validateDate(this);" onfocus="$(this).mask('99/99/9999');" style="width: 90px;" />
+                                    </div>
+                                    <div id="btAtualiza" name="btAtualiza" class="cell" style="width: 120px; display: none;">
+                                        <button type="button" id="bt_salvar" name="bt_salvar" title="Atualizar data de preparo">
+                                            <xsl:attribute name="onclick">javascript:AtualizarDtPreparo(<xsl:value-of select="position()"/>);</xsl:attribute>
+                                            <span>Atualizar</span>
+                                        </button>
+                                    </div>
+                                    <div id="dvValidade" name="dvValidade" class="cellpadd" style="width: 120px;">
                                         <xsl:value-of select="@nu_validade"/>
                                     </div>
-                                    <div class="cell" style="width: 110px;">
+                                    <div class="cell" style="width: 100px;">
                                         <button type="button" id="bt_repicar" name="bt_repicar" title="Repicar">
                                             <xsl:attribute name="onclick">javascript:Repicar(<xsl:value-of select="position()"/>);</xsl:attribute>
                                             <span>Repicar</span>
                                         </button>
                                     </div>
                                     <div class="cell" style="width: 100px;">
-                                        <input type="text" id="dt_repique" name="dt_repique" disabled="true" required="true" maxlength="10" onblur="javascript:validateDate(this);" style="width: 90px;">
+                                        <input type="text" id="dt_repique" name="dt_repique" disabled="true" required="true" maxlength="10" onblur="javascript:validateDate(this);" onfocus="$(this).mask('99/99/9999');" style="width: 90px;">
                                             <xsl:attribute name="value"><xsl:value-of select="@dt_hoje"/></xsl:attribute>
                                         </input>
                                     </div>
                                     <div class="cell" style="width: 100px;">
-                                        <input type="text" id="qt_planta" name="qt_planta" disabled="true" required="true" maxlength="10" style="width: 80px;" />
+                                        <input type="text" id="qt_planta" name="qt_planta" disabled="true" required="true" maxlength="4" style="width: 80px;" />
                                     </div>
                                     <div class="cell" style="width: 80px;">
                                         <button type="button" id="bt_ok" name="bt_ok" title="Ok" style="display: none;">
@@ -225,9 +234,13 @@
                 </div>
             </div>
         </div>
+        <iframe id="iRepique" name="iRepique" style="width: 200px; float: right;" />
+        <iframe id="iPreparo" name="iRepique" style="width: 200px; float: right;" />
         <xsl:if test="count(/root/message) > 0">
             <xsl:call-template name="aviso"/>
         </xsl:if>
+        <div id="slideAlert" name="slideAlert" class="aviso" onclick="javascript: slideAlert('');"> 
+        </div>
     </body>
 </html>
 

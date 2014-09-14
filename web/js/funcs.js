@@ -29,10 +29,28 @@ function ShowHideCadastro(){
     ShowHide('div-cadastro-right');  
     ShowHide('panel-form-cadastro');  
 }
+
+function slideAlert(text){
+    if(text != ''){
+        $('#slideAlert').text(encod_(text));
+    }
+    $('#slideAlert').toggle('slide', {direction: 'up'}, 1000);
+}
+
+function enco(txt) {
+  return decodeURIComponent(escape(txt));
+}
+
+function tabDate(orig, dest) {
+    if (orig.value.replace(/_/g, "").length == 10 && orig.value.replace(/_/g, "") != "") {
+        id(dest).focus();
+    }
+}
+
 function validateDate(obj) {
     var vlr = obj.value;
 
-    if (vlr != '') {
+    if (vlr.replace(/_/g, "").replace(/\//g, "") != '') {
         var date = vlr;
         var DtArray = new Array;
         var ExpReg = new RegExp('((0[1-9]|[1-9])|[12][0-9]|3[01])/((0[1-9]|[1-9])|1[012])/(19|20)[0-9][0-9]');
@@ -53,7 +71,7 @@ function validateDate(obj) {
             }
         }
         if (erro) {
-            alert('\"' + vlr + '\" não é uma data válida.');
+            alert('\"' + vlr.replace(/_/g, "") + '\" não é uma data válida.');
             obj.value = '';
             obj.focus();
             return false;
@@ -78,7 +96,7 @@ function validateForm(frm){
                     label = elem.innerHTML.replace(':', '');
                 }
                 if(elem.required && elem.value == ''){
-                    alert('Campo \"' + label + '\" inválido!');
+                    alert(enco('Campo \"' + label + '\" inválido!'));
                     elem.focus();
                     valida = false;
                 }
@@ -101,7 +119,7 @@ function Editar(ident){
     id('frm').submit();
 }
 function Excluir(ident, nome){
-    if (confirm('Tem certeza que deseja excuir "' + nome + '"?')) {
+    if (confirm(enco('Tem certeza que deseja excuir "' + nome + '"?'))) {
         id('id').value = ident;
         id('cmd').value = id('cmd').value.split('/')[0] + '/del';
         id('frm').submit();
@@ -144,12 +162,25 @@ function RepicarOK(i){
         if(name('qt_planta', i-1).value != '') {
             var sparam = 'id_meio=' + name('id_meio', i-1).value + '&dt_repique=' + name('dt_repique', i-1).value + '&qt_planta=' + name('qt_planta', i-1).value + '';
             alert(sparam);
+            name('bt_ok', i-1).style.display = 'none';
+            name('bt_cancelar', i-1).style.display = 'none';   
+            name('qt_planta', i-1).style.display = 'none';    
+            name('dt_repique', i-1).style.display = 'none'; 
+            
+            name('dvDtMeio', i-1).style.display = 'none';
+            name('inDtMeio', i-1).style.display = 'table-cell';
+            name('btAtualiza', i-1).style.display = 'table-cell';
+            
+            name('dt_meio', i-1).focus();
+            
+            name('dvValidade', i-1).style.display = 'none';
+            
         } else {
-            alert('Campo Quantidade inválido!');
+            alert(enco('Campo Quantidade inválido!'));
             name('qt_planta', i-1).focus();
         }
     } else {
-        alert('Campo Data de repique inválido!');
+        alert(enco('Campo Data de repique inválido!'));
         name('dt_repique', i-1).focus();
     }
 }

@@ -53,3 +53,5 @@ build/web/xsl/painel.xsl
 build/web/xsl/Usuarios.xsl
 build/web/xsl/Vriesea.xsl.0.nblh~
 build/web/WEB-INF/classes/Utils/Settings.class
+build/web/js/jquery.maskedinput.min.js.js
+build/web/js/jquery.maskedinput.min.js
