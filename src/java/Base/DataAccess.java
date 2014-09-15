@@ -71,7 +71,10 @@ public class DataAccess {
                 erro += "<message type= 'erro' text='"+ transform.toText(SQL) + "' />";
             }
         } catch (Exception E) {
-            erro = "<message type= 'erro' text='Class Not Found Exception: " + transform.toText(E.toString()) + "' />";
+            erro = "<message type= 'erro' text='goAutenticar: " + transform.toText(E.toString()) + "' />";
+            if(!SQL.equals("")) {
+                erro += "<message type= 'erro' text='"+ transform.toText(SQL) + "' />";
+            }
         } finally {
             return erro;
         }

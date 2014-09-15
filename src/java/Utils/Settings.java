@@ -8,7 +8,8 @@ import java.util.Properties;
 public class Settings {
     public String getSetting(String Property) throws IOException{
         Properties p = new Properties();
-        File file = new File("D:\\GELB\\app.settings");
+        //File file = new File("D:\\GELB\\web\\app.settings");
+        File file = new File("/usr/local/shared/tomcat/beninkz/webapps/ROOT/app.settings");
         p.load(new FileInputStream(file));
         return p.getProperty(Property);
     }
