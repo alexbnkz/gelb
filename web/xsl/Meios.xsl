@@ -41,7 +41,7 @@
 					</xsl:for-each>
                                         </select>
                                     </div>
-                                    <div class="xxsmall">
+                                    <div class="small">
                                         <label>Nome do meio:</label> 
                                             <input type="text" id="nm_meio" name="nm_meio" required="true" maxlength="10">
                                                 <xsl:attribute name="value"><xsl:value-of select="/root/meio/@nm_meio"/></xsl:attribute>
@@ -53,6 +53,20 @@
                                                 <xsl:attribute name="value"><xsl:value-of select="/root/meio/@dt_meio"/></xsl:attribute>
                                             </input>
                                     </div>
+                                    <div class="small">
+                                        <label>Bloquear:</label> 
+                                        <select type="text" id="ct_bloqueio" name="ct_bloqueio">
+                                            <xsl:if test="/root/meio/@ct_bloqueio = 'S'">
+                                                <option value="S" selected="true">Sim</option>
+                                                <option value="">Não</option>
+                                            </xsl:if>    
+                                            <xsl:if test="/root/meio/@ct_bloqueio != 'S'">
+                                                <option value="S">Sim</option>
+                                                <option value="" selected="true">Não</option>
+                                            </xsl:if>    
+                                        </select>
+                                    </div>
+
                                 </div>
                                 <div class="row">
                                     <div class="xxlarge">
@@ -114,13 +128,20 @@
 					</xsl:for-each>
                                         </select>
                                     </div>
-                                    <div class="xxsmall">
+                                    <div class="small">
                                         <label>Nome do meio:</label> 
                                             <input type="text" id="nm_meio" name="nm_meio" required="true" maxlength="10" />
                                     </div>
                                     <div class="small">
                                         <label>Data de preparo:</label> 
                                         <input type="text" id="dt_meio" name="dt_meio" required="true" maxlength="10" onblur="javascript:validateDate(this);" onfocus="javascript:$(this).mask('99/99/9999');" />
+                                    </div>
+                                    <div class="small">
+                                        <label>Bloquear:</label> 
+                                        <select type="text" id="ct_bloqueio" name="ct_bloqueio">
+                                            <option value="S">Sim</option>
+                                            <option value="" selected="true">Não</option>
+                                        </select>
                                     </div>
                                 </div>
                                 <div class="row">

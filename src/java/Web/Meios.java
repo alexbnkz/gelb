@@ -65,7 +65,7 @@ public class Meios extends HttpServlet {
             
             String html;
             if(!page.equals("blank") && !page.equals("")) {
-                html = transform.toHtml(s.getSetting("root") + "web\\xsl\\" + page + ".xsl", xml);
+                html = transform.toHtml(s.getSetting("root") + "xsl\\" + page + ".xsl", xml);
             }else{
                 html = xml.replace("<", "<br /|").replace(">", "<br />").replace("/|", "/>");
             }

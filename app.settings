@@ -1,8 +1,0 @@
-#MySQL
-
-driver              = com.mysql.jdbc.Driver
-stringconnection    = jdbc:mysql://localhost/ifrj?user=root&password=
-
-#System root
-
-root                = D:\\GELB\\

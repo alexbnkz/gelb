@@ -1,0 +1,10 @@
+#MySQL
+
+driver              = com.mysql.jdbc.Driver
+#stringconnection    = jdbc:mysql://localhost/ifrj?user=root&password=
+stringconnection    = jdbc:mysql://localhost:3307/beninkz?autoReconnect=true&username=beninkz&password=Missy2014
+
+#System root
+
+#root                = D:\\GELB\\web\\
+root                = /usr/local/shared/tomcat/beninkz/webapps/ROOT/
