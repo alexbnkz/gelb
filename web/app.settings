@@ -1,10 +1,20 @@
-#MySQL
+#Default conf can be changed to .remote / .local
+conf                = .remote
 
-driver              = com.mysql.jdbc.Driver
-#stringconnection    = jdbc:mysql://localhost/ifrj?user=root&password=
-stringconnection    = jdbc:mysql://localhost:3307/beninkz?autoReconnect=true&username=beninkz&password=Missy2014
+#MySQL REMOTE
+driver.remote              = com.mysql.jdbc.Driver
+stringconnection.remote    = jdbc:mysql://localhost/beninkz?autoReconnect=true
+user.remote                = beninkz
+password.remote            = Missy2014
 
-#System root
+#System root REMOTE folder
+root.remote                = /usr/local/shared/tomcat/beninkz/webapps/ROOT/
 
-#root                = D:\\GELB\\web\\
-root                = /usr/local/shared/tomcat/beninkz/webapps/ROOT/
+#MySQL LOCAL
+driver.local              = com.mysql.jdbc.Driver
+stringconnection.local    = jdbc:mysql://localhost/ifrj
+user.local                = root
+password.local            = 
+
+#System root LOCAL folder
+root.local                = D:\\GELB\\web\\

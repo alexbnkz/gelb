@@ -1,4 +1,4 @@
-<%@page import="Utils.XMLTransform" %>
+<%@page import="Utils.*" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%
     session.setAttribute("root_message", (String)session.getAttribute("root_message") + "");
@@ -100,9 +100,13 @@
 String alertaErro(String texto) {
     String html = "";
     if(!texto.equals("") && texto != "null" && texto != null) {
+        Settings s = new Settings();
         XMLTransform transform = new XMLTransform();
-        //html = transform.toHtml("D:\\GELB\\web\\xsl\\aviso.xsl", "<root>" + texto + "</root>");
-        html = transform.toHtml("/usr/local/shared/tomcat/beninkz/webapps/ROOT/xsl/aviso.xsl", "<root>" + texto + "</root>");
+        try {
+            html = transform.toHtml(s.getSetting("root" + s.getSetting("conf")) + "xsl/aviso.xsl", "<root>" + texto + "</root>");
+        } catch(Exception E) {
+            html = E.getMessage();
+        }
     }
     return html;
 }

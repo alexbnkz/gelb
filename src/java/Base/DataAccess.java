@@ -16,12 +16,29 @@ public class DataAccess {
     private Settings s = new Settings();
     private XMLTransform transform = new XMLTransform();
     
+    String driver = "";
+    String stringconnection = "";
+    String user = "";
+    String password = "";
+    
+    public DataAccess() {
+        try {
+            driver = s.getSetting("driver" + s.getSetting("conf"));
+            stringconnection = s.getSetting("stringconnection" + s.getSetting("conf"));
+            user = s.getSetting("user" + s.getSetting("conf"));
+            password = s.getSetting("password" + s.getSetting("conf"));
+        } catch (Exception E) {
+            
+        }
+    }
+    
     public String getDados(String SQL)// <editor-fold defaultstate="collapsed">
     {
+        Connection con = null;
         erro = " ";
         try {
-            Class.forName(s.getSetting("driver"));
-            Connection con = DriverManager.getConnection(s.getSetting("stringconnection")); 
+            Class.forName(driver);
+            con = DriverManager.getConnection(stringconnection, user, password); 
                            
             ResultSet result = con.createStatement().executeQuery(SQL);
             
@@ -30,27 +47,42 @@ public class DataAccess {
                     erro = transform.toText(result.getString(1));
                 }
             }
-        } catch (SQLException e) {
-            erro = "<message type= 'erro' text='SQL Exception: " + transform.toText(e.toString()) + "' />";
+            if(!con.isClosed()){
+               con.close(); 
+            }
+        } catch (SQLException E) {
+            erro = "<message type= 'erro' text='Base.DataAccess.getDados()' />";
+            erro += "<message type= 'erro' text='" + transform.toText(E.toString()) + "' />";
             if(!SQL.equals("")) {
                 erro += "<message type= 'erro' text='"+ transform.toText(SQL) + "' />";
             }
+            if(!con.isClosed()){
+               con.close(); 
+            }
         } catch (Exception E) {
-            erro = "<message type= 'erro' text='Exception: " + transform.toText(E.toString()) + "' />";
+            erro = "<message type= 'erro' text='Base.DataAccess.getDados()' />";
+            erro += "<message type= 'erro' text='" + transform.toText(E.toString()) + "' />";
+            if(!SQL.equals("")) {
+                erro += "<message type= 'erro' text='"+ transform.toText(SQL) + "' />";
+            }
+            if(!con.isClosed()){
+               con.close(); 
+            }
         } finally {
             return erro;
         }
     }// </editor-fold>
     public String goAutenticar(Hashtable hash)// <editor-fold defaultstate="collapsed">
     { 
+        Connection con = null;
         String SQL = "";
         erro = " ";
         
         Cripta md5 = new Cripta();
         
         try {
-            Class.forName(s.getSetting("driver"));
-            Connection con = DriverManager.getConnection(s.getSetting("stringconnection")); 
+            Class.forName(driver);
+            con = DriverManager.getConnection(stringconnection, user, password); 
             
             SQL = " SELECT  ";
             SQL += " id_usuario, cd_login, nm_usuario, cd_email, ct_privilegio ";
@@ -65,15 +97,26 @@ public class DataAccess {
                     erro = "";
                 }
             }
-        } catch (SQLException e) {
-            erro = "<message type= 'erro' text='SQL Exception: " + transform.toText(e.toString()) + "' />";
+            if(!con.isClosed()){
+               con.close(); 
+            }
+        } catch (SQLException E) {
+            erro = "<message type= 'erro' text='Base.DataAccess.goAutenticar()' />";
+            erro += "<message type= 'erro' text='" + transform.toText(E.toString()) + "' />";
             if(!SQL.equals("")) {
                 erro += "<message type= 'erro' text='"+ transform.toText(SQL) + "' />";
             }
+            if(!con.isClosed()){
+               con.close(); 
+            }
         } catch (Exception E) {
-            erro = "<message type= 'erro' text='goAutenticar: " + transform.toText(E.toString()) + "' />";
+            erro = "<message type= 'erro' text='Base.DataAccess.goAutenticar()' />";
+            erro += "<message type= 'erro' text='" + transform.toText(E.toString()) + "' />";
             if(!SQL.equals("")) {
                 erro += "<message type= 'erro' text='"+ transform.toText(SQL) + "' />";
+            }
+            if(!con.isClosed()){
+               con.close(); 
             }
         } finally {
             return erro;
@@ -81,12 +124,13 @@ public class DataAccess {
     }// </editor-fold>
     public String getLogin(String login)// <editor-fold defaultstate="collapsed">
     { 
+        Connection con = null;
         String xml = "";
         String SQL = "";
         
         try {
-            Class.forName(s.getSetting("driver"));
-            Connection con = DriverManager.getConnection(s.getSetting("stringconnection")); 
+            Class.forName(driver);
+            con = DriverManager.getConnection(stringconnection, user, password); 
             
             SQL = " SELECT  ";
             SQL += " id_usuario, cd_login, pw_senha, nm_usuario, cd_email, ct_privilegio ";
@@ -118,13 +162,27 @@ public class DataAccess {
                     xml += " > </login>";
                 }
             }
-        } catch (SQLException e) {
-            xml = "<message type= 'erro' text='SQL Exception: " + transform.toText(e.toString()) + "' />";
+            if(!con.isClosed()){
+               con.close(); 
+            }
+        } catch (SQLException E) {
+            xml = "<message type= 'erro' text='Base.DataAccess.getLogin()' />";
+            xml += "<message type= 'erro' text='" + transform.toText(E.toString()) + "' />";
             if(!SQL.equals("")) {
                 xml += "<message type= 'erro' text='"+ transform.toText(SQL) + "' />";
             }
+            if(!con.isClosed()){
+               con.close(); 
+            }
         } catch (Exception E) {
-            xml = "<message type= 'erro' text='Exception: " + transform.toText(E.toString()) + "' />";
+            xml = "<message type= 'erro' text='Base.DataAccess.getLogin()' />";
+            xml += "<message type= 'erro' text='" + transform.toText(E.toString()) + "' />";
+            if(!SQL.equals("")) {
+                xml += "<message type= 'erro' text='"+ transform.toText(SQL) + "' />";
+            }
+            if(!con.isClosed()){
+               con.close(); 
+            }
         } finally {
             return xml;
         }
@@ -132,12 +190,13 @@ public class DataAccess {
     
     public String salvarExperimento(String cmd, Hashtable hash)// <editor-fold defaultstate="collapsed">
     { 
+        Connection con = null;
         String xml = "";
         String SQL = "";
         
         try {
-            Class.forName(s.getSetting("driver"));
-            Connection con = DriverManager.getConnection(s.getSetting("stringconnection")); 
+            Class.forName(driver);
+            con = DriverManager.getConnection(stringconnection, user, password); 
             
             String id_experimento = hash.get("id").toString();
             String nm_experimento = hash.get("nm_experimento").toString();
@@ -195,25 +254,40 @@ public class DataAccess {
                     xml += "<message type= 'erro' text='Esse experimento tem relacionamento em Meios!' />";
                 }
             }
-        } catch (SQLException e) {
-            xml += "<message type= 'erro' text='SQL Exception: " + transform.toText(e.toString()) + "' />";
-            if(!SQL.equals("")){
-                xml += "<message type= 'erro' text='" + transform.toText(SQL) + "' />";
+            if(!con.isClosed()){
+               con.close(); 
+            }
+        } catch (SQLException E) {
+            xml = "<message type= 'erro' text='Base.DataAccess.salvarExperimento()' />";
+            xml += "<message type= 'erro' text='" + transform.toText(E.toString()) + "' />";
+            if(!SQL.equals("")) {
+                xml += "<message type= 'erro' text='"+ transform.toText(SQL) + "' />";
+            }
+            if(!con.isClosed()){
+               con.close(); 
             }
         } catch (Exception E) {
-            xml += "<message type= 'erro' text='Class Not Found Exception: " + transform.toText(E.toString()) + "' />";
+            xml = "<message type= 'erro' text='Base.DataAccess.salvarExperimento()' />";
+            xml += "<message type= 'erro' text='" + transform.toText(E.toString()) + "' />";
+            if(!SQL.equals("")) {
+                xml += "<message type= 'erro' text='"+ transform.toText(SQL) + "' />";
+            }
+            if(!con.isClosed()){
+               con.close(); 
+            }
         } finally {
             return xml;
         }
     }// </editor-fold>
     public String listarExperimento(String cmd, Hashtable hash)// <editor-fold defaultstate="collapsed">
     { 
+        Connection con = null;
         String xml = "";
         String SQL = "";
         
         try {
-            Class.forName(s.getSetting("driver"));
-            Connection con = DriverManager.getConnection(s.getSetting("stringconnection")); 
+            Class.forName(driver);
+            con = DriverManager.getConnection(stringconnection, user, password); 
             
             SQL = " SELECT  ";
             SQL += " id_experimento, nm_experimento, dt_experimento, de_experimento, nm_arquivo ";
@@ -256,10 +330,26 @@ public class DataAccess {
                     xml += " > </experimento>";
                 }
             }
-        } catch (Exception E) {
-            xml = "<message type= 'erro' text='Exception: " + transform.toText(E.toString()) + "' />";
+            if(!con.isClosed()){
+               con.close(); 
+            }
+        } catch (SQLException E) {
+            xml = "<message type= 'erro' text='Base.DataAccess.listarExperimento()' />";
+            xml += "<message type= 'erro' text='" + transform.toText(E.toString()) + "' />";
             if(!SQL.equals("")) {
                 xml += "<message type= 'erro' text='"+ transform.toText(SQL) + "' />";
+            }
+            if(!con.isClosed()){
+               con.close(); 
+            }
+        } catch (Exception E) {
+            xml = "<message type= 'erro' text='Base.DataAccess.listarExperimento()' />";
+            xml += "<message type= 'erro' text='" + transform.toText(E.toString()) + "' />";
+            if(!SQL.equals("")) {
+                xml += "<message type= 'erro' text='"+ transform.toText(SQL) + "' />";
+            }
+            if(!con.isClosed()){
+               con.close(); 
             }
         } finally {
             return xml;
@@ -280,12 +370,13 @@ public class DataAccess {
 
     public String salvarMeio(String cmd, Hashtable hash)// <editor-fold defaultstate="collapsed">
     { 
+        Connection con = null;
         String xml = "";
         String SQL = "";
-                
+        
         try {
-            Class.forName(s.getSetting("driver"));
-            Connection con = DriverManager.getConnection(s.getSetting("stringconnection")); 
+            Class.forName(driver);
+            con = DriverManager.getConnection(stringconnection, user, password); 
             
             String id_meio = "";
             String id_experimento = "";
@@ -350,27 +441,40 @@ public class DataAccess {
                 con.createStatement().execute(SQL);  
                 xml = "<message type= 'aviso' text='Excluido com sucesso!' />";
             }
-        } catch (SQLException e) {
-            xml += "<message type= 'erro' text='SQL Exception: " + transform.toText(e.toString()) + "' />";
-            if(!SQL.equals("")){
-                xml += "<message type= 'erro' text='" + transform.toText(SQL) + "' />";
+            if(!con.isClosed()){
+               con.close(); 
+            }
+        } catch (SQLException E) {
+            xml = "<message type= 'erro' text='Base.DataAccess.salvarMeio()' />";
+            xml += "<message type= 'erro' text='" + transform.toText(E.toString()) + "' />";
+            if(!SQL.equals("")) {
+                xml += "<message type= 'erro' text='"+ transform.toText(SQL) + "' />";
+            }
+            if(!con.isClosed()){
+               con.close(); 
             }
         } catch (Exception E) {
-            xml += "<message type= 'erro' text='Exception: " + transform.toText(E.toString()) + "' />";
+            xml = "<message type= 'erro' text='Base.DataAccess.salvarMeio()' />";
+            xml += "<message type= 'erro' text='" + transform.toText(E.toString()) + "' />";
+            if(!SQL.equals("")) {
+                xml += "<message type= 'erro' text='"+ transform.toText(SQL) + "' />";
+            }
+            if(!con.isClosed()){
+               con.close(); 
+            }
         } finally {
             return xml;
         }
     }// </editor-fold>
     public String listarMeio(String cmd, Hashtable hash)// <editor-fold defaultstate="collapsed">
     { 
+        Connection con = null;
         String xml = "";
         String SQL = "";
         
         try {
-            Class.forName("com.mysql.jdbc.Driver");
-            String connectionUrl = "jdbc:mysql://localhost/ifrj?user=root&password=";
-            
-            Connection con = DriverManager.getConnection(connectionUrl); 
+            Class.forName(driver);
+            con = DriverManager.getConnection(stringconnection, user, password); 
             
             SQL = " SELECT  ";
             SQL += " M.id_meio, E.id_experimento, E.nm_experimento, M.nm_meio, M.dt_meio, M.de_meio, M.ct_bloqueio ";
@@ -430,10 +534,26 @@ public class DataAccess {
                             xml += " > </meio>";
                     }
             }
-        } catch (Exception E) {
-            xml = "<message type= 'erro' text='Exception: " + transform.toText(E.toString()) + "' />";
+            if(!con.isClosed()){
+               con.close(); 
+            }
+        } catch (SQLException E) {
+            xml = "<message type= 'erro' text='Base.DataAccess.listarMeio()' />";
+            xml += "<message type= 'erro' text='" + transform.toText(E.toString()) + "' />";
             if(!SQL.equals("")) {
                 xml += "<message type= 'erro' text='"+ transform.toText(SQL) + "' />";
+            }
+            if(!con.isClosed()){
+               con.close(); 
+            }
+        } catch (Exception E) {
+            xml = "<message type= 'erro' text='Base.DataAccess.listarMeio()' />";
+            xml += "<message type= 'erro' text='" + transform.toText(E.toString()) + "' />";
+            if(!SQL.equals("")) {
+                xml += "<message type= 'erro' text='"+ transform.toText(SQL) + "' />";
+            }
+            if(!con.isClosed()){
+               con.close(); 
             }
         } finally {
             return xml;
@@ -454,14 +574,13 @@ public class DataAccess {
 
     public String salvarRepique(String cmd, Hashtable hash) // <editor-fold defaultstate="collapsed">
     { 
+        Connection con = null;
         String xml = "";
         String SQL = "";
         
         try {
-            Class.forName("com.mysql.jdbc.Driver");
-            String connectionUrl = "jdbc:mysql://localhost/ifrj?user=root&password=";
-            
-            Connection con = DriverManager.getConnection(connectionUrl); 
+            Class.forName(driver);
+            con = DriverManager.getConnection(stringconnection, user, password); 
             
             String id_repique = "";
             if(!cmd.equals("INS")){
@@ -513,27 +632,40 @@ public class DataAccess {
                 con.createStatement().execute(SQL);    
                 xml = "<message type= 'aviso' text='Excluido com sucesso!' />";
             }
-        } catch (SQLException e) {
-            xml += "<message type= 'erro' text='SQL Exception: " + transform.toText(e.toString()) + "' />";
-            if(!SQL.equals("")){
-                xml += "<message type= 'erro' text='" + transform.toText(SQL) + "' />";
+            if(!con.isClosed()){
+               con.close(); 
+            }
+        } catch (SQLException E) {
+            xml = "<message type= 'erro' text='Base.DataAccess.salvarRepique()' />";
+            xml += "<message type= 'erro' text='" + transform.toText(E.toString()) + "' />";
+            if(!SQL.equals("")) {
+                xml += "<message type= 'erro' text='"+ transform.toText(SQL) + "' />";
+            }
+            if(!con.isClosed()){
+               con.close(); 
             }
         } catch (Exception E) {
-            xml += "<message type= 'erro' text='Exception: " + transform.toText(E.toString()) + "' />";
+            xml = "<message type= 'erro' text='Base.DataAccess.salvarRepique()' />";
+            xml += "<message type= 'erro' text='" + transform.toText(E.toString()) + "' />";
+            if(!SQL.equals("")) {
+                xml += "<message type= 'erro' text='"+ transform.toText(SQL) + "' />";
+            }
+            if(!con.isClosed()){
+               con.close(); 
+            }
         } finally {
             return xml;
         }
     }// </editor-fold>
     public String listarRepique(String cmd, Hashtable hash) // <editor-fold defaultstate="collapsed"> 
     { 
+        Connection con = null;
         String xml = "";
         String SQL = "";
         
         try {
-            Class.forName("com.mysql.jdbc.Driver");
-            String connectionUrl = "jdbc:mysql://localhost/ifrj?user=root&password=";
-            
-            Connection con = DriverManager.getConnection(connectionUrl); 
+            Class.forName(driver);
+            con = DriverManager.getConnection(stringconnection, user, password); 
             
             SQL = " SELECT  ";
             SQL += " id_repique, id_meio, dt_repique, nm_planta, dt_planta, qt_planta, ct_primeiro ";
@@ -589,10 +721,26 @@ public class DataAccess {
                     xml += " > </repique>";
                 }
             }
-        } catch (Exception E) {
-            xml = "<message type= 'erro' text='Exception: " + transform.toText(E.toString()) + "' />";
+            if(!con.isClosed()){
+               con.close(); 
+            }
+        } catch (SQLException E) {
+            xml = "<message type= 'erro' text='Base.DataAccess.listarRepique()' />";
+            xml += "<message type= 'erro' text='" + transform.toText(E.toString()) + "' />";
             if(!SQL.equals("")) {
                 xml += "<message type= 'erro' text='"+ transform.toText(SQL) + "' />";
+            }
+            if(!con.isClosed()){
+               con.close(); 
+            }
+        } catch (Exception E) {
+            xml = "<message type= 'erro' text='Base.DataAccess.listarRepique()' />";
+            xml += "<message type= 'erro' text='" + transform.toText(E.toString()) + "' />";
+            if(!SQL.equals("")) {
+                xml += "<message type= 'erro' text='"+ transform.toText(SQL) + "' />";
+            }
+            if(!con.isClosed()){
+               con.close(); 
             }
         } finally {
             return xml;
@@ -601,16 +749,15 @@ public class DataAccess {
     
     public String salvarUsuario(String cmd, Hashtable hash)// <editor-fold defaultstate="collapsed">
     { 
+        Connection con = null;
         String xml = "";
         String SQL = "";
-        
+                
         Cripta md5 = new Cripta();
         
         try {
-            Class.forName("com.mysql.jdbc.Driver");
-            String connectionUrl = "jdbc:mysql://localhost/ifrj?user=root&password=";
-            
-            Connection con = DriverManager.getConnection(connectionUrl); 
+            Class.forName(driver);
+            con = DriverManager.getConnection(stringconnection, user, password); 
             
             String id_usuario = hash.get("id").toString();
             String cd_login = hash.get("cd_login").toString();
@@ -671,27 +818,40 @@ public class DataAccess {
                 con.createStatement().execute(SQL);    
                 xml = "<message type= 'aviso' text='Excluido com sucesso!' />";
             }
-        } catch (SQLException e) {
-            xml += "<message type= 'erro' text='SQL Exception: " + transform.toText(e.toString()) + "' />";
-            if(!SQL.equals("")){
-                xml += "<message type= 'erro' text='" + transform.toText(SQL) + "' />";
+            if(!con.isClosed()){
+               con.close(); 
+            }
+        } catch (SQLException E) {
+            xml = "<message type= 'erro' text='Base.DataAccess.salvarUsuario()' />";
+            xml += "<message type= 'erro' text='" + transform.toText(E.toString()) + "' />";
+            if(!SQL.equals("")) {
+                xml += "<message type= 'erro' text='"+ transform.toText(SQL) + "' />";
+            }
+            if(!con.isClosed()){
+               con.close(); 
             }
         } catch (Exception E) {
-            xml += "<message type= 'erro' text='Class Not Found Exception: " + transform.toText(E.toString()) + "' />";
+            xml = "<message type= 'erro' text='Base.DataAccess.salvarUsuario()' />";
+            xml += "<message type= 'erro' text='" + transform.toText(E.toString()) + "' />";
+            if(!SQL.equals("")) {
+                xml += "<message type= 'erro' text='"+ transform.toText(SQL) + "' />";
+            }
+            if(!con.isClosed()){
+               con.close(); 
+            }
         } finally {
             return xml;
         }
     }// </editor-fold>
     public String listarUsuario(String cmd, Hashtable hash)// <editor-fold defaultstate="collapsed">
     { 
+        Connection con = null;
         String xml = "";
         String SQL = "";
         
         try {
-            Class.forName("com.mysql.jdbc.Driver");
-            String connectionUrl = "jdbc:mysql://localhost/ifrj?user=root&password=";
-            
-            Connection con = DriverManager.getConnection(connectionUrl); 
+            Class.forName(driver);
+            con = DriverManager.getConnection(stringconnection, user, password); 
             
             SQL = " SELECT  ";
             SQL += " id_usuario, cd_login, pw_senha, nm_usuario, cd_email, ct_privilegio ";
@@ -753,10 +913,26 @@ public class DataAccess {
                     xml += " > </usuario>";
                 }
             }
-        } catch (Exception E) {
-            xml = "<message type= 'erro' text='Exception: " + transform.toText(E.toString()) + "' />";
+            if(!con.isClosed()){
+               con.close(); 
+            }
+        } catch (SQLException E) {
+            xml = "<message type= 'erro' text='Base.DataAccess.listarUsuario()' />";
+            xml += "<message type= 'erro' text='" + transform.toText(E.toString()) + "' />";
             if(!SQL.equals("")) {
                 xml += "<message type= 'erro' text='"+ transform.toText(SQL) + "' />";
+            }
+            if(!con.isClosed()){
+               con.close(); 
+            }
+        } catch (Exception E) {
+            xml = "<message type= 'erro' text='Base.DataAccess.listarUsuario()' />";
+            xml += "<message type= 'erro' text='" + transform.toText(E.toString()) + "' />";
+            if(!SQL.equals("")) {
+                xml += "<message type= 'erro' text='"+ transform.toText(SQL) + "' />";
+            }
+            if(!con.isClosed()){
+               con.close(); 
             }
         } finally {
             return xml;
