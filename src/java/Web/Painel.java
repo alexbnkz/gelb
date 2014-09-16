@@ -96,7 +96,7 @@ public class Painel extends HttpServlet {
             xml = "<root>" + "<cmd>" + transform.toText(cmd) + "</cmd>" + xml + "</root>";
             
             String html;
-            html = transform.toHtml(s.getSetting("root") + "xsl\\" + page + ".xsl", xml);
+            html = transform.toHtml(s.getSetting("root" + s.getSetting("conf")) + "xsl/" + page + ".xsl", xml);
             
             out.println(html);
         } catch (Exception e) {
