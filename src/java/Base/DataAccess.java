@@ -21,7 +21,7 @@ public class DataAccess {
     String user = "";
     String password = "";
     
-    public DataAccess() {
+    public DataAccess() { // <editor-fold defaultstate="collapsed">
         try {
             driver = s.getSetting("driver" + s.getSetting("conf"));
             stringconnection = s.getSetting("stringconnection" + s.getSetting("conf"));
@@ -30,7 +30,7 @@ public class DataAccess {
         } catch (Exception E) {
             
         }
-    }
+    } // </editor-fold>
     
     public String getDados(String SQL)// <editor-fold defaultstate="collapsed">
     {
@@ -714,6 +714,9 @@ public class DataAccess {
                     xml += " id_repique = '" + transform.toText(result.getString("id_repique")) + "' ";
                     xml += " id_meio = '" + transform.toText(result.getString("id_meio")) + "' ";
                     xml += " dt_repique = '" + transform.toText(result.getString("dt_repique")) + "' ";
+                    xml += " dia = '" + transform.toText(result.getString("dt_repique").split("/")[0]) + "' ";
+                    xml += " mes = '" + transform.toText(result.getString("dt_repique").split("/")[1]) + "' ";
+                    xml += " ano = '" + transform.toText(result.getString("dt_repique").split("/")[2]) + "' ";
                     xml += " nm_planta = '" + transform.toText(result.getString("nm_planta")) + "' ";
                     xml += " dt_planta = '" + transform.toText(result.getString("dt_planta")) + "' ";
                     xml += " qt_planta = '" + transform.toText(result.getString("qt_planta")) + "' ";
@@ -721,6 +724,25 @@ public class DataAccess {
                     xml += " > </repique>";
                 }
             }
+
+            SQL = "SELECT Cast(Distinct(dt_repique)) AS date FROM tRepique ";
+            SQL += " ORDER BY day(str_to_date(dt_repique, '%d/%m/%y')) ASC, ";
+            SQL += " month(str_to_date(dt_repique, '%d/%m/%y')) ASC, ";
+            SQL += " year(str_to_date(dt_repique, '%d/%m/%y')) ASC ";
+            
+            result = con.createStatement().executeQuery(SQL);
+            
+            if(!result.wasNull()){
+                while(result.next()){
+                    xml += " <distinct ";
+                    xml += " dt_repique = '" + transform.toText(result.getString("dt_repique")) + "' ";
+                    xml += " dia = '" + transform.toText(result.getString("dt_repique").split("/")[0]) + "' ";
+                    xml += " mes = '" + transform.toText(result.getString("dt_repique").split("/")[1]) + "' ";
+                    xml += " ano = '" + transform.toText(result.getString("dt_repique").split("/")[2]) + "' ";
+                    xml += " > </distinct>";
+                }
+            }
+
             if(!con.isClosed()){
                con.close(); 
             }

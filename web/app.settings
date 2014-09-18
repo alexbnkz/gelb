@@ -1,5 +1,5 @@
 #Default conf can be changed to .remote / .local
-conf                = .remote
+conf                = .local
 
 #MySQL REMOTE
 driver.remote              = com.mysql.jdbc.Driver
