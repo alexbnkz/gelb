@@ -50,27 +50,56 @@ public class Repiques extends HttpServlet {
             
             page = hash.get("cmd").toString().split("/")[0];           
             
-            if(cmd.equals("INS") || cmd.equals("UPD") || cmd.equals("DEL")){
-                if(cmd.equals("INS")) {
-                    String id_repique = Base.getDados("SELECT id_repique FROM tRepique " +
-                            "WHERE id_meio = " + hash.get("id_meio").toString() + " AND ct_primeiro = 'S';");
-                    if(id_repique.indexOf("'erro'") == -1){
-                        long nm_planta = 0;
-                        String dt_experimento = "";
-                        String ct_primeiro = "";
-                        if(id_repique.trim().equals("")){
-                            ct_primeiro = "S";
-                        }
+            if(cmd.indexOf("PNL") > -1) {
+                cmd = cmd.replace("PNL", "");           
+                            
+                if(cmd.equals("INS") || cmd.equals("UPD") || cmd.equals("DEL")){
+                    if(cmd.equals("INS")) {
+                        String id_repique = Base.getDados("SELECT id_repique FROM tRepique " +
+                                "WHERE id_meio = " + hash.get("id_meio").toString() + " AND ct_primeiro = 'S';");
+                        if(id_repique.indexOf("'erro'") == -1){
+                            long nm_planta = 0;
+                            String dt_experimento = "";
+                            String ct_primeiro = "";
+                            if(id_repique.trim().equals("")){
+                                ct_primeiro = "S";
+                            }
 
-                            hash.put("nm_planta", "");
-                            hash.put("dt_planta", "");
-                            hash.put("ct_primeiro", ct_primeiro);
+                                hash.put("nm_planta", "");
+                                hash.put("dt_planta", "");
+                                hash.put("ct_primeiro", ct_primeiro);
+                        }
                     }
-                }
-                xml += Base.salvarRepique(cmd, hash);
-            }
+                    xml += Base.salvarRepique(cmd, hash);   
+                }                
+            } else {
+                String id_experimento = Base.getDados("SELECT id_experimento FROM tExperimento WHERE ct_painel = 'S';");
             
-            xml += Base.listarRepique(cmd, hash);
+                if(!id_experimento.trim().equals("")){
+                    //page = Base.getDados("SELECT nm_arquivo FROM tExperimento WHERE ct_painel = 'S';"); //Vriesea
+                    xml += Base.buscarMeio("", id_experimento);
+
+                    // Nome da planta
+                    String dt_experimento = Base.getDados("SELECT dt_experimento FROM tExperimento " +
+                    "WHERE id_experimento = " + id_experimento);
+
+                    SimpleDateFormat DateFormatBra = new SimpleDateFormat("dd/MM/yyyy", new Locale("pt", "BR"));
+                    SimpleDateFormat DateFormatUsa = new SimpleDateFormat("EEE MMM dd HH:mm:ss z yyyy", new Locale("en", "US"));
+
+                    Date d1 = DateFormatUsa.parse((new Date()).toString());
+                    Date d2 = DateFormatBra.parse(dt_experimento);
+
+                    long nm_planta = TimeUnit.MILLISECONDS.toHours(d1.getTime() - d2.getTime())/24;
+
+                    xml += "<sistema nm_planta='VB" + nm_planta + "D' />";
+                    xml += "<sistema dt_hoje='" + (new SimpleDateFormat("EEEE, dd/MM/yyyy HH:mm").format(new Date()).toString()) + "' />";
+                    
+                }
+                
+                xml += Base.listarRepique(cmd, hash);
+            }
+
+            
             
         } catch (Exception e) {
             xml += "<message type= 'erro' text='" + transform.toText(e.toString()) + "' />";

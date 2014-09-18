@@ -160,7 +160,7 @@ function Repicar(i){
 function RepicarOK(i){
     if(name('dt_repique', i-1).value != '') {
         if(name('qt_planta', i-1).value != '') {
-            var sparam = 'Repiques?cmd=blank/ins';
+            var sparam = 'Repiques?cmd=blank/inspnl';
                 sparam += '&id_experimento=1';
                 sparam += '&id_meio=' + name('id_meio', i-1).value;
                 sparam += '&dt_repique=' + name('dt_repique', i-1).value;

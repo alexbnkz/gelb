@@ -57,3 +57,4 @@ build/web/js/jquery.maskedinput.min.js.js
 build/web/js/jquery.maskedinput.min.js
 build/web/app.settings
 dist/ROOT.war
+build/web/xsl/Repiques_1.xsl
