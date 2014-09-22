@@ -66,6 +66,7 @@ public class Painel extends HttpServlet {
             if(!id_experimento.trim().equals("")){
                 page = Base.getDados("SELECT nm_arquivo FROM tExperimento WHERE ct_painel = 'S';"); //Vriesea
                 xml += Base.buscarMeio("", id_experimento);
+                xml += Base.listarRepique("", hash);
                 
                 // Nome da planta
                 String dt_experimento = Base.getDados("SELECT dt_experimento FROM tExperimento " +
@@ -96,7 +97,7 @@ public class Painel extends HttpServlet {
             xml = "<root>" + "<cmd>" + transform.toText(cmd) + "</cmd>" + xml + "</root>";
             
             String html;
-            html = transform.toHtml(s.getSetting("root" + s.getSetting("conf")) + "xsl/" + page + ".xsl", xml);
+            html = transform.toHtml(s.getSetting("root") + "xsl/" + page + ".xsl", xml);
             
             out.println(html);
         } catch (Exception e) {

@@ -10,6 +10,7 @@ import java.util.Date;
 import java.util.Locale;
 import java.text.SimpleDateFormat;
 import java.util.concurrent.TimeUnit;
+import java.util.Map;
 
 public class DataAccess {
     String erro = "";
@@ -23,10 +24,10 @@ public class DataAccess {
     
     public DataAccess() { // <editor-fold defaultstate="collapsed">
         try {
-            driver = s.getSetting("driver" + s.getSetting("conf"));
-            stringconnection = s.getSetting("stringconnection" + s.getSetting("conf"));
-            user = s.getSetting("user" + s.getSetting("conf"));
-            password = s.getSetting("password" + s.getSetting("conf"));
+            driver = s.getSetting("driver");
+            stringconnection = s.getSetting("stringconnection");
+            user = s.getSetting("user");
+            password = s.getSetting("password");
         } catch (Exception E) {
             
         }
@@ -704,7 +705,9 @@ public class DataAccess {
                 SQL += " WHERE id_repique = " + hash.get("id");    
             }
             
-            SQL += " ORDER BY id_repique ASC";      
+            SQL += " ORDER BY year(str_to_date(dt_repique, '%d/%m/%y')) DESC, ";
+            SQL += " month(str_to_date(dt_repique, '%d/%m/%y')) DESC, ";
+            SQL += " day(str_to_date(dt_repique, '%d/%m/%y')) DESC ";
             
             ResultSet result = con.createStatement().executeQuery(SQL);
             
@@ -725,10 +728,10 @@ public class DataAccess {
                 }
             }
 
-            SQL = "SELECT Cast(Distinct(dt_repique)) AS date FROM tRepique ";
-            SQL += " ORDER BY day(str_to_date(dt_repique, '%d/%m/%y')) ASC, ";
-            SQL += " month(str_to_date(dt_repique, '%d/%m/%y')) ASC, ";
-            SQL += " year(str_to_date(dt_repique, '%d/%m/%y')) ASC ";
+            SQL = "SELECT Distinct(dt_repique) FROM tRepique ";
+            SQL += " ORDER BY year(str_to_date(dt_repique, '%d/%m/%y')) DESC, ";
+            SQL += " month(str_to_date(dt_repique, '%d/%m/%y')) DESC, ";
+            SQL += " day(str_to_date(dt_repique, '%d/%m/%y')) DESC LIMIT 10 ";
             
             result = con.createStatement().executeQuery(SQL);
             
@@ -767,6 +770,18 @@ public class DataAccess {
         } finally {
             return xml;
         }
+    }// </editor-fold>
+    public String listarRepique() // <editor-fold defaultstate="collapsed">
+    {
+        Hashtable hash = new Hashtable();
+        return listarMeio("LST", hash);
+    }// </editor-fold>
+    public String buscarRepique(String id_repcique, String id_experimento) // <editor-fold defaultstate="collapsed">
+    {
+        Hashtable hash = new Hashtable();
+        hash.put("id_repcique", id_repcique);
+        hash.put("id_experimento", id_experimento);
+        return listarMeio("SRCH", hash);
     }// </editor-fold>
     
     public String salvarUsuario(String cmd, Hashtable hash)// <editor-fold defaultstate="collapsed">
