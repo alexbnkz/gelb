@@ -664,9 +664,39 @@ public class DataAccess {
         String xml = "";
         String SQL = "";
         
+        Hashtable set = new Hashtable();
+        set.put("id", "");
+        set.put("id_repique", "");
+        set.put("id_meio", "");
+        set.put("dt_repique", "'");
+        set.put("nm_planta", "'");
+        set.put("dt_planta", "'");
+        set.put("qt_planta", "");
+        set.put("ct_primeiro", "'");
+        
         try {
             Class.forName(driver);
-            con = DriverManager.getConnection(stringconnection, user, password); 
+            con = DriverManager.getConnection(stringconnection, user, password);
+            
+            String SQL2 = "";
+            boolean also2 = false;
+            
+            for (Object o: set.entrySet()) {
+                Map.Entry en = (Map.Entry) o;
+                
+                if(!hash.get(en.getKey().toString()).equals("")){
+                    if(also2){SQL2 += " AND ";}
+                    SQL2 += " " + hash.get(en.getKey().toString()) + " = " + en.getValue().toString() + hash.get(en.getKey().toString()) + en.getValue().toString() + " ";  
+                    also2 = true;
+                }   
+                
+            }     
+            
+            
+            //if(hash.contains("id_repique, id_repique, id_meio, id_meio, dt_repique, dt_repique, nm_planta, nm_planta, dt_planta, dt_planta, qt_planta, qt_planta, ct_primeiro ct_primeiro
+            
+            
+            
             
             SQL = " SELECT  ";
             SQL += " id_repique, id_meio, dt_repique, nm_planta, dt_planta, qt_planta, ct_primeiro ";
