@@ -1,0 +1,8 @@
+#MySQL REMOTE
+driver               = com.mysql.jdbc.Driver
+stringconnection     = jdbc:mysql://localhost:3307/beninkz?autoReconnect=true
+user                 = beninkz
+password             = Missy2014
+
+#System root REMOTE folder
+root                 = /usr/local/shared/tomcat/beninkz/webapps/ROOT/

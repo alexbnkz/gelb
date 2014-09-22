@@ -224,11 +224,13 @@
                         
                         <div class="table">
                             <xsl:for-each select="/root/meio">
+                                <xsl:variable name="meio_id_meio"><xsl:value-of select="@id_meio"/></xsl:variable>
+                                <xsl:variable name="dt_repique"><xsl:value-of select="/root/repique[@id_meio = $meio_id_meio]/@dt_repique"/></xsl:variable>
                                 <xsl:if test="@nm_experimento != ''">
                                
                             <div class="legend" style="width: 10px;"></div>
-                            <div class="legend" style="width: 40px;">Nome</div>
-                            <xsl:for-each select="/root/distinct[position()&lt;=8]">
+                            <div class="legend" style="width: 50px;">Nome</div>
+                            <xsl:for-each select="/root/distinct">
                                 <div class="legend" style="width: 60px; text-align: center;"><xsl:value-of select="@dia"/>/<xsl:value-of select="@mes"/></div>
                             </xsl:for-each>
                                 </xsl:if>
@@ -242,9 +244,17 @@
                                             <xsl:attribute name="value"><xsl:value-of select="@id_meio"/></xsl:attribute>
                                         </input>
                                     </div>
-                                    <div class="cell" style="width: 100px;">
-                                        <xsl:value-of select="@qt_planta"/>
-                                    </div>
+                                    <xsl:for-each select="/root/distinct">
+                                        <xsl:variable name="distinct_dt_repique"><xsl:value-of select="@dt_repique"/></xsl:variable>
+                                                <div class="cellpadd" style="width: 60px; text-align: center;">
+                                        <xsl:for-each select="/root/repique">
+                                            <xsl:if test="@dt_repique = $distinct_dt_repique and @id_meio = $meio_id_meio">
+                                                    <xsl:value-of select="@qt_planta"/>
+                                            </xsl:if>
+                                        </xsl:for-each>
+                                                </div>
+                                    </xsl:for-each>
+                                    
 
                                 </div>
                             </xsl:for-each>

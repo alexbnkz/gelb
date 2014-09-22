@@ -30,14 +30,23 @@
                     
                     <div class="panel-grid" style="border-bottom: none;">
                         
-                        <div class="title-small" style="text-align: center;">Nome da planta 
+                        <div class="table" style="text-align: center; font-size: 12px;">
+                        <div class="title-small" style="margin-top: 20px; margin-bottom: 0px;">Nome da planta 
                             <xsl:value-of select="/root/sistema/@nm_planta"/></div>
                         
-                        <div style="text-align: center; font-size: 12px;"> 
-                            <xsl:value-of select="/root/sistema/@dt_hoje"/></div>
+                        <br />
+                            <xsl:value-of select="/root/sistema/@dt_hoje"/>
+
+                        <br />
+                           
+                            <button type="button" id="bt_imprimir" name="bt_imprimir" title="Imprimir etiquetas" onclick="javascript:alert('Imprimindo..');" style="display: inline;">
+                                <span>Imprimir etiquetas</span>
+                            </button>
+
+                      
 
                         <div style="padding-bottom: 10px;"></div>
-
+                        </div>
                     </div>
                     
                     <div id="panel-form-cadastro" class="panel-form" style="display: block;">
@@ -146,6 +155,7 @@
                                
                             <div class="legend" style="width: 10px;"></div>
                             <div class="legend" style="width: 40px;">Nome</div>
+                            <div class="legend" style="width: 40px;">Qt. Anterior</div>
                             <div class="legend" style="width: 100px;">Data de preparo</div>
                             <div class="legend" style="width: 220px;">Validade</div>
                             <div class="legend" style="width: 90px;">Data de repique</div>
@@ -160,6 +170,9 @@
                                         <input type="hidden" id="id_meio" name="id_meio">
                                             <xsl:attribute name="value"><xsl:value-of select="@id_meio"/></xsl:attribute>
                                         </input>
+                                    </div>
+                                    <div class="cell" style="width: 40px;">
+                                       <xsl:value-of select="@dt_meio"/>
                                     </div>
                                     <div id="dvDtMeio" name="dvDtMeio" class="cell" style="width: 100px;">
                                        <xsl:value-of select="@dt_meio"/>

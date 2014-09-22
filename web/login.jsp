@@ -103,7 +103,7 @@ String alertaErro(String texto) {
         Settings s = new Settings();
         XMLTransform transform = new XMLTransform();
         try {
-            html = transform.toHtml(s.getSetting("root" + s.getSetting("conf")) + "xsl/aviso.xsl", "<root>" + texto + "</root>");
+            html = transform.toHtml(s.getSetting("root") + "xsl/aviso.xsl", "<root>" + texto + "</root>");
         } catch(Exception E) {
             html = E.getMessage();
         }
